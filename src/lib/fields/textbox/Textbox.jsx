@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import style from "./Textbox.module.css";
-import { ASSOCIATE_TAGS_WITH_YOUR_FIELDS, PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../utils/eMagGuidelineCode";
+import { ASSOCIATE_TAGS_WITH_YOUR_FIELDS, PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"];
 
