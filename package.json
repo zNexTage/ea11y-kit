@@ -1,21 +1,22 @@
 {
   "name": "ea11y-kit",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "prop-types": "^15.8.1",
+    "react-error-boundary": "^4.0.13",
+    "web-vitals": "^2.1.4"
+  },
+  "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-error-boundary": "^4.0.13",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "del dist && mkdir dist && cross-env NODE_ENV=production babel src/lib src/exceptions src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -38,6 +39,9 @@
     ]
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.3",
+    "babel-cli": "^6.26.0",
+    "cross-env": "^7.0.3"
   }
 }
