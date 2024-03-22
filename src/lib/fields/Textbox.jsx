@@ -31,10 +31,9 @@ const TextboxBase = ({
         throw new GuidelineViolation(6.2, "Associar etiquetas aos seus campos", "Para que a label (etiqueta) seja associado a um campo de texto e contextualize um campo de texto, é necessário informar a propriedade id.");
     }
 
-    if(!type){
+    if(!type || !AVAILABLE_TYPES.includes(type)){
         throw new Error(`É necessário especificar o tipo do campo de texto. Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`);
     }
-
 
     return (
         <div>
