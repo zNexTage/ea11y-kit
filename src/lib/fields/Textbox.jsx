@@ -10,7 +10,10 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"]
  *  @typedef TextboxProps
  *  @property {string} label
  *  @property {string} id
+ *  @property {number} maxLength
+ *  @property {boolean} isRequired 
  *  @property {("email"|"number"|"password"|"search"|"text"|"url")} type
+ *  @property {HTMLInputElement|null} extraAttributes
  */
 
 /** *
@@ -19,7 +22,10 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"]
  */
 const TextboxBase = ({
     label,
+    extraAttributes,
     id,
+    maxLength,
+    isRequired = false,
     type
 }) => {
 
@@ -31,16 +37,24 @@ const TextboxBase = ({
         throw new GuidelineViolation(6.2, "Associar etiquetas aos seus campos", "Para que a label (etiqueta) seja associado a um campo de texto e contextualize um campo de texto, é necessário informar a propriedade id.");
     }
 
-    if(!type || !AVAILABLE_TYPES.includes(type)){
+    if (!type || !AVAILABLE_TYPES.includes(type)) {
         throw new Error(`É necessário especificar o tipo do campo de texto. Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`);
     }
+
 
     return (
         <div>
             <label htmlFor={id}>
                 {label}
             </label>
-            <input className={style.textbox} id={id} type={type} />
+            <input
+                {...extraAttributes}
+                maxLength={maxLength}
+                className={`${style.textbox} ${extraAttributes?.className}`}
+                id={id}
+                type={type}
+                required={isRequired}
+            />
         </div>
     )
 }
@@ -52,13 +66,17 @@ const TextboxBase = ({
 const Textbox = ({
     label,
     id,
-    type
+    type,
+    maxLength,
+    isRequired = false
 }) => (
     <ErrorBoundary fallbackRender={ErrorComponent}>
         <TextboxBase
             label={label}
             id={id}
             type={type}
+            isRequired={isRequired}
+            maxLength={maxLength}
         />
     </ErrorBoundary>
 )
@@ -66,7 +84,9 @@ const Textbox = ({
 Textbox.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired
+    isRequired: PropTypes.bool,
+    type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
+    maxLength: PropTypes.number
 }
 
 export default Textbox;
