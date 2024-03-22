@@ -1,0 +1,9 @@
+.textbox{
+    display: block;
+    padding: 5px;
+    border-radius: 2px;
+    border: 2px solid #000 ;
+}
+.textbox:focus{
+    border: 2px solid #F00;
+}

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
+import style from "./Textbox.module.css";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"];
 
@@ -40,7 +41,7 @@ const TextboxBase = ({
             <label htmlFor={id}>
                 {label}
             </label>
-            <input id={id} type={type} />
+            <input className={style.textbox} id={id} type={type} />
         </div>
     )
 }
