@@ -28,8 +28,9 @@ const TextboxBase = ({
     id,
     maxLength,
     isRequired = false,
-    type
+    type,
 }) => {
+    //TODO: criar atributo `name`.
 
     if (!label) {
         throw new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "Um campo de texto deve possuir uma label (etiqueta) que indique ao usuário o que ele deve inserir no campo. A label é importante para ajudar usuários com qualquer tipo de dificuldade visual, pois os leitores de tela irão ler o campo quando o usuário estiver focado no campo de texto.")
@@ -43,10 +44,9 @@ const TextboxBase = ({
         throw new Error(`É necessário especificar o tipo do campo de texto. Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`);
     }
 
-    if(!placeholder){
+    if (!placeholder) {
         throw new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, `É necessário especificar uma dica para o campo de texto (placeholder). É importante informar uma dica, pois leitores de tela leem a dica e comunicam aos usuários.`);
     }
-
 
     return (
         <div>
@@ -57,6 +57,7 @@ const TextboxBase = ({
                 {...extraAttributes}
                 placeholder={placeholder}
                 maxLength={maxLength}
+                name={id}
                 className={`${style.textbox} ${extraAttributes?.className}`}
                 id={id}
                 type={type}
@@ -84,14 +85,17 @@ const Textbox = ({
     placeholder,
     type,
     maxLength,
-    isRequired = false
+    isRequired = false,
+    extraAttributes
 }) => (
     <ErrorBoundary fallbackRender={ErrorComponent}>
         <TextboxBase
+            {...extraAttributes}
             label={label}
             id={id}
             placeholder={placeholder}
             type={type}
+            name={id}
             isRequired={isRequired}
             maxLength={maxLength}
         />
