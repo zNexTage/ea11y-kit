@@ -22,12 +22,12 @@ const useFieldValidations = (label, id) => {
 
         if (!label) {
             // Violou a diretriz 6.2. Não informou a etiqueta (label).
-            errorsAux.push(new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "Um campo de texto deve possuir uma label (etiqueta) que indique ao usuário o que ele deve inserir no campo. A label é importante para ajudar usuários com qualquer tipo de dificuldade visual, pois os leitores de tela irão ler o campo quando o usuário estiver focado no campo de texto."));           
+            errorsAux.push(new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "É essencial que todos os campos de entrada, como caixas de texto, caixas de seleção (checkbox), botões de rádio (radio button), entre outros, tenham uma etiqueta (label) associada. A etiqueta fornece uma descrição clara do propósito do campo, o que é fundamental para orientar todos os usuários, especialmente aqueles com dificuldades visuais que dependem de leitores de tela. Quando os usuários focam em um campo de entrada, o leitor de tela deve ler a etiqueta para fornecer a devida orientação."));           
         }
 
         if (!id) {
             // Violou a diretriz 6.2. Não informou o id.
-            errorsAux.push(new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "Para que a label (etiqueta) seja associado a um campo de texto e o contextualize, é necessário informar a propriedade id."));
+            errorsAux.push(new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "Para associar corretamente uma etiqueta (label) a um campo de texto e contextualizá-lo, é fundamental fornecer a propriedade 'id' correspondente"));
         }
 
         setErrors(errorsAux);
