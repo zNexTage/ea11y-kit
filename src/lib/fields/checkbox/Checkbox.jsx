@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import ErrorComponent from "../../../components/error-component/ErrorComponent";
 import { useEffect, useState } from "react";
 import style from "./Checkbox.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
