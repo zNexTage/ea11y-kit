@@ -43,7 +43,9 @@ const TextboxBase = ({
     }
 
     if (!placeholder) {
-        throw new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, `É necessário especificar uma dica para o campo de texto (placeholder). É importante informar uma dica, pois leitores de tela leem a dica e comunicam aos usuários.`);
+        const violation = new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, `É necessário especificar uma dica para o campo de texto (placeholder). É importante informar uma dica, pois leitores de tela leem a dica e comunicam aos usuários.`);
+        
+        throw new GuidelineViolationError(violation);
     }
 
     return (
