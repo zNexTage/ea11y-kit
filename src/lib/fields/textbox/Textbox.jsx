@@ -49,7 +49,7 @@ const Textbox = ({
 
         if (!type || !AVAILABLE_TYPES.includes(type)) {
             textFieldViolations.push(
-                new RequiredAttribute(`É necessário especificar o tipo do campo de texto (atributo 'type'). Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`)
+                new RequiredAttribute(`É necessário especificar o tipo do campo de texto (atributo 'type'). O componente Textbox suporta os tipos: ${AVAILABLE_TYPES.join(", ")}`)
             )
         }
 
