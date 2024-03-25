@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
-import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
+import { GuidelineViolationError, GuidelineViolation } from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import style from "./Textbox.module.css";
-import { ASSOCIATE_TAGS_WITH_YOUR_FIELDS, PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
+import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
+import useFieldValidations from "../../hooks/validations/useFieldValidations";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"];
 
@@ -30,15 +31,12 @@ const TextboxBase = ({
     isRequired = false,
     type,
 }) => {
+    const violations = useFieldValidations(label, id)
+
+    if (violations.length > 0) {
+        throw new GuidelineViolationError(violations);
+    }
     //TODO: criar atributo `name`.
-
-    if (!label) {
-        throw new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "Um campo de texto deve possuir uma label (etiqueta) que indique ao usuário o que ele deve inserir no campo. A label é importante para ajudar usuários com qualquer tipo de dificuldade visual, pois os leitores de tela irão ler o campo quando o usuário estiver focado no campo de texto.")
-    }
-
-    if (!id) {
-        throw new GuidelineViolation(ASSOCIATE_TAGS_WITH_YOUR_FIELDS, "Para que a label (etiqueta) seja associado a um campo de texto e contextualize um campo de texto, é necessário informar a propriedade id.");
-    }
 
     if (!type || !AVAILABLE_TYPES.includes(type)) {
         throw new Error(`É necessário especificar o tipo do campo de texto. Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`);
