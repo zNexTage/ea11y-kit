@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorComponent from "../../../components/error-component/ErrorComponent";
 import { useEffect, useState } from "react";
 import style from "./Checkbox.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import AggregateError from "../../../exceptions/AggregateError";
+import ComponentErrorList from "../../../components/component-error-list";
 
 // Enter e tecla espaço.
 const INTERACTION_KEYS = ['Enter', 'NumpadEnter', 'Space'];
@@ -23,18 +21,15 @@ const INTERACTION_KEYS = ['Enter', 'NumpadEnter', 'Space'];
  * @param {CheckboxProps} props 
  * @returns 
  */
-const CheckboxBase = ({
+const Checkbox = ({
     id,
     label,
     isRequired,
     extraAttributes
-}) => {    
+}) => {
     const [isChecked, setIsChecked] = useState(false);
-    const violations = useFieldValidations(label, id);
 
-    if (violations.length > 0) {
-        throw new AggregateError(violations);
-    }
+    const violations = useFieldValidations(label, id);
 
     /**
      * Diretriz do eMAG:
@@ -69,48 +64,32 @@ const CheckboxBase = ({
 
 
     return (
-        <div>
-            <label htmlFor={id}>{label}
-                <input
-                    {...extraAttributes}
-                    required={isRequired}
-                    className={style.Checkbox}
-                    checked={isChecked}
-                    onKeyDown={onKeyDown}
-                    onChange={onChange}
-                    type="checkbox"
-                    name={id}
-                    id={id} />
+        <>
+            {violations.length == 0 &&
+                <div>
+                    <label htmlFor={id}>{label}
+                        <input
+                            {...extraAttributes}
+                            required={isRequired}
+                            className={style.Checkbox}
+                            checked={isChecked}
+                            onKeyDown={onKeyDown}
+                            onChange={onChange}
+                            type="checkbox"
+                            name={id}
+                            id={id} />
 
-                {
-                    isRequired &&
-                    <small>
-                        (campo obrigatório)
-                    </small>
-                }
-            </label>
-        </div>
-    )
-}
-
-/**
- * 
- * @param {CheckboxProps} props 
- * @returns 
- */
-const Checkbox = ({
-    id,
-    label,
-    isRequired = false,
-    ...extraAttributes }) => {
-    return (
-        <ErrorBoundary fallbackRender={ErrorComponent}>
-            <CheckboxBase
-                id={id}
-                label={label}
-                isRequired={isRequired}
-                {...extraAttributes} />
-        </ErrorBoundary>
+                        {
+                            isRequired &&
+                            <small>
+                                (campo obrigatório)
+                            </small>
+                        }
+                    </label>
+                </div>
+            }
+            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+        </>
     )
 }
 
