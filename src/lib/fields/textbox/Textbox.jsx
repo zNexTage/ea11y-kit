@@ -6,10 +6,8 @@ import style from "./Textbox.module.css";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import { useEffect } from "react";
-import BaseError from "../../../exceptions/BaseError";
 import AggregateError from "../../../exceptions/AggregateError";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
-import { REQUIRED_ATTRIBUTE } from "../../../utils/ErrorCodes";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"];
 
