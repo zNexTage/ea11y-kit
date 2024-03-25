@@ -70,6 +70,7 @@ const Checkbox = ({
                     <label htmlFor={id}>{label}
                         <input
                             {...extraAttributes}
+                            role="checkbox"
                             required={isRequired}
                             className={style.Checkbox}
                             checked={isChecked}
