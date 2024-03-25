@@ -5,7 +5,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 
 // Enter e tecla espaço.
-const INTERACTION_KEYS = ['Enter', 'NumpadEnter', 'Space'];
+const INTERACTION_KEYS = ['Enter', 'NumpadEnter'];
 
 /**
  *  @typedef CheckboxProps
