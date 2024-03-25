@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
-import { GuidelineViolationError, GuidelineViolation } from "../../../exceptions/GuidelineViolation/GuidelineViolation";
+import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import style from "./Textbox.module.css";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
+import { useEffect } from "react";
+import BaseError from "../../../exceptions/BaseError";
+import AggregateError from "../../../exceptions/AggregateError";
+import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import { REQUIRED_ATTRIBUTE } from "../../../utils/ErrorCodes";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url"];
 
@@ -31,22 +36,32 @@ const TextboxBase = ({
     isRequired = false,
     type,
 }) => {
-    const violations = useFieldValidations(label, id)
+    const violations = useFieldValidations(label, id);
 
-    if (violations.length > 0) {
-        throw new GuidelineViolationError(violations);
-    }
+    useEffect(() => {
+        const textFieldViolations = [...violations];
+
+        if (!type || !AVAILABLE_TYPES.includes(type)) {
+            textFieldViolations.push(
+                new RequiredAttribute(`É necessário especificar o tipo do campo de texto (atributo 'type'). Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`)
+            )
+        }
+
+        if (!placeholder) {
+            const violation = new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, `É necessário especificar uma dica para o campo de texto (placeholder). É importante informar uma dica, pois leitores de tela leem a dica e comunicam aos usuários.`);
+
+            textFieldViolations.push(
+                new GuidelineViolation(violation)
+            );
+        }
+
+        if (textFieldViolations.length > 0) {
+            throw new AggregateError(textFieldViolations);
+        }
+    }, [type, placeholder, violations]);
+
+
     //TODO: criar atributo `name`.
-
-    if (!type || !AVAILABLE_TYPES.includes(type)) {
-        throw new Error(`É necessário especificar o tipo do campo de texto. Os tipos disponíveis são: ${AVAILABLE_TYPES.join(", ")}`);
-    }
-
-    if (!placeholder) {
-        const violation = new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, `É necessário especificar uma dica para o campo de texto (placeholder). É importante informar uma dica, pois leitores de tela leem a dica e comunicam aos usuários.`);
-        
-        throw new GuidelineViolationError(violation);
-    }
 
     return (
         <div>

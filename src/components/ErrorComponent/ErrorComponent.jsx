@@ -6,9 +6,9 @@ const ErrorComponent = ({ error, resetErrorBoundary }) => {
             </h1>
 
             <ul>
-                {error.getViolations().map(violation => (
+                {error.getErrorMessages().map(message => (
                     <li style={{ color: "red" }}>
-                        {violation}
+                        {message}
                     </li>
                 ))}
             </ul>

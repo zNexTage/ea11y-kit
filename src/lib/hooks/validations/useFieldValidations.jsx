@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { GuidelineViolation } from "../../../exceptions/GuidelineViolation/GuidelineViolation";
+import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { ASSOCIATE_TAGS_WITH_YOUR_FIELDS } from "../../../utils/eMagGuidelineCode";
 
 /**

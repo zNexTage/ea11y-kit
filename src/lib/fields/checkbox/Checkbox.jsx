@@ -4,7 +4,7 @@ import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import { useEffect, useState } from "react";
 import style from "./Checkbox.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import { GuidelineViolationError } from "../../../exceptions/GuidelineViolation/GuidelineViolation";
+import AggregateError from "../../../exceptions/AggregateError";
 
 const ENTER_KEYS = ['Enter', 'NumpadEnter'];
 
@@ -32,7 +32,7 @@ const CheckboxBase = ({
     const violations = useFieldValidations(label, id);
 
     if (violations.length > 0) {
-        throw new GuidelineViolationError(violations);
+        throw new AggregateError(violations);
     }
 
     /**
