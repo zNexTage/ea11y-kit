@@ -6,7 +6,7 @@ import BaseError from "../../exceptions/BaseError";
  * @param {{errors: Array<BaseError>}} props 
  */
 const ComponentErrorList = ({ errors }) => {
-    console.log(errors);
+    
     return (
         <div role="alert">
             <h1>
