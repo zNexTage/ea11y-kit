@@ -6,7 +6,8 @@ import style from "./Checkbox.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import AggregateError from "../../../exceptions/AggregateError";
 
-const ENTER_KEYS = ['Enter', 'NumpadEnter'];
+// Enter e tecla espaço.
+const INTERACTION_KEYS = ['Enter', 'NumpadEnter', 'Space'];
 
 /**
  *  @typedef CheckboxProps
@@ -27,7 +28,7 @@ const CheckboxBase = ({
     label,
     isRequired,
     extraAttributes
-}) => {
+}) => {    
     const [isChecked, setIsChecked] = useState(false);
     const violations = useFieldValidations(label, id);
 
@@ -44,10 +45,10 @@ const CheckboxBase = ({
      * @param {KeyboardEvent} event 
      */
     const onKeyDown = event => {
-        const key = event.key;
+        const key = event.code;
 
-        //  verifica se foi pressionado a tecla Enter.
-        if (ENTER_KEYS.includes(key)) {
+        //  verifica se foi pressionado a tecla Enter ou espaço.
+        if (INTERACTION_KEYS.includes(key)) {
             setIsChecked(!isChecked);
         }
     }
