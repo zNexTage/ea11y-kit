@@ -3,6 +3,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import { useEffect, useState } from "react";
 import style from "./Checkbox.module.css";
+import useFieldValidations from "../../hooks/validations/useFieldValidations";
+import { GuidelineViolationError } from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 
 const ENTER_KEYS = ['Enter', 'NumpadEnter'];
 
@@ -27,6 +29,11 @@ const CheckboxBase = ({
     extraAttributes
 }) => {
     const [isChecked, setIsChecked] = useState(false);
+    const violations = useFieldValidations(label, id);
+
+    if (violations.length > 0) {
+        throw new GuidelineViolationError(violations);
+    }
 
     /**
      * Diretriz do eMAG:
