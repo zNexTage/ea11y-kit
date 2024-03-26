@@ -36,7 +36,10 @@ const Checkbox = ({
      * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
      * 
      * Possibilita marcar/desmarcar o Checkbox através da tecla Enter.     
-     * 
+     * Não é necessário utilizar a tag aria-checked. De acordo com a MDN:
+     * "Nota: Sempre que possível, use um <input> elemento HTML com type="checkbox", 
+     * pois esse elemento tem semântica incorporada e não requer atributos ARIA."
+     * Ref: https://developer.mozilla.org/en-US/docs/web/Accessibility/ARIA/Attributes/aria-checked
      * @param {KeyboardEvent} event 
      */
     const onKeyDown = event => {
