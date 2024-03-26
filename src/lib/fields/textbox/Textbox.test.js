@@ -104,4 +104,25 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
         waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
 
     });
+
+    it("Deve adicionar uma borda e outline na cor vermelho ao focar no campo de texto", () => {
+        render(
+            <Textbox
+                id="teste"
+                isRequired={true}
+                label="teste"
+                type="text"
+                placeholder="Digite aqui..."
+            />
+        );
+
+        const field = screen.getByLabelText("teste");
+        field.focus();
+        expect(field).toHaveFocus();
+
+        waitFor(() => {
+            expect(field).toHaveStyle("border: 1px solid #F00;");
+            expect(field).toHaveStyle("outline:  2px solid #F00;")
+        });
+    })
 });
