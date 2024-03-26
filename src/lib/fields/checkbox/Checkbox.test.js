@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Checkbox from "./Checkbox";
 
 describe("[Checkbox] - Violando diretriz 6.2 do eMAG", () => {
@@ -20,7 +20,7 @@ describe("[Checkbox] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
-    })
+    });
 
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
         render(
@@ -57,5 +57,27 @@ describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
         const field = screen.getByRole("checkbox");
 
         waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
-    })
+    });
+
+    it("Deve selecionar e desmarcar o campo ao foca-lo e pressionar enter", () => {
+        render(
+            <Checkbox
+                id="teste"
+                isRequired={true}
+                label="teste"
+                type="text"
+                placeholder="Digite aqui..."
+            />
+        )
+
+        const field = screen.getByRole("checkbox");
+
+        // Seleciona o campo ao pressionar a tecla Enter
+        fireEvent.keyDown(field, { code: 'Enter' });
+        expect(field).toBeChecked();
+
+        // Desmarca o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
+        fireEvent.keyDown(field, { code: 'NumpadEnter' });
+        expect(field).not.toBeChecked();
+    });
 });
