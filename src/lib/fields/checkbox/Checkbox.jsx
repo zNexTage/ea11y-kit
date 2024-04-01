@@ -41,7 +41,6 @@ const INTERACTION_KEYS = ['Enter', 'NumpadEnter'];
 const Checkbox = ({
     id,
     label,
-    isRequired,
     extraAttributes
 }) => {
     const [isChecked, setIsChecked] = useState(false);
@@ -91,7 +90,6 @@ const Checkbox = ({
                         <input
                             {...extraAttributes}
                             role="checkbox"
-                            required={isRequired}
                             className={style.Checkbox}
                             checked={isChecked}
                             onKeyDown={onKeyDown}
@@ -99,13 +97,6 @@ const Checkbox = ({
                             type="checkbox"
                             name={id}
                             id={id} />
-
-                        {
-                            isRequired &&
-                            <small>
-                                (campo obrigatório)
-                            </small>
-                        }
                     </label>
                 </div>
             }
