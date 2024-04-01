@@ -76,6 +76,14 @@ describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
         fireEvent.keyDown(field, { code: 'Enter' });
         expect(field).toBeChecked();
 
+        // Desmarca o campo ao pressionar a tecla Enter
+        fireEvent.keyDown(field, { code: 'Enter' });
+        expect(field).not.toBeChecked();
+
+        // Seleciona o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
+        fireEvent.keyDown(field, { code: 'NumpadEnter' });
+        expect(field).toBeChecked();
+
         // Desmarca o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
         fireEvent.keyDown(field, { code: 'NumpadEnter' });
         expect(field).not.toBeChecked();
