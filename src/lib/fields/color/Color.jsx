@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import style from "./Color.module.css";
+import Textbox from "../textbox";
 
 const Color = ({
     id,
@@ -8,6 +9,7 @@ const Color = ({
 }) => {
     const [selectedColor, setSelectedColor] = useState("");
     const colorRef = useRef();
+    const selectedColorRef = useRef();
 
     /**
      * 
@@ -15,27 +17,40 @@ const Color = ({
      */
     const onChange = event => {
         setSelectedColor(event.target.value);
+        selectedColorRef.current.focus();
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setSelectedColor(colorRef.current.value);
     }, []);
 
     return (
-        <div>
+        <div className={style.ColorContainer}>
             <div>
                 <label htmlFor={id}>
-                    {label}                    
+                    {label}
                 </label>
                 <input
-                        ref={colorRef}
-                        onChange={onChange}
-                        className={style.Color} type="color" name={name} id={id} />
+                    ref={colorRef}
+                    onChange={onChange}
+                    className={style.Color} type="color" name={name} id={id} />
             </div>
-            <br />
-            <span id="selected-color" aria-live="assertive" aria-label="Cor selecionada">
-                <b>Cor selecionada:</b> <span   id="current-color">{selectedColor}</span>
-            </span>
+            <Textbox
+
+                id="txtSelectedColor"
+                label="Cor selecionada"
+                placeholder="Cor selecionada"
+                type="text"
+                aria-live="polite"
+                extraAttributes={{
+                    value: selectedColor,
+                    readOnly: true,
+                    ref: selectedColorRef
+                }}
+            />
+            {/* <span ref={selectedRef} id="selected-color" role="status" aria-live="polite" aria-label="Cor selecionada">
+                <b>Cor selecionada:</b> <span id="current-color"></span>
+            </span> */}
         </div>
     )
 }

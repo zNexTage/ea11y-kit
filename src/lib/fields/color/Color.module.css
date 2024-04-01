@@ -1,4 +1,13 @@
+
+.Color{
+    display: block;
+}
 .Color:focus{
     border: 2px solid #F00;
     outline: 1px solid #F00;
+}
+
+.ColorContainer {
+    display: grid;
+    grid-template-columns: .2fr 1fr;
 }
