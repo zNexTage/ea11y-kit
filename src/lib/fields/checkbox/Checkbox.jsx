@@ -17,6 +17,23 @@ const INTERACTION_KEYS = ['Enter', 'NumpadEnter'];
  */
 
 /**
+ * Campo selecionavel configurado com as diretrizes do eMAG. 
+ * 
+ * Diretrizes adotadas:
+ * 
+ * - Recomendação 2.1 - Disponibilizar todas as funções da página via teclado: É possível selecionar e remover a seleção
+ * através da tecla espaço e enter.
+ * 
+ * - Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+ *  - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no checkbox.
+ * Além da borda, foi reforçado o destaque do componente através do atributo outline.
+ *  
+ * - Recomendação 6.2 – Associar etiquetas aos seus campos: 
+ *  - O atributo id é obrigatório, e é utilizado para vincular a label ao checkbox e identificar o input;
+ * 
+ * - Recomendação 6.5 – Fornecer instruções para entrada de dados: 
+ *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
+ * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
  * @param {CheckboxProps} props 
  * @returns 
