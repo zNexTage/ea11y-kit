@@ -99,7 +99,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
             />
         )
 
-        const field = screen.getByLabelText("teste");
+        const field = screen.getByLabelText("teste (campo obrigatório)");
 
         waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
 
@@ -116,7 +116,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
             />
         );
 
-        const field = screen.getByLabelText("teste");
+        const field = screen.getByLabelText("teste (campo obrigatório)");
         field.focus();
         expect(field).toHaveFocus();
 

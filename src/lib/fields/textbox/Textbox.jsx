@@ -85,7 +85,7 @@ const Textbox = ({
             {errors.length === 0 &&
                 <div>
                     <label htmlFor={id}>
-                        {isRequired ? label : <>{label}&nbsp;<small>(campo obrigatório)</small></>}
+                        {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
                     <input
                         {...extraAttributes}
@@ -95,7 +95,7 @@ const Textbox = ({
                         className={`${style.textbox} ${extraAttributes?.className}`}
                         id={id}
                         type={type}
-                        required={isRequired}
+                        required={isRequired || false}
                     />
                 </div>
             }
