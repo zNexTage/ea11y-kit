@@ -6,7 +6,3 @@
     width: 100%;
     box-sizing: border-box;
 }
-.textbox:focus{
-    border: 1px solid #F00;
-    outline:  2px solid #F00;
-}

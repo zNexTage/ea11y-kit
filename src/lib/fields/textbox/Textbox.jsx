@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import style from "./Textbox.module.css";
+import baseStyle from "../../Base.module.css";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import React, { useEffect, useState } from "react";
@@ -92,7 +93,7 @@ const Textbox = ({
                         placeholder={placeholder}
                         maxLength={maxLength}
                         name={id}
-                        className={`${style.textbox} ${extraAttributes?.className}`}
+                        className={`${style.textbox} ${baseStyle.Highlight} ${extraAttributes?.className}`}
                         id={id}
                         type={type}
                         required={isRequired || false}

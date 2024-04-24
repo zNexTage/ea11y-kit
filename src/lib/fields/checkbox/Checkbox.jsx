@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import style from "./Checkbox.module.css";
+import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 
@@ -90,7 +90,7 @@ const Checkbox = ({
                         <input
                             {...extraAttributes}
                             role="checkbox"
-                            className={style.Checkbox}
+                            className={`${baseStyle.Highlight}`}
                             checked={isChecked}
                             onKeyDown={onKeyDown}
                             onChange={onChange}
