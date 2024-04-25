@@ -23,10 +23,12 @@ const UploadField = ({
     }, [violations]);
 
     /**
-     * Captura o evento Change do input
+     * Captura o evento Change do input e atualiza o estado files com os arquivos enviados
      * @param {React.ChangeEvent<HTMLInputElement>} event 
      */
-    const onChange = event => {        
+    const onChange = event => {
+        files.forEach(file => URL.revokeObjectURL(file.url));
+
         const newFiles = [].slice.call(event.target.files);
 
         const normalizedFiles = newFiles.map(file => getUploadFileInfos(file));
