@@ -4,6 +4,8 @@ import baseStyle from "../BaseField.module.css";
 import style from "./UploadField.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import DownloadLink from "../../links/download-link";
+import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
+import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 
 /**
  * @typedef UploadFieldProps
@@ -41,6 +43,8 @@ import DownloadLink from "../../links/download-link";
  * Para mais detalhes, acesse: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept
  * - acceptDescription: descrição para ajudar o usuário a saber quais arquivos ele pode anexar. 
  * - multiple: define se pode anexar mais de um arquivo.
+ * 
+ * TODO: Mostrar erros, como: enviou arquivo com um formato não aceito 
  * @param {UploadFieldProps} props
  * @returns 
  */
@@ -58,9 +62,19 @@ const UploadField = ({
     const violations = useFieldValidations(label, id);
 
     useEffect(() => {
-        const textFieldViolations = [...violations];
+        const uploadFieldViolations = [...violations];
+        
+        /**
+         * ao informar os formatos de arquivos permitidos (accept) é necessário descrever ao usuário
+         * quais extensões o campo aceitará.
+        */
+        if(accept && !acceptDescription){
+            uploadFieldViolations.push(
+                new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, "Ao informar a propriedade `accept`, é necessário informar a propriedade `acceptDescription`. Utiliza-se a propriedade `acceptDescription` para descrever ao usuário quais formatos de arquivo ele poderá anexar. Exemplo: Apenas imagens nos formatos PNG e JPG")
+            )
+        }
 
-        setErrors([...textFieldViolations]);
+        setErrors([...uploadFieldViolations]);
     }, [violations]);
 
     /**
