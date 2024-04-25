@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
+import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 
 // Enter e tecla espaço.
-const INTERACTION_KEYS = ['Enter', 'NumpadEnter'];
+const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
 
 /**
  *  @typedef CheckboxProps

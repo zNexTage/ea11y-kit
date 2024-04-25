@@ -4,6 +4,7 @@ import GuidelineViolation from "../../../exceptions/GuidelineViolation/Guideline
 import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 
 /**
  *  @typedef DownloadLinkProps
@@ -87,7 +88,7 @@ const DownloadLink = ({
      */
     const onKeyDown = event => {
         //TODO: Criar constantes para as teclas.
-        if (event.code == "Space") {
+        if (event.code == KeyboardKeys.SPACE) {
             downloadLinkRef.current.click();
         }
     }

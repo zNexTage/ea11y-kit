@@ -1,5 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Checkbox from "./Checkbox";
+import * as KeyboardKeys from "../../../utils/KeyboardCodes";
+
 
 describe("[Checkbox] - Violando diretriz 6.2 do eMAG", () => {
 
@@ -73,19 +75,19 @@ describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
         const field = screen.getByRole("checkbox");
 
         // Seleciona o campo ao pressionar a tecla Enter
-        fireEvent.keyDown(field, { code: 'Enter' });
+        fireEvent.keyDown(field, { code: KeyboardKeys.ENTER });
         expect(field).toBeChecked();
 
         // Desmarca o campo ao pressionar a tecla Enter
-        fireEvent.keyDown(field, { code: 'Enter' });
+        fireEvent.keyDown(field, { code: KeyboardKeys.ENTER });
         expect(field).not.toBeChecked();
 
         // Seleciona o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
-        fireEvent.keyDown(field, { code: 'NumpadEnter' });
+        fireEvent.keyDown(field, { code: KeyboardKeys.NUMPAD_ENTER });
         expect(field).toBeChecked();
 
         // Desmarca o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
-        fireEvent.keyDown(field, { code: 'NumpadEnter' });
+        fireEvent.keyDown(field, { code: KeyboardKeys.NUMPAD_ENTER });
         expect(field).not.toBeChecked();
     });
 });
