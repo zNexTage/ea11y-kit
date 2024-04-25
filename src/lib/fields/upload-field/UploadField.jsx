@@ -171,8 +171,8 @@ UploadField.propTypes = {
     label: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     isRequired: PropTypes.bool,
-    accept: PropTypes.string.isRequired,
-    acceptDescription: PropTypes.string.isRequired,
+    accept: PropTypes.string,
+    acceptDescription: PropTypes.string,
     multiple: PropTypes.bool
 }
 
