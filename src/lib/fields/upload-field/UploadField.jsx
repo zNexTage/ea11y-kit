@@ -114,7 +114,7 @@ const UploadField = ({
     return (
         <div>
             {
-                errors.length == 0 &&
+                errors.length === 0 &&
                 <>
                     <label htmlFor={id}>
                         {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
