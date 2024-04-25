@@ -95,14 +95,14 @@ const DownloadLink = ({
     return (
         <>
             {
-                violations.length == 0 &&
+                violations.length === 0 &&
                 <a
                     ref={downloadLinkRef}
-                    target="_blank"
                     onKeyDown={onKeyDown}
                     className={baseStyle.Highlight}
+                    download={true}
                     href={href}>
-                    {fileName} ({extension} {size}{unit}) - (abre em nova janela)
+                    {fileName} ({extension} {size}{unit})
                 </a>
             }
             {violations.length > 0 && <ComponentErrorList errors={violations} />}

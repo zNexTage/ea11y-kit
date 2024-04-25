@@ -59,7 +59,7 @@ describe("[DownloadLink] - Conformidade com as diretrizes do eMAG", () => {
 
         const link = screen.queryByRole("link");
 
-        expect(link).toHaveTextContent("teste (.jpg 10KB) - (abre em nova janela)")
+        expect(link).toHaveTextContent("teste (.jpg 10KB)")
     });
 
     test("Diretriz 4.4  - Deve adicionar uma borda e outline na cor vermelho ao focar no campo de texto", () => {
