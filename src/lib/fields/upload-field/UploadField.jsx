@@ -29,9 +29,30 @@ const UploadField = ({
     const onChange = event => {        
         const newFiles = [].slice.call(event.target.files);
 
-        setFiles(files => [...newFiles]);
-    }    
+        const normalizedFiles = newFiles.map(file => getUploadFileInfos(file));
 
+        setFiles(_ => [...normalizedFiles]);
+    }
+
+    /**
+     * Obtém a url (temporária), extensão, tamanho e nome do arquivo.
+     * @param {File} file 
+     */
+    const getUploadFileInfos = (file) => {
+        const url = URL.createObjectURL(file);
+        const extesion = file.type.split("/")[1];
+        const size = Number.parseInt(file.size / 1000);
+        const unit = "Kb";
+        const name = file.name;
+
+        return {
+            url,
+            extesion,
+            size,
+            unit,
+            name
+        }
+    }
 
     return (
         <div>
@@ -42,7 +63,14 @@ const UploadField = ({
                         {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
 
-                    <input multiple onChange={onChange} id={id} accept={accept} type="file" className={`${baseStyle.field} ${style.UploadField}`} />
+                    <input
+                        multiple={multiple}
+                        onChange={onChange}
+                        id={id}
+                        accept={accept}
+                        type="file"
+                        className={`${baseStyle.field} ${style.UploadField}`}
+                    />
                     <span>
                         {
                             accept &&
@@ -54,14 +82,17 @@ const UploadField = ({
                     <div>
                         <ul>
                             {files.map((file, index) => {
-                                const fileUrl = URL.createObjectURL(file);
 
                                 return (
                                     (
                                         <li key={`${file.name}_${index}`}>
-                                            <a href={fileUrl} download>
-                                                {file.name}
-                                            </a>
+                                            <DownloadLink
+                                                href={file.url}
+                                                extension={`.${file.extesion}`}
+                                                size={file.size}
+                                                fileName={file.name}
+                                                unit={file.unit}
+                                            />
                                         </li>
                                     )
                                 )
