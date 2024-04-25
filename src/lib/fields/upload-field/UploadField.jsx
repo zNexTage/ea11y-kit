@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import baseStyle from "../BaseField.module.css";
 import style from "./UploadField.module.css";
@@ -163,6 +164,16 @@ const UploadField = ({
         </div>
 
     )
+}
+
+UploadField.propTypes = {
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    isRequired: PropTypes.bool,
+    accept: PropTypes.string.isRequired,
+    acceptDescription: PropTypes.string.isRequired,
+    multiple: PropTypes.bool
 }
 
 export default UploadField;
