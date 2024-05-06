@@ -6,10 +6,11 @@ import BaseError from "./BaseError";
 class ViolationBaseError extends BaseError {
 
     constructor(code, message){
+        super(message);
+        
         this.code = code;
         this.message = message;
 
-        super(message);
     }
 
 }
