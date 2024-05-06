@@ -7,6 +7,18 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
             <Month
                 id="mes"
                 name="mes"
+                fallbackMonthProps={{
+                    monthField: {
+                        id: "txtmes",
+                        label: "mes",
+                        name: "mes"
+                    },
+                    yearField: {
+                        id: "ano",
+                        label: "ano",
+                        name: "ano"
+                    }
+                }}
             />
         );
 
@@ -14,11 +26,13 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
 
         const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
 
-        const alert = screen.queryByRole("alert");
-        expect(alert).toBeInTheDocument();
+        waitFor(() => {
+            const alert = screen.queryByRole("alert");
+            expect(alert).toBeInTheDocument();
 
-        expect(alert).toHaveTextContent(title);
-        expect(alert).toHaveTextContent(message);
+            expect(alert).toHaveTextContent(title);
+            expect(alert).toHaveTextContent(message);
+        });
     });
 
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
@@ -26,6 +40,18 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
             <Month
                 label="mes"
                 name="mes"
+                fallbackMonthProps={{
+                    monthField: {
+                        id: "txtmes",
+                        label: "mes",
+                        name: "mes"
+                    },
+                    yearField: {
+                        id: "ano",
+                        label: "ano",
+                        name: "ano"
+                    }
+                }}
             />
         );
 
@@ -33,11 +59,13 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
 
         const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
 
-        const alert = screen.queryByRole("alert");
-        expect(alert).toBeInTheDocument();
+        waitFor(() => {
+            const alert = screen.queryByRole("alert");
+            expect(alert).toBeInTheDocument();
 
-        expect(alert).toHaveTextContent(title);
-        expect(alert).toHaveTextContent(message);
+            expect(alert).toHaveTextContent(title);
+            expect(alert).toHaveTextContent(message);
+        });
     });
 });
 
@@ -49,6 +77,18 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
                 isRequired={true}
                 label="teste"
                 name="mes"
+                fallbackMonthProps={{
+                    monthField: {
+                        id: "txtmes",
+                        label: "mes",
+                        name: "mes"
+                    },
+                    yearField: {
+                        id: "ano",
+                        label: "ano",
+                        name: "ano"
+                    }
+                }}
             />
         )
 
@@ -64,6 +104,18 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
                 id="teste"
                 isRequired={true}
                 label="teste"
+                fallbackMonthProps={{
+                    monthField: {
+                        id: "txtmes",
+                        label: "mes",
+                        name: "mes"
+                    },
+                    yearField: {
+                        id: "ano",
+                        label: "ano",
+                        name: "ano"
+                    }
+                }}
             />
         );
 
