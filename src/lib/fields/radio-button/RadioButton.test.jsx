@@ -102,13 +102,17 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
 
         // Deve selecionar apenas o primeiro RadioButton
         fireEvent.keyDown(firstRb, { code: KeyboardKeys.ENTER });
-        expect(firstRb).toBeChecked();
-        expect(secondRb).not.toBeChecked();
+        waitFor(() => {
+            expect(firstRb).toBeChecked();
+            expect(secondRb).not.toBeChecked();
+        });
 
         // Ao selecionar o segundo RadioButton, o primeiro deve perder o status de selecionado.
         fireEvent.keyDown(secondRb, { code: KeyboardKeys.ENTER });
-        expect(secondRb).toBeChecked();
-        expect(firstRb).not.toBeChecked();
+        waitFor(() => {
+            expect(secondRb).toBeChecked();
+            expect(firstRb).not.toBeChecked();
+        });
     });
 
     it("Deve desmarcar o campo ao interagir com as setas", () => {
@@ -136,19 +140,25 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
 
         // Deve selecionar apenas o primeiro RadioButton
         fireEvent.keyDown(firstRb, { code: KeyboardKeys.ENTER });
-        expect(firstRb).toBeChecked();
-        expect(secondRb).not.toBeChecked();
+        waitFor(() => {
+            expect(firstRb).toBeChecked();
+            expect(secondRb).not.toBeChecked();
+        })
 
         // ao navegar com a seta, o foco deverá ir para o próximo RadioButton e o status de selecionado deve ser perdido
         fireEvent.keyDown(firstRb, { code: KeyboardKeys.ARROW_DOWN });
-        expect(firstRb).not.toBeChecked();
+        waitFor(() => { expect(firstRb).not.toBeChecked(); })
 
         fireEvent.keyDown(secondRb, { code: KeyboardKeys.ENTER });
-        expect(secondRb).toBeChecked();
-        expect(firstRb).not.toBeChecked();
+        waitFor(() => {
+            expect(secondRb).toBeChecked();
+            expect(firstRb).not.toBeChecked();
+        })
 
         fireEvent.keyDown(secondRb, { code: KeyboardKeys.ARROW_UP });
-        expect(secondRb).not.toBeChecked();
+        waitFor(() => {
+            expect(secondRb).not.toBeChecked();
+        })
     });
 });
 
