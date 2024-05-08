@@ -4,6 +4,7 @@ import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
+import style from "./RadioButton.module.css";
 
 const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
 const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
@@ -39,7 +40,7 @@ const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
  */
 const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) => {
     const violations = useFieldValidations(label, id);
-    const [isChecked, setIsChecked] = useState();
+    const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
         if (extraAttributes?.type) {
@@ -66,8 +67,11 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
      * Seleciona o radio
      * @param {Event} event 
      */
-    const onChange = event => {        
-        setIsChecked(true);
+    const onChange = event => {
+        console.log("ID: " + id);
+        console.log("State : " + isChecked);
+        console.log("Event : " + event.target.checked);
+        setIsChecked(event.target.checked);
     }
 
     return (
@@ -79,7 +83,8 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
                     </label>
                     <input
                         {...extraAttributes}
-                        className={`${baseStyle.Highlight} ${extraAttributes?.className}`}
+                        key={`${id}_${isChecked}`}
+                        className={`${baseStyle.Highlight} ${style.RadioButton} ${extraAttributes?.className}`}
                         type="radio"
                         name={name}
                         id={id}
