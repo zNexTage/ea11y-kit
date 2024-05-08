@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
+import * as KeyboardKeys from "../../../utils/KeyboardCodes";
+
+const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
+const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
 
 /**
  * @typedef RadioButtonProps
@@ -28,19 +32,43 @@ import ComponentErrorList from "../../../components/component-error-list";
  * leitores de telas possam comunicar ao usuário que o campo precisa ser selecionado;
  * 
  *  O componente é renderizado apenas se estiver de acordo com as diretrizes do eMAG. Caso não esteja,
- * será renderizado uma lista contendo quais diretrizes foram violadas.
+ * será renderizado uma lista contendo quais diretrizes foram violadas. * 
  * 
  * @param {RadioButtonProps} props
  * @returns 
  */
 const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) => {
     const violations = useFieldValidations(label, id);
+    const [isChecked, setIsChecked] = useState();
 
     useEffect(() => {
         if (extraAttributes?.type) {
             console.warn("Não é possível alterar o type do componente Radio.");
         }
     }, []);
+
+    /**
+     * Permite seleção e remoção de seleção via teclado.
+     * @param {KeyboardEvent} event 
+     */
+    const onKeyDown = event => {
+        const key = event.code;
+
+        //  verifica se foi pressionado a tecla Enter ou espaço.
+        if (INTERACTION_KEYS.includes(key)) {
+            setIsChecked(true);
+        } else if (FOCUS_OUT_KEYS.includes(key)) { // caso tenha sido pressionada as setas, significa que o usuário vai navegar para o próximo Radio, portanto remove a seleção.
+            setIsChecked(false);
+        }
+    }
+
+    /**
+     * Seleciona o radio
+     * @param {Event} event 
+     */
+    const onChange = event => {        
+        setIsChecked(true);
+    }
 
     return (
         <>
@@ -55,6 +83,9 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
                         type="radio"
                         name={name}
                         id={id}
+                        checked={isChecked}
+                        onChange={onChange}
+                        onKeyDown={onKeyDown}
                         required={isRequired}
                     />
                 </div>
