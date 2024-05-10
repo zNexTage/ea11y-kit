@@ -2,11 +2,12 @@ import { useState } from "react";
 import ComponentErrorList from "../../../components/component-error-list";
 import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
+import PropTypes from "prop-types";
 import style from "./Range.module.css";
 
 /**
  * @typedef RangeProps
- * @property {string} id
+ * @property {string} id 
  * @property {string} label
  * @property {string} name
  * @property {number} min
@@ -111,6 +112,15 @@ const Range = ({ id, label, name, min = 0, max = 100, step = 1, value }) => {
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
     )
+}
+
+Range.propTypes = {
+    id: PropTypes.string.isRequired, //Teste
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    max: PropTypes.number,
+    value: PropTypes.number,
+    step: PropTypes.number
 }
 
 export default Range;
