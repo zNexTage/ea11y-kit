@@ -9,7 +9,6 @@ import style from "./Range.module.css";
  * @property {string} id
  * @property {string} label
  * @property {string} name
- * @property {boolean} isRequired
  * @property {number} min
  * @property {number} max
  * @property {number} value
@@ -39,7 +38,10 @@ const Range = ({ id, label, name, min = 0, max = 100, step = 1, value }) => {
     const violations = useFieldValidations(label, id);
 
     /**
-     * Obtém o valor inicial do range
+     * Obtém o valor inicial do range.
+     * 
+     * O valor padrão está entre o mínimo e o máximo especificados, a menos que o valor máximo seja menor que o mínimo, caso em que o padrão é definido como o atributo de valor mínimo
+     * Ref: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/input/range#value
      * @returns {Number}
      */
     const getDefaultValue = () => {
