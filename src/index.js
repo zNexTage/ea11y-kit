@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Textbox from './lib/fields/Textbox';
 import reportWebVitals from './reportWebVitals';
+import Range from './lib/fields/range';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -9,7 +9,20 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <Textbox label='Nome' id='txtName' type='text' />
+    <Range id='volume' min={0} max={5000} step={50} value={1000} label='Volume' name='volume' />
+
+    {/* <Month id='txtMes' isRequired label='Teste' name='mes' fallbackMonthProps={{
+      monthField: {
+        id: "txtmes",
+        label: "mes",
+        name: "mes"
+      },
+      yearField: {
+        id: "ano",
+        label: "ano",
+        name: "ano"
+      }
+    }} /> */}
   </React.StrictMode>
 );
 

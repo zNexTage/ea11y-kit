@@ -45,7 +45,7 @@ const Range = ({ id, label, name, min = 0, max = 100, step = 1, value }) => {
     const getDefaultValue = () => {
         // Se for value informado via parâmetro é valido, utiliza como valor padrão.
         if (value && (value >= min && value <= max)) {
-            return value; 
+            return value;
         }
 
         // Se o valor minímo informado é menor que o valor máximo, utiliza o valor mínimo como 
@@ -85,12 +85,22 @@ const Range = ({ id, label, name, min = 0, max = 100, step = 1, value }) => {
                         min={min}
                         max={max}
                         step={step}
+                        // TODO: Verificar se é necessário utilizar os atributos abaixo
+                        // aria-valuemin={min}
+                        // aria-valuemax={max}
+                        // aria-valuenow={currentValue}
                         value={currentValue}
                         onChange={onChange}
                         className={baseStyle.Highlight}
+                        aria-describedby={`${id}_value`} // Esse componente está vinculado ao <small> que demonstra o valor atual.
                     />
                     <br />
-                    <small>
+                    <small
+                        id={`${id}_value`}
+                        aria-live="polite"
+                        aria-description={`Valor atual do campo ${label}`}
+                        aria-controls={id} // Esse elemento é controlado pelo Range
+                    >
                         Valor atual: {currentValue}
                     </small>
                 </div>
