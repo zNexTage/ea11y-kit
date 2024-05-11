@@ -8,6 +8,7 @@ import UploadField from './lib/fields/upload-field';
 import DownloadLink from './lib/links/download-link';
 import ImageButton from './lib/fields/image-button';
 import RadioButton from './lib/fields/radio-button';
+import Range from './lib/fields/range';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -26,6 +27,20 @@ root.render(
 
     <RadioButton id='rbTeste' label='Teste' name='teste' isRequired />
     <RadioButton id='rbXd' label='Teste' name='teste' />
+    <Range id='volume' min={0} max={5000} step={50} value={1000} label='Volume' name='volume' />
+
+    {/* <Month id='txtMes' isRequired label='Teste' name='mes' fallbackMonthProps={{
+      monthField: {
+        id: "txtmes",
+        label: "mes",
+        name: "mes"
+      },
+      yearField: {
+        id: "ano",
+        label: "ano",
+        name: "ano"
+      }
+    }} /> */}
   </React.StrictMode>
 );
 
