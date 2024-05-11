@@ -18,6 +18,7 @@ const RANGE_ORIENTATION_VERTICAL = 'vertical';
  * @property {number} value
  * @property {number} step
  * @property {'horizontal'|'vertical'} orientation
+ * @property {string} unit
  */
 
 
@@ -39,7 +40,16 @@ const RANGE_ORIENTATION_VERTICAL = 'vertical';
  * @param {RangeProps} props 
  * @returns 
  */
-const Range = ({ id, label, name, min = 0, max = 100, step = 1, value, orientation = RANGE_ORIENTATION_HORIZONTAL }) => {
+const Range = ({
+    id,
+    label,
+    name,
+    min = 0,
+    max = 100,
+    step = 1,
+    value,
+    orientation = RANGE_ORIENTATION_HORIZONTAL, 
+    unit = "%" }) => {
     const violations = useFieldValidations(label, id);
 
     /**
@@ -108,7 +118,7 @@ const Range = ({ id, label, name, min = 0, max = 100, step = 1, value, orientati
                         aria-description={`Valor atual do campo ${label}`}
                         aria-controls={id} // Esse elemento é controlado pelo Range
                     >
-                        Valor atual: {currentValue}
+                        Valor atual: {currentValue}{unit}
                     </small>
                 </div>
             }
