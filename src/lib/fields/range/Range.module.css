@@ -1,3 +1,7 @@
 .RangeLabel {
     display: block;
 }
+
+.RangeInputVertical {
+    writing-mode: vertical-lr;
+}

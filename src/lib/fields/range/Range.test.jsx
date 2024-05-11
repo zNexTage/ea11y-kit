@@ -111,4 +111,21 @@ describe("[Range] - Conformidade com as diretrizes do eMAG", () => {
 
         expect(Number.parseInt(range.defaultValue)).toEqual(500);
     });
+
+    it("Deve alterar a orientação do Range ao definir orientation para vertical", () => {
+        render(
+            <Range
+                id="volume"
+                label="volume"
+                max={1000}
+                min={0}
+                name="volume"
+                orientation="vertical"
+            />
+        );
+
+        const range = screen.getByLabelText("volume");
+
+        expect(range).toHaveClass("RangeInputVertical");
+    })
 });

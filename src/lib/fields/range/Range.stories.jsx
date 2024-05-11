@@ -27,3 +27,12 @@ export const NonCompliace = {
     component: Range
 };
 NonCompliace.storyName = "Inconformidade com as diretrizes do eMAG";
+
+export const VerticalRange = () => (
+    <Range
+        id="volume"
+        label="Volume"
+        orientation="vertical"
+    />
+);
+VerticalRange.storyName = "Orientação vertical"

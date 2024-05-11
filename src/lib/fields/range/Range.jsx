@@ -5,6 +5,9 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
 import style from "./Range.module.css";
 
+const RANGE_ORIENTATION_HORIZONTAL = 'horizontal';
+const RANGE_ORIENTATION_VERTICAL = 'vertical';
+
 /**
  * @typedef RangeProps
  * @property {string} id 
@@ -14,6 +17,7 @@ import style from "./Range.module.css";
  * @property {number} max
  * @property {number} value
  * @property {number} step
+ * @property {'horizontal'|'vertical'} orientation
  */
 
 
@@ -35,7 +39,7 @@ import style from "./Range.module.css";
  * @param {RangeProps} props 
  * @returns 
  */
-const Range = ({ id, label, name, min = 0, max = 100, step = 1, value }) => {
+const Range = ({ id, label, name, min = 0, max = 100, step = 1, value, orientation = RANGE_ORIENTATION_HORIZONTAL }) => {
     const violations = useFieldValidations(label, id);
 
     /**
@@ -94,7 +98,7 @@ const Range = ({ id, label, name, min = 0, max = 100, step = 1, value }) => {
                         // aria-valuenow={currentValue}
                         value={currentValue}
                         onChange={onChange}
-                        className={baseStyle.Highlight}
+                        className={`${baseStyle.Highlight} ${orientation === RANGE_ORIENTATION_VERTICAL && style.RangeInputVertical} `}
                         aria-describedby={`${id}_value`} // Esse componente está vinculado ao <small> que demonstra o valor atual.
                     />
                     <br />
