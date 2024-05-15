@@ -48,7 +48,7 @@ const Range = ({
     max = 100,
     step = 1,
     value,
-    orientation = RANGE_ORIENTATION_HORIZONTAL, 
+    orientation = RANGE_ORIENTATION_HORIZONTAL,
     unit = "%" }) => {
     const violations = useFieldValidations(label, id);
 
@@ -129,12 +129,15 @@ const Range = ({
 }
 
 Range.propTypes = {
-    id: PropTypes.string.isRequired, //Teste
+    id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     max: PropTypes.number,
+    min: PropTypes.number,
     value: PropTypes.number,
-    step: PropTypes.number
+    step: PropTypes.number,
+    orientation: PropTypes.string,
+    unit: PropTypes.string
 }
 
 export default Range;

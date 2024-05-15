@@ -15,6 +15,10 @@ export const AccordingToGuidelines = () => (
     <Range
         id="volume"
         label="Volume"
+        max={100}
+        min={0}
+        name="volume"
+        unit="%"
     />
 );
 
