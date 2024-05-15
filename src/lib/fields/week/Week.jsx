@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
@@ -30,14 +31,16 @@ import React, { useEffect, useState } from "react";
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
+ * TODO: Fornecer suporte para todos os navegadores: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/week#handling_browser_support
+ * 
  * 
  * @param {WeekProps} props 
  * @returns {React.JSX.Element}
  */
 const Week = ({ id, label, name, required = false }) => {
+    const [errors, setErrors] = useState([]);
 
     const violations = useFieldValidations(label, id);
-    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         const errorsAux = [...violations];
@@ -48,12 +51,12 @@ const Week = ({ id, label, name, required = false }) => {
             )
         }
 
-        setErrors(errorsAux);
-    }, []);
+        setErrors([...errorsAux]);
+    }, [violations, name]);
 
     return (
         <>
-            {errors.length == 0 &&
+            {errors.length === 0 &&
                 <div>
                     <label htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
@@ -71,6 +74,13 @@ const Week = ({ id, label, name, required = false }) => {
             {errors.length > 0 && <ComponentErrorList errors={errors} />}
         </>
     )
+}
+
+Week.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    required: PropTypes.bool
 }
 
 export default Week;
