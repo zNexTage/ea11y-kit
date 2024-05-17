@@ -99,6 +99,7 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
  * é utilizado como "fallback"  um select para selecionar o mês e um select para selecionar o ano, conforme demonstrado
  * no exemplo da MDN: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
  *  
+ * TODO: Garantir que o valor do campo seja o mesmo que teria se fosse um campo do tipo month
  * @param {MonthProps} props
  */
 const Month = ({ id, label, name, isRequired = false, extraAttributes, fallbackMonthProps = null }) => {
