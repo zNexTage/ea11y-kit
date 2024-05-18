@@ -89,6 +89,9 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.
  * Além da borda, foi reforçado o destaque do componente através do atributo outline.
  * 
+ * Recomendação 6.2 – Associar etiquetas aos seus campos: 
+ *  - O atributo id é obrigatório, e é utilizado para vincular a label ao campo de texto e identificar o input;
+ * 
  * Recomendação 6.5 – Fornecer instruções para entrada de dados: 
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
