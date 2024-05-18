@@ -19,6 +19,7 @@ import RequiredAttribute from "../../../exceptions/RequiredAttribute";
  * @property {string} name 
  * @property {boolean} required
  * @property {Array<SelectOptions>} options 
+ * @property {React.InputHTMLAttributes|null} extraAttributes
  */
 
 /**
@@ -45,7 +46,8 @@ const Select = ({
     label,
     name,
     required = false,
-    options = []
+    options = [],
+    extraAttributes
 }) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
@@ -72,6 +74,7 @@ const Select = ({
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
                     <select
+                        {...extraAttributes}
                         className={baseStyle.field}
                         name={name}
                         id={id}
