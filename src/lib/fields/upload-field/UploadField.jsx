@@ -24,16 +24,16 @@ import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelin
  * 
  * Diretrizes adotadas:
  * 
- * **Recomendação 3.5 – Descrever links clara e sucintamente**
+ * Recomendação 3.5 – Descrever links clara e sucintamente*
  * - Ao listar os arquivos anexados, é demonstrado o nome do arquivo, a extensão e o tamanho do arquivo no próprio texto do link.
  * 
- * **Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente**
+ * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente**
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo. Além da borda, foi reforçado o destaque do componente através do atributo outline.
  * 
- * **Recomendação 6.2 – Associar etiquetas aos seus campos:** 
+ * Recomendação 6.2 – Associar etiquetas aos seus campos:** 
  *  - A propriedade id é obrigatório, e é utilizado para vincular a label ao campo e identificar o input;
  * 
- * **Recomendação 6.5 – Fornecer instruções para entrada de dados:** 
+ * Recomendação 6.5 – Fornecer instruções para entrada de dados:** 
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido; 
  * - A propriedade acceptDescription descreve para o usuário quais arquivos ele pode anexar;
