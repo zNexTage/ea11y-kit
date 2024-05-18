@@ -5,6 +5,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import style from "../textbox/Textbox.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import Select from "../select/Select";
 
 const MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -62,20 +63,22 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
     return (
         <div>
             <span>
-                <label htmlFor={monthField.id}>Mês:&nbsp;</label>
-                <select required={isRequired} name={monthField.name} id={monthField.id}>
-                    {
-                        MONTHS.map((m, index) => <option value={index + 1}>{m}</option>)
-                    }
-                </select>
+                <Select
+                    required={isRequired}
+                    label={<>Mês:&nbsp;</>}
+                    name={monthField.name}
+                    id={monthField.id}
+                    options={MONTHS.map((m, index) => ({ text: m, value: index + 1 }))}
+                />
             </span>
             <span>
-                <label for={yearField.id}>Ano:</label>
-                <select required={isRequired} id={yearField.id} name={yearField.name}>
-                    {
-                        years.map(y => <option value={y}>{y}</option>)
-                    }
-                </select>
+                <Select
+                    label={<>Ano:</>}
+                    required={isRequired}
+                    name={yearField.name}
+                    id={yearField.id}
+                    options={years.map((y, index) => ({ text: y, value: y }))}
+                />
             </span>
         </div>
     )
@@ -178,7 +181,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes, fallbackM
                         renderizado um select para selecionar os meses e um outro select para selecionar os anos.
                         Para que esse componente funcione corretamente, é necessário que seja informado a prop <b>fallbackMonthProps</b>.
 
-                        <b>fallbackMonthProps</b> é um objeto e permite configurar os select do mês e do ano, permitindo informar uma label customizada, id e name para os campos. 
+                        <b>fallbackMonthProps</b> é um objeto e permite configurar os select do mês e do ano, permitindo informar uma label customizada, id e name para os campos.
                         Dentro de <b>fallbackMonthProps</b>, há o atributo <b>monthField</b> que configura o select do mês. Você está vendo esta mensagem porque omitiu <b>monthField</b> ou algum atributo deste objeto.
                     </p>
                 </>
@@ -193,7 +196,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes, fallbackM
                         renderizado um select para selecionar os meses e um outro select para selecionar os anos.
                         Para que esse componente funcione corretamente, é necessário que seja informado a prop <b>fallbackMonthProps</b>.
 
-                        <b>fallbackMonthProps</b> é um objeto e permite configurar os select do mês e do ano, permitindo informar uma label customizada, id e name para os campos. 
+                        <b>fallbackMonthProps</b> é um objeto e permite configurar os select do mês e do ano, permitindo informar uma label customizada, id e name para os campos.
                         Dentro de <b>fallbackMonthProps</b>, há o atributo <b>yearField</b> que configura o select do mês. Você está vendo esta mensagem porque omitiu <b>yearField</b> ou algum atributo deste objeto.
                     </p>
                 </>
