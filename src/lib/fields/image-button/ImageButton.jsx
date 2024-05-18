@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import baseStyle from "../../Base.module.css";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_TEXT_ALTERNATIVE_TO_FORM_IMAGE_BUTTONS } from "../../../utils/eMagGuidelineCode";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import ComponentErrorList from "../../../components/component-error-list";
 
 /**
  * @typedef ImageButtonProps
@@ -36,24 +37,39 @@ const ImageButton = ({
     width = 100,
     height = 30
 }) => {
-    useEffect(()=>{
-        if(!src){
-            throw new RequiredAttribute("É necessário atribuir para a propriedade `src` qual a url da imagem.")
+    const [errors, setErrors] = useState([]);
+
+    useEffect(() => {
+        const errorsAux = [];
+
+        if (!src) {
+            errorsAux.push(new RequiredAttribute("É necessário atribuir para a propriedade `src` a url da imagem."));
         }
-        
-        if(!alt){
-            throw new GuidelineViolation(PROVIDE_TEXT_ALTERNATIVE_TO_FORM_IMAGE_BUTTONS, "Para botões gráficos (<input type='image'> deve-se informar um texto alternativo. O alt é importante para que os leitores de tela descrevam a imagem aos usuários.")
+
+        if (!alt) {
+            errorsAux.push(new GuidelineViolation(PROVIDE_TEXT_ALTERNATIVE_TO_FORM_IMAGE_BUTTONS, "Para botões gráficos (<input type='image'> deve-se informar um texto alternativo. O alt é importante para que os leitores de tela descrevam a imagem aos usuários."));
         }
+
+        setErrors([...errorsAux]);
     }, []);
 
     return (
-        <input
-            className={baseStyle.Highlight}
-            type="image"
-            width={width}
-            height={height}
-            src={src}
-            alt={alt} />
+        <>
+            {
+                errors.length === 0 &&
+                <input
+                    className={baseStyle.Highlight}
+                    type="image"
+                    width={width}
+                    height={height}
+                    src={src}
+                    alt={alt} />
+            }
+
+            {
+                errors.length > 0 && <ComponentErrorList errors={errors} />
+            }
+        </>
     )
 }
 
