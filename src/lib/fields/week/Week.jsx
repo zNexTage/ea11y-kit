@@ -5,6 +5,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import baseFieldStyle from "../BaseField.module.css";
 import React, { useEffect, useRef, useState } from "react";
 import useTotalWeeksInYear from "../../hooks/week/useTotalWeeksInYear";
+import Select from "../select";
 
 /**
  * @typedef FallbackWeekField
@@ -131,23 +132,16 @@ const FallbackWeek = ({
             {
                 yearViolations.length === 0 &&
                 <div>
-                    <label htmlFor={yearField.id}>
-                        {yearField.label} {required && <small>(campo obrigatório)</small>}
-                    </label>
-                    <select
-                        className={baseFieldStyle.field}
-                        onChange={onYearChange}
-                        name={yearField.name}
+
+                    <Select
+                        extraAttributes={{
+                            onChange: onYearChange
+                        }}
                         id={yearField.id}
-                    >
-                        {orderedYears.map((year) => (
-                            <option
-                                key={year}
-                                value={year}>
-                                {year}
-                            </option>
-                        ))}
-                    </select>
+                        name={yearField.name}
+                        label={yearField.label}
+                        options={orderedYears.map((year) => ({ text: year, value: year }))}
+                    />
                 </div>
             }
             {
