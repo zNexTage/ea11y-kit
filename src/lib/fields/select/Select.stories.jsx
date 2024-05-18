@@ -16,15 +16,34 @@ export const AccordingToGuidelines = () => (<Select
     id="selecao_ano"
     label="Selecione um ano"
     name="selecao_ano"
-    options={[
-        { text: '2022', value: 2022 },
-        { text: '2023', value: 2023 },
-        { text: '2024', value: 2024 },
-        { text: '2025', value: 2025 },
-    ]}
-/>);
+>
+    <option value={2022}>2022</option>
+    <option value={2023}>2023</option>
+    <option value={2024}>2024</option>
+    <option value={2025}>2025</option>
+</Select>
+);
 
 AccordingToGuidelines.storyName = "Conformidade com as diretrizes do eMAG"
+
+export const GroupedSelect = () => (
+    <Select
+        id="selecao_carro"
+        label="Selecione um carro"
+        name="selecao_carro"
+    >
+        {/* Exemplo retirado de https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_optgroup */}
+        <optgroup label="Carros Suecos">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+        </optgroup>
+        <optgroup label="Carros Alemães">
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </optgroup>
+    </Select>
+);
+GroupedSelect.storyName = "Agrupamento de opções"
 
 /**
  * Será listado todas as diretrizes violadas caso haja alguma inconformidade com as diretrizes do eMAG. 
