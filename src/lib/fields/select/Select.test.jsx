@@ -7,12 +7,11 @@ describe("[Select] - Violando diretriz 6.2 do eMAG", () => {
             <Select
                 id="selecione"
                 name="selecione"
-                options={[
-                    { text: '2023', value: '2024' },
-                    { text: '2023', value: '2023' },
-                    { text: '2022', value: '2022' },
-                ]}
-            />
+            >
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
         );
 
         const title = "Violação das diretrizes do eMAG";
@@ -33,12 +32,11 @@ describe("[Select] - Violando diretriz 6.2 do eMAG", () => {
             <Select
                 label="selecione"
                 name="selecione"
-                options={[
-                    { text: '2023', value: '2024' },
-                    { text: '2023', value: '2023' },
-                    { text: '2022', value: '2022' },
-                ]}
-            />
+            >
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
         );
 
         const title = "Violação das diretrizes do eMAG";
@@ -60,13 +58,11 @@ describe("[Select] - Omitindo outros atributos", () => {
         render(
             <Select
                 id="selecione"
-                label="selecione"
-                options={[
-                    { text: '2023', value: '2024' },
-                    { text: '2023', value: '2023' },
-                    { text: '2022', value: '2022' },
-                ]}
-            />
+                label="selecione">
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
         );
 
         const title = "Violação das diretrizes do eMAG";
@@ -87,7 +83,11 @@ describe("[Select] - Omitindo outros atributos", () => {
             <Select
                 id="selecione"
                 label="selecione"
-            />
+            >
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
         );
 
         const title = "Violação das diretrizes do eMAG";
@@ -111,13 +111,11 @@ describe("[Select] - Conformidade com as diretrizes do eMAG", () => {
                 id="selecione"
                 label="selecione"
                 name="selecione"
-                required
-                options={[
-                    { text: '2023', value: '2024' },
-                    { text: '2023', value: '2023' },
-                    { text: '2022', value: '2022' },
-                ]}
-            />
+                required>
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
         )
 
         const field = screen.getByLabelText("selecione (campo obrigatório)");
@@ -131,13 +129,11 @@ describe("[Select] - Conformidade com as diretrizes do eMAG", () => {
             <Select
                 id="selecione"
                 label="selecione"
-                name="selecione"
-                options={[
-                    { text: '2023', value: '2024' },
-                    { text: '2023', value: '2023' },
-                    { text: '2022', value: '2022' },
-                ]}
-            />
+                name="selecione">
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
         );
 
         const field = screen.getByLabelText("selecione");

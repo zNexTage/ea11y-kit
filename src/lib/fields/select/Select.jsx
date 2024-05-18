@@ -18,8 +18,8 @@ import RequiredAttribute from "../../../exceptions/RequiredAttribute";
  * @property {string} id
  * @property {string} name 
  * @property {boolean} required
- * @property {Array<SelectOptions>} options 
  * @property {React.InputHTMLAttributes|null} extraAttributes
+ * @property {React.ReactNode} children
  */
 
 /**
@@ -46,7 +46,7 @@ const Select = ({
     label,
     name,
     required = false,
-    options = [],
+    children,
     extraAttributes
 }) => {
     const [errors, setErrors] = useState([]);
@@ -57,10 +57,6 @@ const Select = ({
 
         if (!name) {
             errorsAux.push(new RequiredAttribute("É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp)."));
-        }
-
-        if (!options || options.length === 0) {
-            errorsAux.push(new RequiredAttribute("É necessário especificar as opções de seleção."));
         }
 
         setErrors([...errorsAux]);
@@ -80,11 +76,7 @@ const Select = ({
                         id={id}
                     >
                         {
-                            options.map(opt => (
-                                <option key={`${opt.value}_${opt.text}`} value={opt.value}>
-                                    {opt.text}
-                                </option>
-                            ))
+                            children
                         }
                     </select>
                 </div>

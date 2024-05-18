@@ -68,8 +68,9 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
                     label={<>Mês:&nbsp;</>}
                     name={monthField.name}
                     id={monthField.id}
-                    options={MONTHS.map((m, index) => ({ text: m, value: index + 1 }))}
-                />
+                >
+                    {MONTHS.map((m, index) => <option value={index + 1}>{m}</option>)}
+                </Select>
             </span>
             <span>
                 <Select
@@ -77,8 +78,9 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
                     required={isRequired}
                     name={yearField.name}
                     id={yearField.id}
-                    options={years.map((y, index) => ({ text: y, value: y }))}
-                />
+                >
+                    {years.map((y, index) => <option value={y}>{y}</option>)}
+                </Select>
             </span>
         </div>
     )
