@@ -220,7 +220,7 @@ const Week = ({ id, label, name, required = false, fallbackWeekProps }) => {
 
         if (!name) {
             errorsAux.push(
-                new RequiredAttribute(`É necessário especificar o tipo do campo de texto (atributo 'name')`)
+                new RequiredAttribute(`É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).`)
             )
         }
 
