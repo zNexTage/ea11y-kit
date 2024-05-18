@@ -45,6 +45,24 @@ export const GroupedSelect = () => (
 );
 GroupedSelect.storyName = "Agrupamento de opções"
 
+export const MultipleSelect = () => (
+    <Select
+        id="selecao_carro"
+        label="Selecione um carro"
+        name="selecao_carro"
+        extraAttributes={{
+            multiple: true
+        }}
+    >
+
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+    </Select>
+);
+MultipleSelect.storyName = "Múltipla seleção"
+
 /**
  * Será listado todas as diretrizes violadas caso haja alguma inconformidade com as diretrizes do eMAG. 
  */
