@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Phone from "./Phone";
 
 describe("[Phone] - Violando diretriz 6.2 do eMAG", () => {
@@ -162,3 +162,131 @@ describe("[Phone] - Conformidade com as diretrizes do eMAG", () => {
         });
     })
 });
+
+describe("[Phone] - Formatação", () => {
+    it("Deve aplicar mascara para celulares", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Celular"
+                whichFormat="cellphone"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Celular (campo obrigatório) (00) 90000-0000");
+
+        fireEvent.change(field, { target: { value: "11956824156" } });
+        expect(field).toHaveValue("11 95682-4156");
+    });
+
+    it("Deve aplicar mascara para telefones fixos ao digitar no campo", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefone Fixo"
+                whichFormat="phone"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Telefone Fixo (campo obrigatório) (00) 0000-0000");
+
+        fireEvent.change(field, { target: { value: "1145165263" } });
+        expect(field).toHaveValue("11 4516-5263");
+    });
+
+    it("Deve aplicar mascara para telefones fixos e celulares ao digitar no campo", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefones fixos / Celular"
+                whichFormat="both"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Telefones fixos / Celular (campo obrigatório) (00) 90000-0000 / (00) 0000-0000");
+
+        fireEvent.change(field, { target: { value: "11956841201" } });
+        expect(field).toHaveValue("11 95684-1201");
+    });
+
+    it("Deve aplicar manter o campo em branco ao digitar valores inválidos", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefones fixos / Celular"
+                whichFormat="both"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Telefones fixos / Celular (campo obrigatório) (00) 90000-0000 / (00) 0000-0000");
+
+        fireEvent.change(field, { target: { value: "adasdasdasd" } });
+        expect(field).toHaveValue("");
+    });
+
+    it("Deve aplicar mascara para telefones fixos ao colar no campo", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefone Fixo"
+                whichFormat="phone"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Telefone Fixo (campo obrigatório) (00) 0000-0000");
+
+        fireEvent.paste(field, { clipboardData: { getData: () => '1145165263' } });
+        expect(field).toHaveValue("11 4516-5263");
+    });
+
+    it("Deve aplicar mascara para telefones fixos e celulares ao colar no campo", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefones fixos / Celular"
+                whichFormat="both"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Telefones fixos / Celular (campo obrigatório) (00) 90000-0000 / (00) 0000-0000");
+
+        fireEvent.paste(field, { clipboardData: { getData: () => '11956841201' } });
+        expect(field).toHaveValue("11 95684-1201");
+    });
+
+    it("Deve aplicar manter o campo em branco ao colar valores inválidos", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefones fixos / Celular"
+                whichFormat="both"
+                isRequired
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+            />
+        );
+
+        const field = screen.getByLabelText("Telefones fixos / Celular (campo obrigatório) (00) 90000-0000 / (00) 0000-0000");
+
+        fireEvent.paste(field, { clipboardData: { getData: () => 'asdasdas' }, });
+        expect(field).toHaveValue("");
+    });
+})

@@ -102,23 +102,38 @@ const Phone = ({ isRequired = false,
     }
 
     /**
-     * Formata o valor digitado pelo usuário para o formato de número de telefone fixo ou celular.
-     * @param {React.ChangeEvent<HTMLInputElement>} event 
+     * Formata o DDD no número de telefone informado
+     * @param {string} value Número de telefone enviado pelo usuário
+     * @returns {string}
      */
-    const onChange = event => {
-        const inputValue = event.target.value;
-
-        const formated = inputValue
+    const formatDdd = value => {
+        const formated = value
             .replace(/[^0-9]/g, "")
             .slice(0, 11);
 
-        let result = formated.replace(/\D/g, '')
+        return formated.replace(/\D/g, '')
             .replace(/(\d{2})(\d)/, '$1 $2');
+    }
+
+    /**
+     * Verifica se um número de telefone é referente a um celular
+     * @param {string} phoneNumber 
+     */
+    const isCellphoneNumber = (phoneNumber) => {
+        const [ddd, number] = phoneNumber.split(" ");
+
+        if(!number) return false;
+
+        return number.startsWith("9");
+    }
+
+    const getFormattedValue = value => {
+        let result = formatDdd(value);
 
         if (whichFormat === WHICH_FORMAT_BOTH) {
             // aplica o formato de telefone fixo apenas quando o número de caracteres
             // for menor ou igual a um número de telefone fixo comum.
-            if (inputValue.length <= PHONE_LANDLINE_MIN_LENGTH) {
+            if (!isCellphoneNumber(result)) {
                 result = phoneRegexFormat(result);
             }
             // caso o número informado seja maior que o de telefone fixo, 
@@ -135,6 +150,18 @@ const Phone = ({ isRequired = false,
         if (whichFormat === WHICH_FORMAT_PHONE) {
             result = phoneRegexFormat(result);
         }
+
+        return result;
+    }
+
+    /**
+     * Formata o valor digitado pelo usuário para o formato de número de telefone fixo ou celular.
+     * @param {React.ChangeEvent<HTMLInputElement>} event 
+     */
+    const onChange = event => {
+        const inputValue = event.target.value;
+
+        const result = getFormattedValue(inputValue);
 
         setCurrentValue(result);
     }
@@ -171,6 +198,18 @@ const Phone = ({ isRequired = false,
         return formats[whichFormat];
     }
 
+    /**
+     * Formata o número colocado no campo de texto
+     * @param {ClipboardEvent } event 
+     */
+    const onPaste = event => {
+        const value = (event.clipboardData || window.clipboardData).getData("text");
+
+        const phoneNumber = getFormattedValue(value);
+
+        setCurrentValue(phoneNumber);
+    }
+
 
     return (
         <>
@@ -188,6 +227,7 @@ const Phone = ({ isRequired = false,
                     required={isRequired}
                     value={currentValue}
                     onChange={onChange}
+                    onPaste={onPaste}
                     minLength={getMinLength()}
                 />
             </div>
