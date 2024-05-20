@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
-import style from "./Textbox.module.css";
-import baseStyle from "../../Base.module.css";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import React, { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
+import baseFieldStyle from "../BaseField.module.css";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url", "date", "datetime-local", "time"];
 
@@ -98,7 +97,7 @@ const Textbox = ({
                         placeholder={placeholder}
                         maxLength={maxLength}
                         name={name}
-                        className={`${style.textbox} ${baseStyle.Highlight} ${extraAttributes?.className}`}
+                        className={`${baseFieldStyle.field} ${extraAttributes?.className}`}
                         id={id}
                         type={type}
                         required={isRequired || false}
