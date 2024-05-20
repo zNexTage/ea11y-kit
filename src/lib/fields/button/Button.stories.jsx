@@ -3,7 +3,7 @@ import Button from "./Button";
 
 
 export default {
-    label: "Botão (Button)",
+    title: "Botão (Button)",
     component: Button,
     tags: ['autodocs']
 };

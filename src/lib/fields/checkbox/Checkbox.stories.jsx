@@ -2,7 +2,7 @@ import Checkbox from "./Checkbox";
 
 
 export default {
-    label: "Checkbox",
+    title: "Checkbox",
     component: Checkbox,
     tags: ['autodocs']
 };
