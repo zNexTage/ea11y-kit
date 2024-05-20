@@ -94,6 +94,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
                 id="teste"
                 isRequired={true}
                 label="teste"
+                name="teste"
                 type="text"
                 placeholder="Digite aqui..."
             />
@@ -111,6 +112,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
                 id="teste"
                 isRequired={true}
                 label="teste"
+                name="teste"
                 type="text"
                 placeholder="Digite aqui..."
             />

@@ -14,6 +14,7 @@ export default {
 export const AccordingToGuidelines = () => (<Textbox
     id="txtNome"
     label="Nome"
+    name="nome"
     placeholder="Digite o nome aqui..."
     type="text"
 />);

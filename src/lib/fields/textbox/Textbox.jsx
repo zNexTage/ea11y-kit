@@ -8,11 +8,12 @@ import React, { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
 
-const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url", "date", "datetime-local", "time"] ;
+const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url", "date", "datetime-local", "time"];
 
 /**
  *  @typedef TextboxProps
  *  @property {string} label
+ *  @property {string} name
  *  @property {string} id
  *  @property {number} maxLength
  *  @property {boolean} isRequired 
@@ -51,6 +52,7 @@ const Textbox = ({
     extraAttributes,
     placeholder,
     id,
+    name,
     maxLength,
     isRequired = false,
     type,
@@ -74,11 +76,14 @@ const Textbox = ({
             );
         }
 
+        if (!name) {
+            textFieldViolations.push(
+                new RequiredAttribute(`É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).`)
+            )
+        }
+
         setErrors([...textFieldViolations]);
     }, [type, placeholder, violations]);
-
-
-    //TODO: criar atributo `name`.
 
     return (
 
@@ -92,7 +97,7 @@ const Textbox = ({
                         {...extraAttributes}
                         placeholder={placeholder}
                         maxLength={maxLength}
-                        name={id}
+                        name={name}
                         className={`${style.textbox} ${baseStyle.Highlight} ${extraAttributes?.className}`}
                         id={id}
                         type={type}
@@ -112,7 +117,8 @@ Textbox.propTypes = {
     id: PropTypes.string.isRequired,
     isRequired: PropTypes.bool,
     type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
-    maxLength: PropTypes.number
+    maxLength: PropTypes.number,
+    name: PropTypes.string.isRequired
 }
 
 export default Textbox;
