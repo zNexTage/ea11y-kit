@@ -71,7 +71,7 @@ const FallbackWeek = ({
      * @returns {Array<number>} Lista dos anos para montar o select
      */
     const getYears = () => {
-        if (yearOptions.length > 0) {
+        if (!yearOptions || yearOptions.length > 0) {
             return yearOptions;
         }
 
@@ -140,8 +140,13 @@ const FallbackWeek = ({
                         id={yearField.id}
                         name={yearField.name}
                         label={yearField.label}
-                        options={orderedYears.map((year) => ({ text: year, value: year }))}
-                    />
+                    >
+                        {orderedYears.map(year => (
+                            <option value={year}>
+                                {year}
+                            </option>
+                        ))}
+                    </Select>
                 </div>
             }
             {
@@ -152,13 +157,12 @@ const FallbackWeek = ({
             {
                 weekViolations.length === 0 &&
                 <div>
-                    <label htmlFor={weekField.id}>
-                        {weekField.label} {required && <small>(campo obrigatório)</small>}
-                    </label>
-                    <select
-                        className={baseFieldStyle.field}
+                    <Select
                         name={weekField.name}
-                        id={weekField.id}>
+                        id={weekField.id}
+                        label={<>{weekField.label} {required && <small>(campo obrigatório)</small>}</>}
+
+                    >
                         {weeks.map((week) => (
                             <option
                                 key={week}
@@ -166,7 +170,7 @@ const FallbackWeek = ({
                                 {week}
                             </option>
                         ))}
-                    </select>
+                    </Select>
                 </div>
             }
 
@@ -263,7 +267,8 @@ Week.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    fallbackWeekProps: PropTypes.object.isRequired
 }
 
 export default Week;

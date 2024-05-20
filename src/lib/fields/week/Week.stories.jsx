@@ -17,6 +17,20 @@ export const AccordingToGuidelines = () => (
         label="Em qual semana você gostaria de começar?"
         name="semana"
         required
+        fallbackWeekProps={{
+            required: true,
+            weekField: {
+                id: 'week',
+                label: 'Que semana você gostaria de começar?',
+                name: 'week'
+            },
+            yearField: {
+                id: 'year',
+                label: 'Em qual ano?',
+                name: 'year',
+
+            }
+        }}
     />
 );
 
