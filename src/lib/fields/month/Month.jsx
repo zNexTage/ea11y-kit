@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import style from "../textbox/Textbox.module.css";
+import baseFieldStyle from "../BaseField.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import Select from "../select/Select";
@@ -155,7 +154,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes, fallbackM
                                     {...extraAttributes}
                                     type="month"
                                     name={name}
-                                    className={`${baseStyle.Highlight} ${style.textbox} ${extraAttributes?.className}`}
+                                    className={`${baseFieldStyle.field} ${extraAttributes?.className}`}
                                     id={id}
                                     pattern="[0-9]{4}-[0-9]{2}"
                                     required={isRequired}
