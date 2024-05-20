@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import baseFieldStyle from "../BaseField.module.css";
+import PropTypes from "prop-types";
+import useFieldValidations from "../../hooks/validations/useFieldValidations";
+import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import InvalidAttribute from "../../../exceptions/InvalidAttribute";
+import ComponentErrorList from "../../../components/component-error-list";
 
 const PHONE_LANDLINE_MIN_LENGTH = 12;
 const PHONE_CELLPHONE_MIN_LENGTH = 13;
@@ -8,12 +13,6 @@ const WHICH_FORMAT_BOTH = "both";
 const WHICH_FORMAT_PHONE = "phone";
 const WHICH_FORMAT_CELLPHONE = "cellphone";
 
-/**
- * TODO:
- * - Verificar se houve violação de diretrizes;
- * - Realizar testes;
- * - Criar storie (storybook/documentação)
- */
 
 /**
  * @typedef PhoneProps
@@ -44,15 +43,41 @@ const WHICH_FORMAT_CELLPHONE = "cellphone";
  * 
  * 
  * O componente é renderizado apenas se estiver de acordo com as diretrizes do eMAG. Caso não esteja,
- * será renderizado uma lista contendo quais diretrizes foram violadas. TODO: Adicionar verificações
+ * será renderizado uma lista contendo quais diretrizes foram violadas.
+ * 
  * @param {PhoneProps} props 
  * @returns 
  */
 const Phone = ({ isRequired = false,
     whichFormat = WHICH_FORMAT_BOTH,
     label,
-    placeholder, name, id }) => {
+    placeholder,
+    name,
+    id
+}) => {
     const [currentValue, setCurrentValue] = useState("");
+
+    const violations = useFieldValidations(label, id);
+
+    const [errors, setErrors] = useState([]);
+
+    useEffect(() => {
+        const errorsAux = [...violations];
+
+        if (!name) {
+            errorsAux.push(
+                new RequiredAttribute(`É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).`)
+            );
+        }
+
+        if (!whichFormat in [WHICH_FORMAT_BOTH, WHICH_FORMAT_CELLPHONE, WHICH_FORMAT_PHONE]) {
+            errorsAux.push(
+                new InvalidAttribute(`Os formatos permitidos são: ${WHICH_FORMAT_BOTH}, ${WHICH_FORMAT_CELLPHONE} e ${WHICH_FORMAT_PHONE}.`)
+            );
+        }
+
+        setErrors([...errorsAux]);
+    }, [name, violations, whichFormat]);
 
     /**
      * Formata o valor de entrada para 00 00000-0000
@@ -148,24 +173,38 @@ const Phone = ({ isRequired = false,
 
 
     return (
-        <div>
-            <label htmlFor={id}>
-                {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label} <small>{getAllowedFormatHelpText()}</small>
-            </label>
-            <input
-                placeholder={placeholder}
-                name={name}
-                pattern={"[0-9]{2} [0-9]{4,6}-[0-9]{3,4}$"}
-                className={`${baseFieldStyle.field}`}
-                id={id}
-                type="tel"
-                required={isRequired}
-                value={currentValue}
-                onChange={onChange}
-                minLength={getMinLength()}
-            />
-        </div>
+        <>
+            {errors.length === 0 && <div>
+                <label htmlFor={id}>
+                    {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label} <small>{getAllowedFormatHelpText()}</small>
+                </label>
+                <input
+                    placeholder={placeholder}
+                    name={name}
+                    pattern={"[0-9]{2} [0-9]{4,6}-[0-9]{3,4}$"}
+                    className={`${baseFieldStyle.field}`}
+                    id={id}
+                    type="tel"
+                    required={isRequired}
+                    value={currentValue}
+                    onChange={onChange}
+                    minLength={getMinLength()}
+                />
+            </div>
+            }
+
+            {errors.length > 0 && <ComponentErrorList errors={errors} />}
+        </>
     )
+}
+
+Phone.propTypes = {
+    label: PropTypes.string.isRequired,
+    isRequired: PropTypes.bool,
+    placeholder: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    whichFormat: PropTypes.oneOf([WHICH_FORMAT_BOTH, WHICH_FORMAT_CELLPHONE, WHICH_FORMAT_PHONE]).isRequired
 }
 
 export default Phone;
