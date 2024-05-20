@@ -112,14 +112,6 @@ const Range = ({
                         aria-describedby={`${id}_value`} // Esse componente está vinculado ao <small> que demonstra o valor atual.
                     />
                     <br />
-                    <small
-                        id={`${id}_value`}
-                        aria-live="polite"
-                        aria-description={`Valor atual do campo ${label}`}
-                        aria-controls={id} // Esse elemento é controlado pelo Range
-                    >
-                        Valor atual: {currentValue}{unit}
-                    </small>
                 </div>
             }
 
