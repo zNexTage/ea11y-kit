@@ -77,7 +77,7 @@ const UploadField = ({
         }
 
         setErrors([...uploadFieldViolations]);
-    }, [violations]);
+    }, [violations, accept, acceptDescription]);
 
     /**
      * Captura o evento Change do input e atualiza o estado files com os arquivos enviados
