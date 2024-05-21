@@ -6,23 +6,39 @@ import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import Select from "../select/Select";
 
-const MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+/*
+Normaliza os números dos meses de acordo com o formato usado pelo input month padrão.
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
+*/
+const MONTHS = [
+    { text: "Janeiro", number: "01" },
+    { text: "Fevereiro", number: "02" },
+    { text: "Março", number: "03" },
+    { text: "Abril", number: "04" },
+    { text: "Maio", number: "05" },
+    { text: "Junho", number: "06" },
+    { text: "Julho", number: "07" },
+    { text: "Agosto", number: "08" },
+    { text: "Setembro", number: "09" },
+    { text: "Outubro", number: "10" },
+    { text: "Novembro", number: "11 " },
+    { text: "Dezembro", number: "12" }
+];
 
 /**
  * @typedef MonthField
  * @property {string} id
  * @property {string} label
- * @property {string} name
  * 
  * @typedef YearField
  * @property {string} id
  * @property {string} label
- * @property {string} name
  * @property {number} range
  * 
  * @typedef FallbackMonthProps
  * @property {MonthField} monthField
  * @property {YearField} yearField
+ * @property {string} name
  */
 
 /**
@@ -41,9 +57,10 @@ const MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Ago
  * é utilizado como "fallback"  um select para selecionar o mês e um select para selecionar o ano
  * 
  * referência: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
+ *  * 
  * @param {FallbackMonthProps} props
  */
-const FallbackMonth = ({ isRequired, monthField, yearField }) => {
+const FallbackMonth = ({ isRequired, monthField, yearField, name }) => {
     // Obtém os anos anteriores com base no parâmetro range
     const getYears = (range = 40) => {
         const currentYear = new Date().getFullYear();
@@ -58,6 +75,27 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
     }
 
     const years = getYears(yearField?.range);
+    const [year, setYear] = useState(years[0]);
+    const [month, setMonth] = useState(MONTHS[0]);
+
+    /**
+     * Obtém o ano selecionado
+     * @param {React.ChangeEvent<HTMLInputElement>} event
+     */
+    const onChangeYear = event => {
+        setYear(event.target.value);
+    }
+
+    /**
+     * Obtém o mês selecionado
+     * @param {React.ChangeEvent<HTMLInputElement>} event 
+     */
+    const onChangeMonth = event => {
+        const monthNumber = event.target.value;
+        const selectedMonth = MONTHS.find(month => month.number === monthNumber);
+
+        setMonth(selectedMonth);
+    }
 
     return (
         <div>
@@ -65,22 +103,34 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
                 <Select
                     required={isRequired}
                     label={<>Mês:&nbsp;</>}
-                    name={monthField.name}
                     id={monthField.id}
+                    name={`mes_${name}`}
+                    extraAttributes={{
+                        onChange: onChangeMonth
+                    }}
                 >
-                    {MONTHS.map((m, index) => <option value={index + 1}>{m}</option>)}
+                    {MONTHS.map((m, index) => <option value={m.number}>{m.text}</option>)}
                 </Select>
             </span>
             <span>
                 <Select
                     label={<>Ano:</>}
                     required={isRequired}
-                    name={yearField.name}
                     id={yearField.id}
+                    name={`ano_${name}`}
+                    extraAttributes={{
+                        onChange: onChangeYear
+                    }}
                 >
                     {years.map((y, index) => <option value={y}>{y}</option>)}
                 </Select>
             </span>
+
+            {/*
+              Normaliza o valor para que seja enviado para o submit o formato que o input month mandaria por padrão.            
+            https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
+            */}
+            <input type="hidden" value={`${year}-${month.number}`} name={name} />
         </div>
     )
 }
@@ -107,6 +157,7 @@ const FallbackMonth = ({ isRequired, monthField, yearField }) => {
  * no exemplo da MDN: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
  *  
  * TODO: Garantir que o valor do campo seja o mesmo que teria se fosse um campo do tipo month
+ * 
  * @param {MonthProps} props
  */
 const Month = ({ id, label, name, isRequired = false, extraAttributes, fallbackMonthProps = null }) => {
@@ -163,6 +214,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes, fallbackM
                             :
                             <FallbackMonth
                                 {...fallbackMonthProps}
+                                name={name}
                                 isRequired
                             />
                     }
