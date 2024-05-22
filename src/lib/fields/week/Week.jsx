@@ -27,10 +27,10 @@ import Select from "../select";
 /**
  * @typedef FallbackWeekProps
  * @property {Array<number>?} yearOptions
- * @property {FallbackWeekField} weekField
- * @property {FallbackWeekField} yearField
  * @property {boolean} required
  * @property {string} name
+ * @property {string} id
+ * @property {string} label 
  */
 
 /**
@@ -62,9 +62,9 @@ import Select from "../select";
  */
 export const FallbackWeek = ({
     yearOptions = [],
-    weekField,
-    yearField,
     name,
+    id,
+    label,
     required = false
 }) => {
 
@@ -90,9 +90,7 @@ export const FallbackWeek = ({
     }
 
     //TODO: Validar propriedade name.
-
-    const weekViolations = useFieldValidations(weekField.label, weekField.id);
-    const yearViolations = useFieldValidations(yearField.label, yearField.id);
+    const violations = useFieldValidations(label, id);
 
     // ordena os anos em ordem decrescente.
     const orderedYears = getYears().sort().reverse();
@@ -162,67 +160,64 @@ export const FallbackWeek = ({
         return weeks;
     }
 
-    const hasYearViolations = yearViolations.length > 0;
-    const hasWeekViolations = weekViolations.length > 0
 
     return (
-        <div className={baseStyle.fallbackContainer}>
-            {
-                !hasYearViolations &&
-                <Select
-                    extraAttributes={{
-                        onChange: onYearChange
-                    }}
-                    required={required}
-                    id={yearField.id}
-                    name={`${name}_${yearField.id}`}
-                    label={yearField.label}
-                >
-                    {orderedYears.map(year => (
-                        <option value={year}>
-                            {year}
-                        </option>
-                    ))}
-                </Select>
-            }
-            {
-                hasYearViolations &&
-                <ComponentErrorList errors={yearViolations} />
+        <>
+
+            {violations.length === 0 &&
+                <div>
+                    <p>{label}</p>
+                    <div className={baseStyle.fallbackContainer}>
+                        <Select
+                            extraAttributes={{
+                                onChange: onYearChange
+                            }}
+                            required={required}
+                            id={`fallback_year_${id}`}
+                            name={`fallback_year_${name}`}
+                            label="Ano"
+                        >
+                            {orderedYears.map(year => (
+                                <option value={year}>
+                                    {year}
+                                </option>
+                            ))}
+                        </Select>
+
+                        <Select
+                            extraAttributes={{
+                                onChange: onWeekChange
+                            }}
+                            id={`fallback_week_${id}`}
+                            name={`fallback_week_${name}`}
+                            required={required}
+                            label="Semana"
+
+                        >
+                            {weeks.map((week) => (
+                                <option
+                                    key={week.value}
+                                    value={week.value}>
+                                    {week.text}
+                                </option>
+                            ))}
+                        </Select>
+
+
+                        {/* para manter a compatabilidade com um input week, os valores selecionados pelo usuário são normalizados para o formato nativo de um input week.  */}
+                        {
+                            violations.length > 0 &&
+                            <input
+                                type="hidden"
+                                name={name}
+                                value={`${selectedYear}-${selectedWeek.value}`} />
+                        }
+                    </div>
+                </div>
             }
 
-            {
-                !hasWeekViolations &&
-                <Select
-                    extraAttributes={{
-                        onChange: onWeekChange
-                    }}
-                    name={`${name}_${weekField.id}`}
-                    id={weekField.id}
-                    required={required}
-                    label={weekField.label}
 
-                >
-                    {weeks.map((week) => (
-                        <option
-                            key={week.value}
-                            value={week.value}>
-                            {week.text}
-                        </option>
-                    ))}
-                </Select>
-            }
-
-            {
-                hasWeekViolations &&
-                <ComponentErrorList errors={weekViolations} />
-            }
-
-            {/* para manter a compatabilidade com um input week, os valores selecionados pelo usuário são normalizados para o formato nativo de um input week.  */}
-            {
-                !hasYearViolations && !hasWeekViolations &&
-                <input type="hidden" name={name} value={`${selectedYear}-${selectedWeek.value}`} />
-            }
-        </div>
+        </>
     )
 }
 
@@ -290,10 +285,10 @@ const Week = ({ id, label, name, required = false, fallbackWeekProps }) => {
 
                     {!isBrowserSupportsTypeWeek &&
                         <FallbackWeek
-                            weekField={fallbackWeekProps.weekField}
-                            yearField={fallbackWeekProps.yearField}
                             yearOptions={fallbackWeekProps.yearOptions}
-                            required={fallbackWeekProps.required}
+                            required={required}
+                            id={id}
+                            label={label}
                             name={name}
                         />
                     }
