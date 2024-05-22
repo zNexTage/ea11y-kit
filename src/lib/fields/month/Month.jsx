@@ -67,7 +67,7 @@ const FallbackMonth = ({ isRequired, monthField, yearField, name }) => {
 
         const years = [currentYear];
 
-        for (let i = 0; i <= range; i++) {
+        for (let i = 1; i <= range; i++) {
             years.push(currentYear - i);
         }
 
