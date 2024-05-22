@@ -11,7 +11,6 @@ import Select from "../select";
  * @typedef FallbackWeekField
  * 
  * @property {string} id
- * @property {string} name
  * @property {string} label
  */
 
@@ -30,6 +29,7 @@ import Select from "../select";
  * @property {FallbackWeekField} weekField
  * @property {FallbackWeekField} yearField
  * @property {boolean} required
+ * @property {string} name
  */
 
 /**
@@ -54,7 +54,7 @@ import Select from "../select";
  * é utilizado como "fallback"  um select para selecionar o ano e um select para selecionar a semana, conforme demonstrado
  * no exemplo da MDN: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/week#examples
  * 
- * TODO: Garantir que o valor do campo seja o mesmo que teria se fosse um campo do tipo week
+ * Normaliza o valor para o formato yyyy-Www conforme demonstrado no exemplo da MDN: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/week#handling_browser_support
  * 
  * @param {FallbackWeekProps} props
  * @returns 
@@ -63,6 +63,7 @@ const FallbackWeek = ({
     yearOptions = [],
     weekField,
     yearField,
+    name,
     required = false
 }) => {
 
@@ -90,26 +91,56 @@ const FallbackWeek = ({
     const weekViolations = useFieldValidations(weekField.label, weekField.id);
     const yearViolations = useFieldValidations(yearField.label, yearField.id);
 
+    // ordena os anos em ordem decrescente.
     const orderedYears = getYears().sort().reverse();
 
     const { getTotalWeeksInYear } = useTotalWeeksInYear();
 
     const [weeks, setWeeks] = useState([]);
 
-    useEffect(() => {
-        const totalWeeks = getTotalWeeksInYear(orderedYears[0]);
+    // os estados a seguir são utilizados em um input hidden. Em input hidden, o atributo value possui o valor normalizado da seleção do usuário
+    // no formato nativo de um campo do tipo week.
+    const [selectedYear, setSelectedYear] = useState();
+    const [selectedWeek, setSelectedWeek] = useState({});
 
-        setWeeks(getWeeks(totalWeeks));
+    useEffect(() => {
+        const year = orderedYears[0];
+
+        const totalWeeks = getTotalWeeksInYear(year);
+
+        const weeks = getWeeks(totalWeeks);
+
+        setWeeks(weeks);
+
+
+        // Define os valores iniciais dos campos.
+        setSelectedYear(year);
+        setSelectedWeek(weeks[0]);
     }, []);
 
     /**
-     * Ao trocar de ano, é calculado o total de semanas no ano selecionado.
+     * Ao trocar de ano, é calculado o total de semanas no ano selecionado. 
+     * Além disso, é salvo no estado o ano selecionado
      * @param {React.ChangeEvent<HTMLSelectElement>} event 
      */
     const onYearChange = event => {
-        const totalWeeks = getTotalWeeksInYear(event.target.value);
+        const year = event.target.value;
+
+        const totalWeeks = getTotalWeeksInYear(year);
 
         setWeeks(getWeeks(totalWeeks));
+
+        setSelectedYear(year);
+    }
+
+    /**
+     * Obtém a semana selecionada e salva no estado.
+     * @param {React.ChangeEvent<HTMLSelectElement>} event 
+     */
+    const onWeekChange = event => {
+        const { text, value } = weeks.find(w => w.value === event.target.value);
+
+        setSelectedWeek({ text, value });
     }
 
     /**
@@ -121,16 +152,20 @@ const FallbackWeek = ({
         const weeks = [];
 
         for (let week = 1; week <= totalWeeks; week++) {
-            weeks.push(week);
+            const value = 'W' + `${week}`.padStart(2, 0);
+            weeks.push({ value, text: week });
         }
 
         return weeks;
     }
 
+    const hasYearViolations = yearViolations.length > 0;
+    const hasWeekViolations = weekViolations.length > 0
+
     return (
         <div>
             {
-                yearViolations.length === 0 &&
+                !hasYearViolations &&
                 <div>
 
                     <Select
@@ -138,7 +173,7 @@ const FallbackWeek = ({
                             onChange: onYearChange
                         }}
                         id={yearField.id}
-                        name={yearField.name}
+                        name={`${name}_${yearField.id}`}
                         label={yearField.label}
                     >
                         {orderedYears.map(year => (
@@ -150,24 +185,27 @@ const FallbackWeek = ({
                 </div>
             }
             {
-                yearViolations.length > 0 &&
+                hasYearViolations &&
                 <ComponentErrorList errors={yearViolations} />
             }
 
             {
-                weekViolations.length === 0 &&
+                !hasWeekViolations &&
                 <div>
                     <Select
-                        name={weekField.name}
+                        extraAttributes={{
+                            onChange: onWeekChange
+                        }}
+                        name={`${name}_${weekField.id}`}
                         id={weekField.id}
                         label={<>{weekField.label} {required && <small>(campo obrigatório)</small>}</>}
 
                     >
                         {weeks.map((week) => (
                             <option
-                                key={week}
-                                value={week}>
-                                {week}
+                                key={week.value}
+                                value={week.value}>
+                                {week.text}
                             </option>
                         ))}
                     </Select>
@@ -175,8 +213,14 @@ const FallbackWeek = ({
             }
 
             {
-                weekViolations.length > 0 &&
+                hasWeekViolations &&
                 <ComponentErrorList errors={weekViolations} />
+            }
+
+            {/* para manter a compatabilidade com um input week, os valores selecionados pelo usuário são normalizados para o formato nativo de um input week.  */}
+            {
+                !hasYearViolations && !hasWeekViolations &&
+                <input type="hidden" name={name} value={`${selectedYear}-${selectedWeek.value}`} />
             }
         </div>
     )
@@ -199,9 +243,6 @@ const FallbackWeek = ({
  * Recomendação 6.5 – Fornecer instruções para entrada de dados: 
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
- * 
- * TODO: Fornecer suporte para todos os navegadores: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/week#handling_browser_support
- * 
  * 
  * @param {WeekProps} props 
  * @returns {React.JSX.Element}
@@ -253,6 +294,7 @@ const Week = ({ id, label, name, required = false, fallbackWeekProps }) => {
                             yearField={fallbackWeekProps.yearField}
                             yearOptions={fallbackWeekProps.yearOptions}
                             required={fallbackWeekProps.required}
+                            name={name}
                         />
                     }
                 </>
