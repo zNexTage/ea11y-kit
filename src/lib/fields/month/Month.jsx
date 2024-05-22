@@ -39,6 +39,7 @@ const MONTHS = [
  * @property {MonthField} monthField
  * @property {YearField} yearField
  * @property {string} name
+ * @property {boolean} required
  */
 
 /**
@@ -55,12 +56,27 @@ const MONTHS = [
 /**
  * Caso o navegador não suporte o campos de entrada com o tipo Month,
  * é utilizado como "fallback"  um select para selecionar o mês e um select para selecionar o ano
+ * Diretrizes adotadas:
  * 
+ * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+ * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.
+ * Além da borda, foi reforçado o destaque do componente através do atributo outline.
+ * 
+ * Recomendação 6.2 – Associar etiquetas aos seus campos: 
+ *  - O atributo id é obrigatório, e é utilizado para vincular a label ao campo de texto e identificar o input;
+ * 
+ * Recomendação 6.5 – Fornecer instruções para entrada de dados: 
+ *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
+ * 
+ * O componente é renderizado apenas se estiver de acordo com as diretrizes do eMAG. Caso não esteja,
+ * será renderizado uma lista contendo quais diretrizes foram violadas. 
  * referência: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
  *  * 
  * @param {FallbackMonthProps} props
  */
-const FallbackMonth = ({ isRequired, monthField, yearField, name }) => {
+export const FallbackMonth = ({ required, monthField, yearField, name }) => {
+    //TODO: Realizar testes
+
     // Obtém os anos anteriores com base no parâmetro range
     const getYears = (range = 40) => {
         const currentYear = new Date().getFullYear();
@@ -101,8 +117,8 @@ const FallbackMonth = ({ isRequired, monthField, yearField, name }) => {
         <div>
             <span>
                 <Select
-                    required={isRequired}
-                    label={<>Mês:&nbsp;</>}
+                    required={required}
+                    label={monthField.label}
                     id={monthField.id}
                     name={`mes_${name}`}
                     extraAttributes={{
@@ -114,8 +130,8 @@ const FallbackMonth = ({ isRequired, monthField, yearField, name }) => {
             </span>
             <span>
                 <Select
-                    label={<>Ano:</>}
-                    required={isRequired}
+                    label={yearField.label}
+                    required={required}
                     id={yearField.id}
                     name={`ano_${name}`}
                     extraAttributes={{
