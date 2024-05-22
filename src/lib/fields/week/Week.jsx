@@ -59,7 +59,7 @@ import Select from "../select";
  * @param {FallbackWeekProps} props
  * @returns 
  */
-const FallbackWeek = ({
+export const FallbackWeek = ({
     yearOptions = [],
     weekField,
     yearField,
@@ -87,6 +87,8 @@ const FallbackWeek = ({
 
         return years;
     }
+
+    //TODO: Validar propriedade name.
 
     const weekViolations = useFieldValidations(weekField.label, weekField.id);
     const yearViolations = useFieldValidations(yearField.label, yearField.id);
@@ -172,6 +174,7 @@ const FallbackWeek = ({
                         extraAttributes={{
                             onChange: onYearChange
                         }}
+                        required={required}
                         id={yearField.id}
                         name={`${name}_${yearField.id}`}
                         label={yearField.label}
@@ -198,7 +201,8 @@ const FallbackWeek = ({
                         }}
                         name={`${name}_${weekField.id}`}
                         id={weekField.id}
-                        label={<>{weekField.label} {required && <small>(campo obrigatório)</small>}</>}
+                        required={required}
+                        label={weekField.label}
 
                     >
                         {weeks.map((week) => (
