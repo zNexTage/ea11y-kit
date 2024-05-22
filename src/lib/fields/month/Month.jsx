@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import baseFieldStyle from "../BaseField.module.css";
-import style from "./Month.module.css";
+import baseStyle from "../../Base.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import Select from "../select/Select";
@@ -115,7 +115,7 @@ export const FallbackMonth = ({ required, monthField, yearField, name }) => {
     }
 
     return (
-        <div className={style.fallbackContainer}>
+        <div className={baseStyle.fallbackContainer}>
             <Select
                 required={required}
                 label={monthField.label}

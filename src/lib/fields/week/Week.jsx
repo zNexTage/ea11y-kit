@@ -5,6 +5,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import baseFieldStyle from "../BaseField.module.css";
 import React, { useEffect, useRef, useState } from "react";
 import useTotalWeeksInYear from "../../hooks/week/useTotalWeeksInYear";
+import baseStyle from "../../Base.module.css";
 import Select from "../select";
 
 /**
@@ -165,27 +166,24 @@ export const FallbackWeek = ({
     const hasWeekViolations = weekViolations.length > 0
 
     return (
-        <div>
+        <div className={baseStyle.fallbackContainer}>
             {
                 !hasYearViolations &&
-                <div>
-
-                    <Select
-                        extraAttributes={{
-                            onChange: onYearChange
-                        }}
-                        required={required}
-                        id={yearField.id}
-                        name={`${name}_${yearField.id}`}
-                        label={yearField.label}
-                    >
-                        {orderedYears.map(year => (
-                            <option value={year}>
-                                {year}
-                            </option>
-                        ))}
-                    </Select>
-                </div>
+                <Select
+                    extraAttributes={{
+                        onChange: onYearChange
+                    }}
+                    required={required}
+                    id={yearField.id}
+                    name={`${name}_${yearField.id}`}
+                    label={yearField.label}
+                >
+                    {orderedYears.map(year => (
+                        <option value={year}>
+                            {year}
+                        </option>
+                    ))}
+                </Select>
             }
             {
                 hasYearViolations &&
@@ -194,26 +192,24 @@ export const FallbackWeek = ({
 
             {
                 !hasWeekViolations &&
-                <div>
-                    <Select
-                        extraAttributes={{
-                            onChange: onWeekChange
-                        }}
-                        name={`${name}_${weekField.id}`}
-                        id={weekField.id}
-                        required={required}
-                        label={weekField.label}
+                <Select
+                    extraAttributes={{
+                        onChange: onWeekChange
+                    }}
+                    name={`${name}_${weekField.id}`}
+                    id={weekField.id}
+                    required={required}
+                    label={weekField.label}
 
-                    >
-                        {weeks.map((week) => (
-                            <option
-                                key={week.value}
-                                value={week.value}>
-                                {week.text}
-                            </option>
-                        ))}
-                    </Select>
-                </div>
+                >
+                    {weeks.map((week) => (
+                        <option
+                            key={week.value}
+                            value={week.value}>
+                            {week.text}
+                        </option>
+                    ))}
+                </Select>
             }
 
             {
