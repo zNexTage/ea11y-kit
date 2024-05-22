@@ -5,15 +5,9 @@ describe("[FallbackMonth] - Violando diretriz 6.2 do eMAG", () => {
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo label para o campo mês", () => {
         render(
             <FallbackMonth
-                monthField={{
-                    id: "txtmes",
-                    name: "mes"
-                }}
-                yearField={{
-                    id: "ano",
-                    label: "ano",
-                    name: "ano"
-                }}
+                id="txtMes"
+                name="mes"
+                required
             />
         );
 
@@ -30,46 +24,12 @@ describe("[FallbackMonth] - Violando diretriz 6.2 do eMAG", () => {
         });
     });
 
-    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo label para o campo ano", () => {
+    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo label", () => {
         render(
             <FallbackMonth
-                monthField={{
-                    id: "txtmes",
-                    name: "mes",
-                    label: "mes"
-                }}
-                yearField={{
-                    id: "ano",
-                    name: "ano"
-                }}
-            />
-        );
-
-        const title = "Violação das diretrizes do eMAG";
-
-        const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
-
-        waitFor(() => {
-            const alert = screen.queryByRole("alert");
-            expect(alert).toBeInTheDocument();
-
-            expect(alert).toHaveTextContent(title);
-            expect(alert).toHaveTextContent(message);
-        });
-    })
-
-    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id para o campo mês", () => {
-        render(
-            <FallbackMonth
-                monthField={{
-                    name: "mes",
-                    label: "mes"
-                }}
-                yearField={{
-                    id: "ano",
-                    label: "ano",
-                    name: "ano"
-                }}
+                label="Em qual mês você deseja nos visitar?"
+                name="mes"
+                required
             />
         );
 
@@ -86,81 +46,38 @@ describe("[FallbackMonth] - Violando diretriz 6.2 do eMAG", () => {
         });
     });
 
-    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id para o campo ano", () => {
-        render(
-            <FallbackMonth
-                monthField={{
-                    id: "txtmes",
-                    name: "mes",
-                    label: "mes"
-                }}
-                yearField={{
-                    name: "ano",
-                    label: "ano"
-                }}
-            />
-        );
-
-        const title = "Violação das diretrizes do eMAG";
-
-        const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
-
-        waitFor(() => {
-            const alert = screen.queryByRole("alert");
-            expect(alert).toBeInTheDocument();
-
-            expect(alert).toHaveTextContent(title);
-            expect(alert).toHaveTextContent(message);
-        });
-    })
 });
 
 describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
     it("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
         render(
             <FallbackMonth
+                id="txtMes"
+                label="Em qual mês você deseja nos visitar?"
+                name="mes"
                 required
-                monthField={{
-                    id: "txtmes",
-                    name: "mes",
-                    label: "mes"
-                }}
-                yearField={{
-                    name: "ano",
-                    label: "ano",
-                    id: "ano"
-                }}
-                
             />
         )
 
-        const monthField = screen.getByLabelText("mes (campo obrigatório)");
+        const monthField = screen.getByLabelText("Mês (campo obrigatório)");
         waitFor(() => expect(monthField.parentElement).toHaveTextContent("(campo obrigatório)"));
 
-        const yearField = screen.getByLabelText("ano (campo obrigatório)");
-        waitFor(() => expect(yearField.parentElement).toHaveTextContent("(campo obrigatório)"));        
+        const yearField = screen.getByLabelText("Ano (campo obrigatório)");
+        waitFor(() => expect(yearField.parentElement).toHaveTextContent("(campo obrigatório)"));
 
     });
 
     it("Deve adicionar uma borda e outline na cor vermelho ao focar no campo mês", () => {
         render(
             <FallbackMonth
+                id="txtMes"
+                label="Em qual mês você deseja nos visitar?"
+                name="mes"
                 required
-                monthField={{
-                    id: "txtmes",
-                    name: "mes",
-                    label: "mes"
-                }}
-                yearField={{
-                    name: "ano",
-                    label: "ano",
-                    id: "ano"
-                }}
-                
             />
         );
 
-        const field = screen.getByLabelText("mes (campo obrigatório)");
+        const field = screen.getByLabelText("Mês (campo obrigatório)");
         field.focus();
         expect(field).toHaveFocus();
 
@@ -173,22 +90,14 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
     it("Deve adicionar uma borda e outline na cor vermelho ao focar no campo ano", () => {
         render(
             <FallbackMonth
+                id="txtMes"
+                label="Em qual mês você deseja nos visitar?"
+                name="mes"
                 required
-                monthField={{
-                    id: "txtmes",
-                    name: "mes",
-                    label: "mes"
-                }}
-                yearField={{
-                    name: "ano",
-                    label: "ano",
-                    id: "ano"
-                }}
-                
             />
         );
 
-        const field = screen.getByLabelText("ano (campo obrigatório)");
+        const field = screen.getByLabelText("Ano (campo obrigatório)");
         field.focus();
         expect(field).toHaveFocus();
 
