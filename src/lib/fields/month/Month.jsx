@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import baseFieldStyle from "../BaseField.module.css";
+import style from "./Month.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import Select from "../select/Select";
@@ -114,33 +115,29 @@ export const FallbackMonth = ({ required, monthField, yearField, name }) => {
     }
 
     return (
-        <div>
-            <span>
-                <Select
-                    required={required}
-                    label={monthField.label}
-                    id={monthField.id}
-                    name={`mes_${name}`}
-                    extraAttributes={{
-                        onChange: onChangeMonth
-                    }}
-                >
-                    {MONTHS.map((m, index) => <option value={m.number}>{m.text}</option>)}
-                </Select>
-            </span>
-            <span>
-                <Select
-                    label={yearField.label}
-                    required={required}
-                    id={yearField.id}
-                    name={`ano_${name}`}
-                    extraAttributes={{
-                        onChange: onChangeYear
-                    }}
-                >
-                    {years.map((y, index) => <option value={y}>{y}</option>)}
-                </Select>
-            </span>
+        <div className={style.fallbackContainer}>
+            <Select
+                required={required}
+                label={monthField.label}
+                id={monthField.id}
+                name={`mes_${name}`}
+                extraAttributes={{
+                    onChange: onChangeMonth
+                }}
+            >
+                {MONTHS.map((m, index) => <option value={m.number}>{m.text}</option>)}
+            </Select>
+            <Select
+                label={yearField.label}
+                required={required}
+                id={yearField.id}
+                name={`ano_${name}`}
+                extraAttributes={{
+                    onChange: onChangeYear
+                }}
+            >
+                {years.map((y, index) => <option value={y}>{y}</option>)}
+            </Select>
 
             {/*
               Normaliza o valor para que seja enviado para o submit o formato que o input month mandaria por padrão.            
