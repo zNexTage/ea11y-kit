@@ -15,6 +15,7 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url",
  *  @property {string} label
  *  @property {string} name
  *  @property {string} id
+ *  @property {string} placeholder
  *  @property {number} maxLength
  *  @property {boolean} isRequired 
  *  @property {("email"|"number"|"password"|"search"|"text"|"url")} type
@@ -110,7 +111,6 @@ const Textbox = ({
     )
 }
 
-
 Textbox.propTypes = {
     label: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
@@ -118,7 +118,8 @@ Textbox.propTypes = {
     isRequired: PropTypes.bool,
     type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
     maxLength: PropTypes.number,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    extraAttributes: PropTypes.object
 }
 
 export default Textbox;

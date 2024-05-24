@@ -104,6 +104,7 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
 RadioButton.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     isRequired: PropTypes.bool,
     extraAttributes: PropTypes.object
 }

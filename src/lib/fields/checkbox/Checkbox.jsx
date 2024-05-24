@@ -111,6 +111,7 @@ Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     isRequired: PropTypes.bool,
+    extraAttributes: PropTypes.object
 }
 
 export default Checkbox;

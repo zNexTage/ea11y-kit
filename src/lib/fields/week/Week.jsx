@@ -18,7 +18,7 @@ import Select from "../select";
  */
 
 /**
- * @typedef FallbackWeekProps * 
+ * @typedef FallbackWeekProps 
  * @property {boolean} required
  * @property {string} name
  * @property {string} id
@@ -223,8 +223,6 @@ export const FallbackWeek = ({
     )
 }
 
-
-
 /**
  * Campo de entrada para informar uma semana configurado com as diretrizes do eMAG.
  * 
@@ -307,7 +305,7 @@ Week.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
-    fallbackWeekProps: PropTypes.object.isRequired
+    fallbackYearOptions: PropTypes.array.isRequired
 }
 
 export default Week;

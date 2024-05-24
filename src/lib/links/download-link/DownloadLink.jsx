@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidelineCode";
@@ -110,6 +111,14 @@ const DownloadLink = ({
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
     )
+}
+
+DownloadLink.propTypes = {
+    href: PropTypes.string.isRequired,
+    fileName: PropTypes.string.isRequired,
+    extension: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired,
+    unit: PropTypes.string.isRequired
 }
 
 export default DownloadLink;

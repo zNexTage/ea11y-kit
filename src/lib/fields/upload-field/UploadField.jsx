@@ -173,7 +173,6 @@ const UploadField = ({
 UploadField.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
     isRequired: PropTypes.bool,
     accept: PropTypes.string,
     acceptDescription: PropTypes.string,

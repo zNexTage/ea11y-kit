@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import { useEffect, useState } from "react";
@@ -78,6 +79,13 @@ const Color = ({
 
         </>
     )
+}
+
+Color.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    required: PropTypes.bool
 }
 
 export default Color;

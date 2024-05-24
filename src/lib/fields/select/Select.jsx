@@ -82,18 +82,13 @@ const Select = ({
     )
 }
 
-const SelectExample = [{
-    text: '2024', value: '2024',
-    text: '2023', value: '2023',
-    text: '2022', value: '2022',
-    text: '2021', value: '2021',
-}]
-
 Select.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     required: PropTypes.bool,
+    extraAttributes: PropTypes.object,
+    children: PropTypes.object,
 }
 
 export default Select;

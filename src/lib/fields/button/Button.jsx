@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 
@@ -23,6 +24,11 @@ const Button = ({ text = 'Enviar', type = 'button' }) => {
             {text}
         </button>
     )
+}
+
+Button.propTypes = {
+    text: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['submit', 'reset', 'button']).isRequired
 }
 
 export default Button;

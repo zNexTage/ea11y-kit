@@ -1,4 +1,5 @@
 
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
@@ -84,6 +85,16 @@ const Textarea = ({
             {errors.length > 0 && <ComponentErrorList errors={errors} />}
         </>
     )
+}
+
+Textarea.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    rows: PropTypes.number.isRequired,
+    cols: PropTypes.number.isRequired,
+    required: PropTypes.bool
 }
 
 export default Textarea;
