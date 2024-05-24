@@ -1,4 +1,0 @@
-.RadioButton:checked, .RadioButton:focus{
-    border: var(--e-mag-border-size) solid var(--e-mag-highligth-focus-color);
-    outline: var(--e-mag-outline-size) solid var(--e-mag-highligth-focus-color);
-}

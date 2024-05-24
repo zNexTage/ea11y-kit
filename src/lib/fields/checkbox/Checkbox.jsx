@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
+import { labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
 // Enter e tecla espaço.
 const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
@@ -12,7 +13,6 @@ const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
  *  @typedef CheckboxProps
  *  @property {string} label
  *  @property {string} id
- *  @property {number} maxLength
  *  @property {boolean} isRequired 
  *  @property {HTMLInputElement|null} extraAttributes
  */
@@ -87,18 +87,19 @@ const Checkbox = ({
         <>
             {violations.length == 0 &&
                 <div>
-                    <label htmlFor={id}>{label}
-                        <input
-                            {...extraAttributes}
-                            role="checkbox"
-                            className={`${baseStyle.Highlight}`}
-                            checked={isChecked}
-                            onKeyDown={onKeyDown}
-                            onChange={onChange}
-                            type="checkbox"
-                            name={id}
-                            id={id} />
+                    <label className={`${labelCss}`} htmlFor={id}>
+                        {label}
                     </label>
+                    <input
+                        {...extraAttributes}
+                        role="checkbox"
+                        className={`${lightTheme} ${fieldHightlight}`}
+                        checked={isChecked}
+                        onKeyDown={onKeyDown}
+                        onChange={onChange}
+                        type="checkbox"
+                        name={id}
+                        id={id} />
                 </div>
             }
             {violations.length > 0 && <ComponentErrorList errors={violations} />}

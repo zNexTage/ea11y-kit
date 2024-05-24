@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import baseFieldStyle from "../BaseField.module.css";
-import baseStyle from "../../Base.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import Select from "../select/Select";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
+import baseTheme, { lightTheme } from "../../../stitches.config";
 
 /*
 Normaliza os números dos meses de acordo com o formato usado pelo input month padrão.
@@ -104,6 +104,17 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
         setMonth(selectedMonth);
     }
 
+    const fallbackContainer = baseTheme.css({
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '10px',
+        '@media(max-width: 800px)': {
+            gridTemplateColumns: '1fr!important',
+            gap: '3px!important',
+            gridTemplateRows: '1fr 1fr'
+        }
+    });
+
     return (
         <>
             {
@@ -112,7 +123,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
                     <p>
                         {label}
                     </p>
-                    <div className={baseStyle.fallbackContainer}>
+                    <div className={`${fallbackContainer}`}>
                         <Select
                             required={required}
                             label="Mês"
@@ -215,7 +226,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes }) => {
                                     {...extraAttributes}
                                     type="month"
                                     name={name}
-                                    className={`${baseFieldStyle.field} ${extraAttributes?.className}`}
+                                    className={`${fieldCss} ${fieldHightlight} ${lightTheme}`}
                                     id={id}
                                     pattern="[0-9]{4}-[0-9]{2}"
                                     required={isRequired}

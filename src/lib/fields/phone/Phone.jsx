@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import baseFieldStyle from "../BaseField.module.css";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import InvalidAttribute from "../../../exceptions/InvalidAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
+import { fieldCss, labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
 const PHONE_LANDLINE_MIN_LENGTH = 12;
 const PHONE_CELLPHONE_MIN_LENGTH = 13;
@@ -122,7 +123,7 @@ const Phone = ({ isRequired = false,
     const isCellphoneNumber = (phoneNumber) => {
         const [ddd, number] = phoneNumber.split(" ");
 
-        if(!number) return false;
+        if (!number) return false;
 
         return number.startsWith("9");
     }
@@ -221,7 +222,7 @@ const Phone = ({ isRequired = false,
                     placeholder={placeholder}
                     name={name}
                     pattern={"[0-9]{2} [0-9]{4,6}-[0-9]{3,4}$"}
-                    className={`${baseFieldStyle.field}`}
+                    className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
                     id={id}
                     type="tel"
                     required={isRequired}

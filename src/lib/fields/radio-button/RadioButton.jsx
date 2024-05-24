@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
-import style from "./RadioButton.module.css";
+import { fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
 const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
 const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
@@ -84,7 +84,7 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
                     <input
                         {...extraAttributes}
                         key={`${id}_${isChecked}`}
-                        className={`${baseStyle.Highlight} ${style.RadioButton} ${extraAttributes?.className}`}
+                        className={`${lightTheme} ${fieldHightlight} ${extraAttributes?.className}`}
                         type="radio"
                         name={name}
                         id={id}

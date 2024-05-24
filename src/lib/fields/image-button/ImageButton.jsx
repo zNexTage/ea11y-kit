@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import baseStyle from "../../Base.module.css";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_TEXT_ALTERNATIVE_TO_FORM_IMAGE_BUTTONS } from "../../../utils/eMagGuidelineCode";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
+import { fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
 /**
  * @typedef ImageButtonProps
@@ -58,7 +59,7 @@ const ImageButton = ({
             {
                 errors.length === 0 &&
                 <input
-                    className={baseStyle.Highlight}
+                    className={`${lightTheme} ${fieldHightlight}`}
                     type="image"
                     width={width}
                     height={height}

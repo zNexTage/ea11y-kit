@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import baseStyle from "../../Base.module.css";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
+import { lightTheme } from "../../../stitches.config";
+import { fieldHightlight } from "../../fields/shared-styles/Field.style";
 
 /**
  *  @typedef DownloadLinkProps
@@ -100,7 +101,7 @@ const DownloadLink = ({
                 <a
                     ref={downloadLinkRef}
                     onKeyDown={onKeyDown}
-                    className={baseStyle.Highlight}
+                    className={`${lightTheme} ${fieldHightlight}`}
                     download={true}
                     href={href}>
                     {fileName} ({extension} {size}{unit})

@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import baseStyle from "../BaseField.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
 /**
  * @typedef TextareaProps
@@ -72,7 +73,7 @@ const Textarea = ({
                         required={required}
                         rows={rows}
                         cols={cols}
-                        className={baseStyle.field}
+                        className={`${lightTheme} ${fieldCss} ${fieldHightlight} `}
                         name={name}
                         placeholder={placeholder}
                         id={id}>

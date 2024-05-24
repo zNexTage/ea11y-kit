@@ -1,4 +1,5 @@
-import baseStyle from "../../Base.module.css";
+import { fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
 /**
  * @typedef ButtonProps
@@ -18,7 +19,7 @@ import baseStyle from "../../Base.module.css";
  */
 const Button = ({ text = 'Enviar', type = 'button' }) => {
     return (
-        <button className={baseStyle.Highlight} type={type}>
+        <button className={`${lightTheme} ${fieldHightlight}`} type={type}>
             {text}
         </button>
     )

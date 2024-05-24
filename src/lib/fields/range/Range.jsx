@@ -1,9 +1,9 @@
 import { useState } from "react";
 import ComponentErrorList from "../../../components/component-error-list";
-import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
-import style from "./Range.module.css";
+import { labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import baseTheme, { lightTheme } from "../../../stitches.config";
 
 const RANGE_ORIENTATION_HORIZONTAL = 'horizontal';
 const RANGE_ORIENTATION_VERTICAL = 'vertical';
@@ -52,6 +52,10 @@ const Range = ({
     unit = "%" }) => {
     const violations = useFieldValidations(label, id);
 
+    const rangeVerticalCss = baseTheme.css({
+        writingMode: "vertical-lr"
+    });
+
     /**
      * Obtém o valor inicial do range.
      * 
@@ -91,7 +95,7 @@ const Range = ({
 
             {violations.length == 0 &&
                 <div>
-                    <label className={style.RangeLabel} htmlFor={id}>
+                    <label className={`${labelCss}`} htmlFor={id}>
                         {label}
                     </label>
 
@@ -108,10 +112,12 @@ const Range = ({
                         // aria-valuenow={currentValue}
                         value={currentValue}
                         onChange={onChange}
-                        className={`${baseStyle.Highlight} ${orientation === RANGE_ORIENTATION_VERTICAL && style.RangeInputVertical} `}
-                        aria-describedby={`${id}_value`} // Esse componente está vinculado ao <small> que demonstra o valor atual.
+                        className={`${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
                     />
                     <br />
+                    <small>
+                        Valor atual: {currentValue}{unit}
+                    </small>
                 </div>
             }
 

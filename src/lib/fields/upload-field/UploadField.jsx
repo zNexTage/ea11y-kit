@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import baseStyle from "../BaseField.module.css";
-import style from "./UploadField.module.css";
 import ComponentErrorList from "../../../components/component-error-list";
 import DownloadLink from "../../links/download-link";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
+import baseTheme, { lightTheme } from "../../../stitches.config";
 
 /**
  * @typedef UploadFieldProps
@@ -79,6 +79,10 @@ const UploadField = ({
         setErrors([...uploadFieldViolations]);
     }, [violations, accept, acceptDescription]);
 
+    const uploadFieldCss = baseTheme.css({
+        border: 'none'
+    })
+
     /**
      * Captura o evento Change do input e atualiza o estado files com os arquivos enviados
      * @param {React.ChangeEvent<HTMLInputElement>} event 
@@ -128,7 +132,7 @@ const UploadField = ({
                         id={id}
                         accept={accept}
                         type="file"
-                        className={`${baseStyle.field} ${style.UploadField}`}
+                        className={`${lightTheme} ${fieldCss} ${fieldHightlight} ${uploadFieldCss}`}
                     />
                     <span>
                         {

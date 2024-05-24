@@ -2,18 +2,11 @@ import PropTypes from "prop-types";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import baseFieldStyle from "../BaseField.module.css";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
+import baseTheme, { lightTheme } from "../../../stitches.config";
 import React, { useEffect, useRef, useState } from "react";
 import useTotalWeeksInYear from "../../hooks/week/useTotalWeeksInYear";
-import baseStyle from "../../Base.module.css";
 import Select from "../select";
-
-/**
- * @typedef FallbackWeekField
- * 
- * @property {string} id
- * @property {string} label
- */
 
 /** 
  * @typedef WeekProps
@@ -21,12 +14,11 @@ import Select from "../select";
  * @property {string} name
  * @property {string} label
  * @property {boolean} required
- * @property {FallbackWeekProps} fallbackWeekProps
+ * @property {Array<number>?} fallbackYearOptions
  */
 
 /**
- * @typedef FallbackWeekProps
- * @property {Array<number>?} yearOptions
+ * @typedef FallbackWeekProps * 
  * @property {boolean} required
  * @property {string} name
  * @property {string} id
@@ -160,6 +152,16 @@ export const FallbackWeek = ({
         return weeks;
     }
 
+    const fallbackContainer = baseTheme.css({
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '10px',
+        '@media(max-width: 800px)': {
+            gridTemplateColumns: '1fr!important',
+            gap: '3px!important',
+            gridTemplateRows: '1fr 1fr'
+        }
+    });
 
     return (
         <>
@@ -167,7 +169,7 @@ export const FallbackWeek = ({
             {violations.length === 0 &&
                 <div>
                     <p>{label}</p>
-                    <div className={baseStyle.fallbackContainer}>
+                    <div className={`${fallbackContainer}`}>
                         <Select
                             extraAttributes={{
                                 onChange: onYearChange
@@ -242,7 +244,7 @@ export const FallbackWeek = ({
  * @param {WeekProps} props 
  * @returns {React.JSX.Element}
  */
-const Week = ({ id, label, name, required = false, fallbackWeekProps }) => {
+const Week = ({ id, label, name, required = false, fallbackYearOptions }) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
     const [isBrowserSupportsTypeWeek, setIsBrowserSupportsTypeWeek] = useState(true);
@@ -279,13 +281,13 @@ const Week = ({ id, label, name, required = false, fallbackWeekProps }) => {
                             type="week"
                             name={name}
                             id={id}
-                            className={baseFieldStyle.field}
+                            className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
                         />
                     </div>}
 
                     {!isBrowserSupportsTypeWeek &&
                         <FallbackWeek
-                            yearOptions={fallbackWeekProps.yearOptions}
+                            yearOptions={fallbackYearOptions}
                             required={required}
                             id={id}
                             label={label}

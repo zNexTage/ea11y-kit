@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import ComponentErrorList from "../../../components/component-error-list";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import baseStyle from "../BaseField.module.css";
 import PropTypes from "prop-types";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import { fieldCss, labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { lightTheme } from "../../../stitches.config";
 
-/**
- * @typedef SelectOptions
- * 
- * @property {string} value
- * @property {string} text
- */
 
 /**
  * @typedef SelectProps
@@ -66,12 +61,12 @@ const Select = ({
         <>
             {errors.length === 0 &&
                 <div>
-                    <label htmlFor={id}>
+                    <label className={`${labelCss}`} htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
                     <select
                         {...extraAttributes}
-                        className={baseStyle.field}
+                        className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
                         name={name}
                         id={id}
                     >
@@ -99,7 +94,6 @@ Select.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     required: PropTypes.bool,
-    options: PropTypes.arrayOf(PropTypes.objectOf(SelectExample)).isRequired,
 }
 
 export default Select;

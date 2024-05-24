@@ -1,9 +1,9 @@
-import style from "./Color.module.css";
-import baseStyle from "../../Base.module.css";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
+import { labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import baseTheme, { lightTheme } from "../../../stitches.config";
 
 /**
  * @typedef ColorProps
@@ -40,6 +40,10 @@ const Color = ({
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
 
+    const colorStyle = baseTheme.css({
+        display: "block"
+    });
+
     useEffect(() => {
         const errorsAux = [...violations];
 
@@ -55,11 +59,11 @@ const Color = ({
             {
                 errors.length === 0 &&
                 <div>
-                    <label htmlFor={id}>
+                    <label className={`${labelCss}`} htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
                     <input
-                        className={`${style.Color} ${baseStyle.Highlight}`}
+                        className={`${colorStyle} ${lightTheme} ${fieldHightlight}`}
                         type="color"
                         name={name}
                         id={id}
