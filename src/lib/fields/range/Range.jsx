@@ -52,6 +52,10 @@ const Range = ({
     unit = "%" }) => {
     const violations = useFieldValidations(label, id);
 
+    const rangeCss = baseTheme.css({
+        display: 'block'
+    });
+
     const rangeVerticalCss = baseTheme.css({
         writingMode: "vertical-lr"
     });
@@ -112,9 +116,8 @@ const Range = ({
                         // aria-valuenow={currentValue}
                         value={currentValue}
                         onChange={onChange}
-                        className={`${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
+                        className={`${rangeCss} ${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
                     />
-                    <br />
                     <small>
                         Valor atual: {currentValue}{unit}
                     </small>
