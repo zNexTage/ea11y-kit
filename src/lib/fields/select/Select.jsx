@@ -3,7 +3,7 @@ import ComponentErrorList from "../../../components/component-error-list";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
-import { fieldCss, labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 
 
@@ -61,7 +61,7 @@ const Select = ({
         <>
             {errors.length === 0 &&
                 <div>
-                    <label className={`${labelCss}`} htmlFor={id}>
+                    <label htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
                     <select

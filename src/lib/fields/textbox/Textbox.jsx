@@ -5,7 +5,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import React, { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
-import { fieldCss, labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url", "date", "datetime-local", "time"];
@@ -91,7 +91,7 @@ const Textbox = ({
         <>
             {errors.length === 0 &&
                 <div>
-                    <label className={`${labelCss}`} htmlFor={id}>
+                    <label htmlFor={id}>
                         {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
                     <input

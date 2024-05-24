@@ -2,7 +2,7 @@ import { useState } from "react";
 import ComponentErrorList from "../../../components/component-error-list";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
-import { labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { fieldHightlight } from "../shared-styles/Field.style";
 import baseTheme, { lightTheme } from "../../../stitches.config";
 
 const RANGE_ORIENTATION_HORIZONTAL = 'horizontal';
@@ -95,7 +95,7 @@ const Range = ({
 
             {violations.length == 0 &&
                 <div>
-                    <label className={`${labelCss}`} htmlFor={id}>
+                    <label htmlFor={id}>
                         {label}
                     </label>
 

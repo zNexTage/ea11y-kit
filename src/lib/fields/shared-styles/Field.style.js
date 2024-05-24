@@ -14,14 +14,9 @@ const fieldHightlight = baseTheme.css({
         border: '$sizes$borderSize solid $colors$highlightColor',
         outline: '$sizes$outlineSize solid $colors$highlightColor',
     }
-})
-
-const labelCss = baseTheme.css({
-    display: 'block'
 });
 
 export {
     fieldCss,
-    labelCss,
     fieldHightlight
 }

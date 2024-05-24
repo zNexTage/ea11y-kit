@@ -4,7 +4,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import InvalidAttribute from "../../../exceptions/InvalidAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
-import { fieldCss, labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 
 const PHONE_LANDLINE_MIN_LENGTH = 12;

@@ -3,7 +3,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
-import { labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { fieldHightlight } from "../shared-styles/Field.style";
 import baseTheme, { lightTheme } from "../../../stitches.config";
 
 /**
@@ -60,7 +60,7 @@ const Color = ({
             {
                 errors.length === 0 &&
                 <div>
-                    <label className={`${labelCss}`} htmlFor={id}>
+                    <label htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
                     <input

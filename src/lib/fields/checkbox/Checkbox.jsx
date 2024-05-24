@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
-import { labelCss, fieldHightlight } from "../shared-styles/Field.style";
+import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 
 // Enter e tecla espaço.
@@ -87,7 +87,7 @@ const Checkbox = ({
         <>
             {violations.length == 0 &&
                 <div>
-                    <label className={`${labelCss}`} htmlFor={id}>
+                    <label htmlFor={id}>
                         {label}
                     </label>
                     <input
