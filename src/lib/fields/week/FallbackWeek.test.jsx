@@ -46,7 +46,31 @@ describe("[FallbackWeek] - Violando diretriz 6.2 do eMAG", () => {
     });
 });
 
-describe("[Week] - Conformidade com as diretrizes do eMAG", () => {
+describe("[FallbackWeek] - Omitindo outros atributos", () => {
+    it("Deverá ser renderizado um alerta ao omitir o atributo name", () => {
+        render(
+            <FallbackWeek
+                id="week"
+                label="teste"
+                required
+            />
+        );
+
+        const title = "Violação das diretrizes do eMAG";
+
+        const message = "É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).";
+
+        waitFor(() => {
+            const alert = screen.queryByRole("alert");
+            expect(alert).toBeInTheDocument();
+
+            expect(alert).toHaveTextContent(title);
+            expect(alert).toHaveTextContent(message);
+        });
+    })
+})
+
+describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
     it("Deve aparecer a indicação (campo obrigatório) quando required do campo semana for igual a true", () => {
         render(
             <FallbackWeek

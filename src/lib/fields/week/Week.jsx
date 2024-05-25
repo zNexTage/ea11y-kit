@@ -81,7 +81,8 @@ export const FallbackWeek = ({
         return years;
     }
 
-    //TODO: Validar propriedade name.
+    const [errors, setErrors] = useState([]);
+    
     const violations = useFieldValidations(label, id);
 
     // ordena os anos em ordem decrescente.
@@ -97,6 +98,14 @@ export const FallbackWeek = ({
     const [selectedWeek, setSelectedWeek] = useState({});
 
     useEffect(() => {
+        const errorsAux = [...violations];
+
+        if (!name) {
+            errorsAux.push(
+                new RequiredAttribute(`É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).`)
+            )
+        }
+
         const year = orderedYears[0];
 
         const totalWeeks = getTotalWeeksInYear(year);
@@ -105,10 +114,11 @@ export const FallbackWeek = ({
 
         setWeeks(weeks);
 
-
         // Define os valores iniciais dos campos.
         setSelectedYear(year);
         setSelectedWeek(weeks[0]);
+
+        setErrors(errorsAux);
     }, []);
 
     /**
@@ -166,7 +176,7 @@ export const FallbackWeek = ({
     return (
         <>
 
-            {violations.length === 0 &&
+            {errors.length === 0 &&
                 <div>
                     <p>{label}</p>
                     <div className={`${fallbackContainer}`}>
@@ -208,7 +218,7 @@ export const FallbackWeek = ({
 
                         {/* para manter a compatabilidade com um input week, os valores selecionados pelo usuário são normalizados para o formato nativo de um input week.  */}
                         {
-                            violations.length > 0 &&
+                            errors.length > 0 &&
                             <input
                                 type="hidden"
                                 name={name}
