@@ -16,7 +16,6 @@ import baseTheme, { lightTheme } from "../../../stitches.config";
  * @property {string} accept
  * @property {string} acceptDescription
  * @property {bool} multiple
- * TODO: Mostrar erros, como: enviou arquivo com um formato não aceito 
  */
 
 /**
