@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import DownloadLink from "./DownloadLink"
 
 describe("[DownloadLink] - Violando diretriz 3.5", () => {
-    test("Deverá ser renderizado um alerta de violação da diretriz 3.5 ao omitir o atributo extesion", () => {
+    test("Deverá ser renderizado um alerta de violação da diretriz 3.5 ao omitir o atributo extension", () => {
         render(
             <DownloadLink
                 fileName="teste"
@@ -62,7 +62,7 @@ describe("[DownloadLink] - Conformidade com as diretrizes do eMAG", () => {
         expect(link).toHaveTextContent("teste (.jpg 10KB)")
     });
 
-    test("Diretriz 4.4  - Deve adicionar uma borda e outline na cor vermelho ao focar no campo de texto", () => {
+    test("Diretriz 4.4  - Deve adicionar uma borda e outline na cor vermelho ao focar no link", () => {
         render(
             <DownloadLink
                 fileName="teste"
