@@ -66,6 +66,15 @@ const Form = () => {
                     placeholder="Informe a senha a ser utilizada na plataforma"
                 />
 
+                <Textbox
+                    label="Data de nascimento"
+                    type="date"
+                    name="data_nascimento"
+                    id="txtDataNascimento"
+                    placeholder="Informe a sua data de nascimento"
+                />
+
+
                 <Phone
                     id="txtTelefone"
                     label="Informe o seu celular ou telefone fixo"
@@ -141,6 +150,23 @@ const Form = () => {
                     fallbackYearOptions={[
                         2024, 2023, 2022, 2021, 2020, 2019
                     ]} />
+
+
+                <Textbox
+                    label="Que dia e hora você quer nos visitar?"
+                    type="datetime-local"
+                    name="data_visita"
+                    id="txtDataVisita"
+                    placeholder="Informe o dia e hora você quer nos visitar"
+                />
+
+                <Textarea
+                    label="Descreva o motivo da sua visita"
+                    id="txtMotivoVisita"
+                    name="motivo_visita"
+                    required
+                    placeholder="Informe o motivo da sua visita"
+                />
             </fieldset>
             <Button text="Enviar" type="submit" />
         </form>
