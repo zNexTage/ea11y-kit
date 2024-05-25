@@ -89,7 +89,6 @@ const DownloadLink = ({
      * @param {KeyboardEvent} event 
      */
     const onKeyDown = event => {
-        //TODO: Criar constantes para as teclas.
         if (event.code == KeyboardKeys.SPACE) {
             downloadLinkRef.current.click();
         }

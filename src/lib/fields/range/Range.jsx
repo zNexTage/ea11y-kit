@@ -110,10 +110,6 @@ const Range = ({
                         min={min}
                         max={max}
                         step={step}
-                        // TODO: Verificar se é necessário utilizar os atributos abaixo
-                        // aria-valuemin={min}
-                        // aria-valuemax={max}
-                        // aria-valuenow={currentValue}
                         value={currentValue}
                         onChange={onChange}
                         className={`${rangeCss} ${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
