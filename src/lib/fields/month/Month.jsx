@@ -218,8 +218,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes }) => {
                         isBrowserSupportsTypeMonth ?
                             <div>
                                 <label htmlFor={id}>
-                                    {/* TODO: Colocar na frente da label (mês/ano)? */}
-                                    {label}{isRequired ? <small>&nbsp;(campo obrigatório)</small> : label}
+                                    {label}{isRequired && <small>&nbsp;(campo obrigatório)</small>}
                                 </label>
                                 <input
                                     ref={field}
