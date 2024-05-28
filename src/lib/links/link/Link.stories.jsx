@@ -8,7 +8,7 @@ export default {
 }
 
 /**
- * adiciona a descrição (abre em nova janela) quando o link se refere a um destino externo
+ * adiciona a descrição (abre em nova guia) quando o link se refere a um destino externo
  */
 export const ExternalLink = () => (
     <Link href="https://emag.governoeletronico.gov.br/" target="_blank">

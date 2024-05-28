@@ -54,7 +54,7 @@ const Link = ({ children, href, target, ...rest }) => {
 
     return (
         <a {...rest} target={target} href={href} className={`${lightTheme} ${fieldHightlight}`} {...extraProps}>
-            {children} {isTargetBlank && <span>(abre em nova janela)</span>}
+            {children} {isTargetBlank && <span>(abre em nova guia)</span>}
         </a>
     )
 }

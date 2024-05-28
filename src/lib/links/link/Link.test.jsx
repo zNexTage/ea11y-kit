@@ -23,7 +23,7 @@ describe("[Link] - Conformidade com as diretrizes do eMAG", () => {
         });
     });
 
-    it("Diretriz 1.9  - Deve adicionar a indicação (abre em nova janela) quando o target for _blank", () => {
+    it("Diretriz 1.9  - Deve adicionar a indicação (abre em nova guia) quando o target for _blank", () => {
         render(
             <Link
                 target="_blank"
@@ -35,10 +35,10 @@ describe("[Link] - Conformidade com as diretrizes do eMAG", () => {
 
         const link = screen.queryByRole("link");
 
-        expect(link).toHaveTextContent("(abre em nova janela)");
+        expect(link).toHaveTextContent("(abre em nova guia)");
     });
 
-    it("Deve omitir (abre em nova janela) quando o target for diferente de _blank", () => {
+    it("Deve omitir (abre em nova guia) quando o target for diferente de _blank", () => {
         render(
             <Link
                 href="#sobre-nos"
@@ -49,6 +49,6 @@ describe("[Link] - Conformidade com as diretrizes do eMAG", () => {
 
         const link = screen.queryByRole("link");
 
-        expect(link).not.toHaveTextContent("(abre em nova janela)");
+        expect(link).not.toHaveTextContent("(abre em nova guia)");
     });
 })

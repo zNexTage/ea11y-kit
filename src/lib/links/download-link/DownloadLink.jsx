@@ -32,7 +32,7 @@ import Link from "../link";
  * "Quando for realmente necessária a abertura de um link em nova janela, é recomendado que tal ação seja 
  * informada ao usuário no próprio texto do link. Isso permite ao usuário decidir se quer ou não sair da 
  * janela ou aba em que se encontra e, caso decida acessar o link, ele saberá que se trata de uma nova aba 
- * ou janela." Logo a frente do nome do arquivo e da extensão será acrescentado o texto (abre em nova janela).
+ * ou janela." Logo a frente do nome do arquivo e da extensão será acrescentado o texto (abre em nova guia).
  * 
  * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
  * É possível interagir com o link utilizando o espaço do teclado.
