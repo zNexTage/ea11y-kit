@@ -5,10 +5,12 @@ const TARGET_BLANK = "_blank";
 const TARGET_SELF = "_self";
 
 /**
- * @typedef LinkProps
- * @property {string} href
+ * @typedef LinkProps 
  * @property {React.ReactNode} children
- * @property {"_blank"|"_self"|"_parent"|"_top"|"framename"} target
+ * */
+
+/**
+ * @typedef {LinkProps & HTMLAnchorElement} ExtendedLinkProps
  */
 
 /**
@@ -29,10 +31,10 @@ const TARGET_SELF = "_self";
  * 4.4 – Possibilitar que o elemento com foco seja visualmente evidente:
  * Ao focar no link, é aplicado uma borda.
  * 
- * @param {LinkProps} props 
+ * @param {ExtendedLinkProps} props 
  * @returns 
  */
-const Link = ({ children, href, target = TARGET_SELF }) => {
+const Link = ({ children, href, target = TARGET_SELF, ...rest }) => {
 
     const extraProps = {};
 
@@ -52,7 +54,7 @@ const Link = ({ children, href, target = TARGET_SELF }) => {
     }
 
     return (
-        <a href={href} className={`${lightTheme} ${fieldHightlight}`} {...extraProps}>
+        <a {...rest} href={href} className={`${lightTheme} ${fieldHightlight}`} {...extraProps}>
             {children} {isTargetBlank && <span>(abre em nova janela)</span>}
         </a>
     )
