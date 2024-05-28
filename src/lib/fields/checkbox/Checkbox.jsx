@@ -49,26 +49,6 @@ const Checkbox = ({
     const violations = useFieldValidations(label, id);
 
     /**
-     * Diretriz do eMAG:
-     * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
-     * 
-     * Possibilita marcar/desmarcar o Checkbox através da tecla Enter.     
-     * Não é necessário utilizar a tag aria-checked. De acordo com a MDN:
-     * "Nota: Sempre que possível, use um <input> elemento HTML com type="checkbox", 
-     * pois esse elemento tem semântica incorporada e não requer atributos ARIA."
-     * Ref: https://developer.mozilla.org/en-US/docs/web/Accessibility/ARIA/Attributes/aria-checked
-     * @param {KeyboardEvent} event 
-     */
-    const onKeyDown = event => {
-        const key = event.code;
-
-        //  verifica se foi pressionado a tecla Enter ou espaço.
-        if (INTERACTION_KEYS.includes(key)) {
-            setIsChecked(!isChecked);
-        }
-    }
-
-    /**
      * Marca/desmarca o checkbox através da interação pelo mouse.
      * @param {MouseEvent} event 
      */
@@ -95,7 +75,6 @@ const Checkbox = ({
                         role="checkbox"
                         className={`${lightTheme} ${fieldHightlight}`}
                         checked={isChecked}
-                        onKeyDown={onKeyDown}
                         onChange={onChange}
                         type="checkbox"
                         name={id}

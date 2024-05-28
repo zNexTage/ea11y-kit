@@ -59,35 +59,5 @@ describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
         const field = screen.getByRole("checkbox");
 
         waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
-    });
-
-    it("Deve selecionar e desmarcar o campo ao foca-lo e pressionar enter", () => {
-        render(
-            <Checkbox
-                id="teste"
-                isRequired={true}
-                label="teste"
-                type="text"
-                placeholder="Digite aqui..."
-            />
-        )
-
-        const field = screen.getByRole("checkbox");
-
-        // Seleciona o campo ao pressionar a tecla Enter
-        fireEvent.keyDown(field, { code: KeyboardKeys.ENTER });
-        expect(field).toBeChecked();
-
-        // Desmarca o campo ao pressionar a tecla Enter
-        fireEvent.keyDown(field, { code: KeyboardKeys.ENTER });
-        expect(field).not.toBeChecked();
-
-        // Seleciona o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
-        fireEvent.keyDown(field, { code: KeyboardKeys.NUMPAD_ENTER });
-        expect(field).toBeChecked();
-
-        // Desmarca o campo ao pressionar o Enter que fica junto com a parte numérica do teclado.
-        fireEvent.keyDown(field, { code: KeyboardKeys.NUMPAD_ENTER });
-        expect(field).not.toBeChecked();
-    });
+    });    
 });
