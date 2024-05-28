@@ -40,7 +40,7 @@ const Link = ({ children, href, target, ...rest }) => {
     const isTargetBlank = target === TARGET_BLANK;
 
     /*
-    adiciona a configuração com noopener e noreferrer.
+    adiciona a configuração noopener e noreferrer.
     noopener:  
       - Previne que a nova página (a que foi aberta com target="_blank") tenha acesso ao objeto window.opener.
       - Sem essa precaução, a nova página poderia executar scripts que manipulassem a página original, o que pode ser um risco de segurança.
