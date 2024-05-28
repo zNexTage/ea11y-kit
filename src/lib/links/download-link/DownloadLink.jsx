@@ -5,8 +5,7 @@ import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidel
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
-import { lightTheme } from "../../../stitches.config";
-import { fieldHightlight } from "../../fields/shared-styles/Field.style";
+import Link from "../link";
 
 /**
  *  @typedef DownloadLinkProps
@@ -98,14 +97,9 @@ const DownloadLink = ({
         <>
             {
                 violations.length === 0 &&
-                <a
-                    ref={downloadLinkRef}
-                    onKeyDown={onKeyDown}
-                    className={`${lightTheme} ${fieldHightlight}`}
-                    download={true}
-                    href={href}>
+                <Link ref={downloadLinkRef} href={href} onKeyDown={onKeyDown} download={true} >
                     {fileName} ({extension} {size}{unit})
-                </a>
+                </Link>
             }
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
