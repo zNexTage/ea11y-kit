@@ -2,7 +2,6 @@ import { lightTheme } from "../../../stitches.config";
 import { fieldHightlight } from "../../fields/shared-styles/Field.style";
 
 const TARGET_BLANK = "_blank";
-const TARGET_SELF = "_self";
 
 /**
  * @typedef LinkProps 
@@ -34,7 +33,7 @@ const TARGET_SELF = "_self";
  * @param {ExtendedLinkProps} props 
  * @returns 
  */
-const Link = ({ children, href, target = TARGET_SELF, ...rest }) => {
+const Link = ({ children, href, target, ...rest }) => {
 
     const extraProps = {};
 
@@ -54,7 +53,7 @@ const Link = ({ children, href, target = TARGET_SELF, ...rest }) => {
     }
 
     return (
-        <a {...rest} href={href} className={`${lightTheme} ${fieldHightlight}`} {...extraProps}>
+        <a {...rest} target={target} href={href} className={`${lightTheme} ${fieldHightlight}`} {...extraProps}>
             {children} {isTargetBlank && <span>(abre em nova janela)</span>}
         </a>
     )
