@@ -190,7 +190,7 @@ export const FallbackWeek = ({
                             label="Ano"
                         >
                             {orderedYears.map(year => (
-                                <option value={year}>
+                                <option key={`fallback_year_${year}`} value={year}>
                                     {year}
                                 </option>
                             ))}

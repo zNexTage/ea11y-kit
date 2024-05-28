@@ -5,8 +5,7 @@ import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidel
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
-import { lightTheme } from "../../../stitches.config";
-import { fieldHightlight } from "../../fields/shared-styles/Field.style";
+import Link from "../link";
 
 /**
  *  @typedef DownloadLinkProps
@@ -33,7 +32,7 @@ import { fieldHightlight } from "../../fields/shared-styles/Field.style";
  * "Quando for realmente necessária a abertura de um link em nova janela, é recomendado que tal ação seja 
  * informada ao usuário no próprio texto do link. Isso permite ao usuário decidir se quer ou não sair da 
  * janela ou aba em que se encontra e, caso decida acessar o link, ele saberá que se trata de uma nova aba 
- * ou janela." Logo a frente do nome do arquivo e da extensão será acrescentado o texto (abre em nova janela).
+ * ou janela." Logo a frente do nome do arquivo e da extensão será acrescentado o texto (abre em nova guia).
  * 
  * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
  * É possível interagir com o link utilizando o espaço do teclado.
@@ -98,14 +97,9 @@ const DownloadLink = ({
         <>
             {
                 violations.length === 0 &&
-                <a
-                    ref={downloadLinkRef}
-                    onKeyDown={onKeyDown}
-                    className={`${lightTheme} ${fieldHightlight}`}
-                    download={true}
-                    href={href}>
+                <Link ref={downloadLinkRef} href={href} onKeyDown={onKeyDown} download={true} >
                     {fileName} ({extension} {size}{unit})
-                </a>
+                </Link>
             }
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
