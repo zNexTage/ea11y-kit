@@ -219,7 +219,6 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                         <input
                             className={`${lightTheme} ${fieldHightlight}`}
                             aria-label="Posição atual do áudio"
-                            defaultValue={0}
                             min={0}
                             max={100}
                             value={getCalcCurrentValue()}
