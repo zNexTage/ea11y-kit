@@ -3,6 +3,7 @@ import { lightTheme, } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import DownloadLink from "../links/download-link/DownloadLink";
 import { styled } from '@stitches/react';
+import useAudioPlayer from "../hooks/audio-player";
 
 /**
  * @typedef Source
@@ -37,8 +38,33 @@ const Caption = styled("p", {
 const AudioContainer = styled("div", {
     maxWidth: 300,
     textAlign: "center"
-})
+});
 
+const AudioPlayer = styled("div", {
+    border: "2px solid #ddd",
+    padding: 10,
+    borderRadius: 5,
+    position: "relative",
+});
+
+const AudioPlayerTitle = styled("p", {
+    position: "absolute",
+    top: -10,
+    margin: 0,
+    right: 8,
+    backgroundColor: "#FFF"
+});
+
+const AudioPlayerProgressControl = styled("div", {
+    display: "flex",
+    justifyContent: "space-between"
+});
+
+const AudioPlayerTime = styled("p", {
+    textAlign: "right",
+    margin: 0,
+    marginTop: 5
+})
 
 /**
  * Componente de áudio pré-configurado com as diretrizes do eMAG
@@ -56,6 +82,7 @@ const AudioContainer = styled("div", {
 const Audio = ({ sources, captionFile, tracks = [] }) => {
     //TODO: Permitir trocar a legenda.
 
+
     // const getDefaultTrack = () => {
     //     const track = tracks.find(t => t.default);
 
@@ -68,15 +95,47 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
 
     // const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
     const [currentTrackText, setCurrentTrackText] = useState("");
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     const audioRef = useRef();
 
+    const { pause, play, isPlaying } = useAudioPlayer(audioRef.current);
+
+    useEffect(() => {
+        setDuration(audioRef.current?.duration);
+    }, [audioRef.current]);
+
+    const onPlayPauseClick = event => {
+        if (isPlaying) {
+            pause();
+            return
+        }
+
+        play();
+    }
+
     /**
-     * Atualiza a legenda conforme o vídeo é reproduzido.
+     * Converte segundos para minutos
+     * @param {number} seconds 
+     */
+    const formatTime = seconds => {
+        if (!seconds) {
+            return "00:00";
+        }
+
+        const minutes = Math.floor(seconds / 60);
+        const secondsAux = Math.floor(seconds % 60);
+
+        return `${minutes}:${secondsAux < 10 ? '0' : ''}${secondsAux}`;
+    }
+
+    /**
+     * Atualiza as legendas conforme o áudio é reproduzido
      * @param {*} event 
      * @returns 
      */
-    const onTimeUpdate = event => {
+    const updateCaption = (event) => {
         if (tracks?.length === 0) return; // se não informou legendas, não precisa fazer nada.        
         const textTracks = [...event.target.textTracks];
 
@@ -97,12 +156,35 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
         setCurrentTrackText(currentCue.text);
     }
 
+    /**
+     * Atualiza a legenda conforme o vídeo é reproduzido e atualiza o estado current time.
+     * @param {*} event 
+     * @returns 
+     */
+    const onTimeUpdate = event => {
+        updateCaption(event);
+
+        setCurrentTime(event.target.currentTime);
+    }
+
+    /**
+     * Cálcula o valor atual da reprodução em porcentagem. 
+     * @returns {number}
+     */
+    const getCalcCurrentValue = () => {
+        const value = (currentTime / duration) * 100;
+
+        if(!value) return 0;
+        return value;
+    }
+
+
     return (
         <AudioContainer>
             <Caption style={{ display: !currentTrackText ? "none" : "inline-block" }}>
                 {currentTrackText}
             </Caption>
-            <audio ref={audioRef} onTimeUpdate={onTimeUpdate} className={`${lightTheme} ${fieldHightlight}`} controls>
+            <audio style={{ display: "none" }} ref={audioRef} onTimeUpdate={onTimeUpdate} className={`${lightTheme} ${fieldHightlight}`} controls>
                 {
                     sources.map((source, index) => (
                         <source
@@ -126,6 +208,27 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                 }
             </audio>
             <br />
+            <AudioPlayer>
+                <AudioPlayerTitle>
+                    Reprodutor de áudio
+                </AudioPlayerTitle>
+                <div>
+                    <AudioPlayerProgressControl>
+                        <button onClick={onPlayPauseClick}>
+                            {isPlaying ? "Pausar" : "Reproduzir"}
+                        </button>
+                        <input
+                            defaultValue={0}
+                            min={0}
+                            max={100}
+                            value={getCalcCurrentValue()}
+                            type="range" />
+                    </AudioPlayerProgressControl>
+                    <AudioPlayerTime>
+                        {formatTime(currentTime)} / {formatTime(duration)}
+                    </AudioPlayerTime>
+                </div>
+            </AudioPlayer>
             <DownloadLink
                 {...captionFile}
             />
