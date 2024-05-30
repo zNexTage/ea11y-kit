@@ -32,7 +32,8 @@ const Caption = styled("p", {
     backgroundColor: "rgb(71, 71, 71)",
     color: "#fff",
     padding: 5,
-    display: "inline-block",
+    minHeight: 20,
+    display: "block",
     borderRadius: 3
 });
 
@@ -164,7 +165,7 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
      */
     const onTimeUpdate = event => {
         updateCaption(event);
-        
+
         const currentTime = event.target.currentTime;
 
         setCurrentTime(currentTime);
@@ -176,8 +177,8 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
      */
     const onProgressChange = event => {
         const value = Number.parseFloat(event.target.value);
-        
-        const timeSeek = (value * duration) / 100;
+
+        const timeSeek = (value * audioRef.current.duration) / 100;
 
         setCurrentTime(timeSeek);
         audioRef.current.currentTime = timeSeek;
@@ -188,16 +189,16 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
      * @returns {number}
      */
     const getCurrentTime = () => {
-        if(!audioRef.current?.currentTime) return 0;
+        if (!audioRef.current?.currentTime) return 0;
 
-        return (audioRef.current.currentTime / duration) * 100;
+        return (audioRef.current.currentTime / audioRef.current.duration) * 100;
     }
+
+    console.log(getCurrentTime());
 
     return (
         <AudioContainer>
-            <Caption style={{ display: !currentTrackText ? "none" : "inline-block" }}>
-                {currentTrackText}
-            </Caption>
+
             <audio style={{ display: "none" }} ref={audioRef} onTimeUpdate={onTimeUpdate} className={`${lightTheme} ${fieldHightlight}`} controls>
                 {
                     sources.map((source, index) => (
@@ -226,6 +227,8 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                 <AudioPlayerTitle>
                     Reprodutor de áudio
                 </AudioPlayerTitle>
+
+
                 <div>
                     <AudioPlayerProgressControl>
                         <Button text={isPlaying ? "Pausar" : "Reproduzir"} onClick={onPlayPauseClick} />
@@ -242,6 +245,10 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                         {formatTime(currentTime)} / {formatTime(duration)}
                     </AudioPlayerTime>
                 </div>
+
+                <Caption css={{ textAlign: 'left' }}>
+                    {currentTrackText}
+                </Caption>
             </AudioPlayer>
             <DownloadLink
                 {...captionFile}
