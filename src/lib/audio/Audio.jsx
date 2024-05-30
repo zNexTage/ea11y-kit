@@ -6,6 +6,7 @@ import { styled } from '@stitches/react';
 import useAudioPlayer from "../hooks/audio-player";
 import Button from "../fields/button/Button";
 import Select from "../fields/select/Select";
+import Range from "../fields/range/Range";
 
 /**
  * @typedef Source
@@ -69,6 +70,19 @@ const AudioPlayerTime = styled("p", {
     marginTop: 5
 })
 
+const VolumeContainer = styled("div", {
+    textAlign: "left",
+    display: "flex",
+    alignItems: "center",
+    "&>span": {
+        flex: .2
+    },
+    "&>div": {
+        width: "100%",
+        flex: 1
+    }
+})
+
 /**
  * Componente de áudio pré-configurado com as diretrizes do eMAG
  * 
@@ -83,6 +97,8 @@ const AudioPlayerTime = styled("p", {
  * @returns 
  */
 const Audio = ({ sources, captionFile, tracks = [] }) => {
+
+    const rgVolumeId = useId();
 
     const getDefaultTrack = () => {
         const track = tracks.filter(t => t.default)[0];
@@ -104,6 +120,7 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
     const [currentTrackText, setCurrentTrackText] = useState("");
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(0);
 
     const audioRef = useRef();
 
@@ -111,7 +128,10 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
 
     useEffect(() => {
         setDuration(audioRef.current?.duration);
+        setVolume(audioRef.current?.volume * 100);
     }, [audioRef.current]);
+
+
 
     /**
      * Inicia ou pausa um vídeo.
@@ -228,10 +248,28 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
         return (audioRef.current.currentTime / audioRef.current.duration) * 100;
     }
 
+    /**
+ * Modifica o volume com base na seleção do usuário.
+     * @param {} event 
+     */
+    const onChangeVolume = event => {
+        const newVolume = Number.parseFloat(event.target.value);
+
+        audioRef.current.volume = newVolume / 100;
+
+        setVolume(newVolume);
+    }
+
     return (
         <AudioContainer>
 
-            <audio style={{ display: "none" }} ref={audioRef} onTimeUpdate={onTimeUpdate} className={`${lightTheme} ${fieldHightlight}`} controls>
+            <audio
+                style={{ display: "none" }}
+                ref={audioRef}
+                onTimeUpdate={onTimeUpdate}
+                className={`${lightTheme} ${fieldHightlight}`}
+                controls
+            >
                 {
                     sources.map((source, index) => (
                         <source
@@ -263,7 +301,10 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
 
                 <div>
                     <AudioPlayerProgressControl>
-                        <Button text={isPlaying ? "Pausar" : "Reproduzir"} onClick={onPlayPauseClick} />
+                        <Button
+                            text={isPlaying ? "Pausar" : "Reproduzir"}
+                            onClick={onPlayPauseClick}
+                        />
                         <input
                             className={`${lightTheme} ${fieldHightlight}`}
                             aria-label="Posição atual do áudio"
@@ -278,13 +319,28 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                     </AudioPlayerTime>
                 </div>
 
+                <VolumeContainer>
+                    <span>
+                        {volume}
+                    </span>
+                    <Range
+                        value={volume}
+                        id={rgVolumeId}
+                        max={100}
+                        min={0}
+                        onChange={onChangeVolume}
+                        label="Volume"
+                        name={`volume_${rgVolumeId}`}
+                    />
+                </VolumeContainer>
+
                 {
                     tracks.length > 0 &&
                     <div style={{ textAlign: 'left' }}>
                         <Select
                             id="cboLegenda"
                             name="legenda"
-                            label="Selecione a legenda"
+                            label="Idioma da legenda"
                             extraAttributes={{
                                 onChange: event => {
                                     const track = tracks.find(track => track.srcLang === event.target.value);
