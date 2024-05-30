@@ -4,6 +4,7 @@ import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import DownloadLink from "../links/download-link/DownloadLink";
 import { styled } from '@stitches/react';
 import useAudioPlayer from "../hooks/audio-player";
+import Button from "../fields/button/Button";
 
 /**
  * @typedef Source
@@ -174,7 +175,7 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
     const getCalcCurrentValue = () => {
         const value = (currentTime / duration) * 100;
 
-        if(!value) return 0;
+        if (!value) return 0;
         return value;
     }
 
@@ -214,9 +215,7 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                 </AudioPlayerTitle>
                 <div>
                     <AudioPlayerProgressControl>
-                        <button onClick={onPlayPauseClick}>
-                            {isPlaying ? "Pausar" : "Reproduzir"}
-                        </button>
+                        <Button text={isPlaying ? "Pausar" : "Reproduzir"} onClick={onPlayPauseClick} />
                         <input
                             defaultValue={0}
                             min={0}
