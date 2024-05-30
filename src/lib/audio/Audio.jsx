@@ -83,7 +83,7 @@ const AudioPlayerTime = styled("p", {
  * @returns 
  */
 const Audio = ({ sources, captionFile, tracks = [] }) => {
-    
+
     const getDefaultTrack = () => {
         const track = tracks.filter(t => t.default)[0];
 
@@ -94,7 +94,13 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
         return tracks[0];
     }
 
+    useEffect(() => {
+        // Sempre quando as legendas forem trocadas, altera a legend selecionada.
+        setSelectedTrack(getDefaultTrack());
+    }, [tracks]);
+
     const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
+
     const [currentTrackText, setCurrentTrackText] = useState("");
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -107,6 +113,11 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
         setDuration(audioRef.current?.duration);
     }, [audioRef.current]);
 
+    /**
+     * Inicia ou pausa um vídeo.
+     * @param {*} event 
+     * @returns 
+     */
     const onPlayPauseClick = event => {
         if (isPlaying) {
             pause();
@@ -158,14 +169,14 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
      * @returns 
      */
     const updateCaption = (event) => {
-        if (tracks?.length === 0) return; // se não informou legendas, não precisa fazer nada.        
-        const textTracks = [...event.target.textTracks];
+        if (tracks?.length === 0) return; // se não informou legendas, não precisa fazer nada.    
 
-        // console.log(selectedTrack);
-        console.dir(textTracks);
+        const textTracks = [...event.target.textTracks];
 
         // o mode da legenda utilizada é showing.
         const currentTextTrack = textTracks.find(track => track.mode === "showing");
+
+        if (!currentTextTrack) return;
 
         const activeCues = currentTextTrack.activeCues;
 
@@ -288,11 +299,11 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                             {currentTrackText}
                         </Caption>
 
-                        <DownloadLink
-                            {...captionFile}
-                        />
                     </div>
                 }
+                <DownloadLink
+                    {...captionFile}
+                />
             </AudioPlayer>
 
         </AudioContainer>
