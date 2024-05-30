@@ -164,21 +164,34 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
      */
     const onTimeUpdate = event => {
         updateCaption(event);
+        
+        const currentTime = event.target.currentTime;
 
-        setCurrentTime(event.target.currentTime);
+        setCurrentTime(currentTime);
     }
 
     /**
-     * Cálcula o valor atual da reprodução em porcentagem. 
-     * @returns {number}
+     * Altera o tempo do vídeo para o tempo requisitado no range.
+     * @param {*} event 
      */
-    const getCalcCurrentValue = () => {
-        const value = (currentTime / duration) * 100;
+    const onProgressChange = event => {
+        const value = Number.parseFloat(event.target.value);
+        
+        const timeSeek = (value * duration) / 100;
 
-        if (!value) return 0;
-        return value;
+        setCurrentTime(timeSeek);
+        audioRef.current.currentTime = timeSeek;
     }
 
+    /**
+     * Obtém o tempo atual do vídeo em porcentagem
+     * @returns {number}
+     */
+    const getCurrentTime = () => {
+        if(!audioRef.current?.currentTime) return 0;
+
+        return (audioRef.current.currentTime / duration) * 100;
+    }
 
     return (
         <AudioContainer>
@@ -221,7 +234,8 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                             aria-label="Posição atual do áudio"
                             min={0}
                             max={100}
-                            value={getCalcCurrentValue()}
+                            onChange={onProgressChange}
+                            value={getCurrentTime()}
                             type="range" />
                     </AudioPlayerProgressControl>
                     <AudioPlayerTime>
