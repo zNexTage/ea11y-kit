@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { lightTheme, } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import DownloadLink from "../links/download-link/DownloadLink";
 import { styled } from '@stitches/react';
 import useAudioPlayer from "../hooks/audio-player";
 import Button from "../fields/button/Button";
+import Select from "../fields/select/Select";
 
 /**
  * @typedef Source
@@ -82,20 +83,18 @@ const AudioPlayerTime = styled("p", {
  * @returns 
  */
 const Audio = ({ sources, captionFile, tracks = [] }) => {
-    //TODO: Permitir trocar a legenda.
+    
+    const getDefaultTrack = () => {
+        const track = tracks.filter(t => t.default)[0];
 
+        if (track) {
+            return track;
+        }
 
-    // const getDefaultTrack = () => {
-    //     const track = tracks.find(t => t.default);
+        return tracks[0];
+    }
 
-    //     if (track) {
-    //         return track;
-    //     }
-
-    //     return tracks[0];
-    // }
-
-    // const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
+    const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
     const [currentTrackText, setCurrentTrackText] = useState("");
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -133,6 +132,27 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
     }
 
     /**
+     * Troca a linguagem da legenda.
+     * @returns 
+     */
+    const changeLegendLang = () => {
+        if (!tracks || tracks?.length === 0) return;
+
+        const textTracks = [...audioRef.current.textTracks];
+
+        // desabilita as outras legendas.
+        textTracks.forEach(track => {
+            track.mode = "disabled";
+        });
+
+        // demonstra a legenda selecionada.
+        const textTrack = textTracks.find(track => track.language === selectedTrack.srcLang);
+        textTrack.mode = "showing";
+    }
+
+    useEffect(changeLegendLang, [selectedTrack]);
+
+    /**
      * Atualiza as legendas conforme o áudio é reproduzido
      * @param {*} event 
      * @returns 
@@ -140,6 +160,9 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
     const updateCaption = (event) => {
         if (tracks?.length === 0) return; // se não informou legendas, não precisa fazer nada.        
         const textTracks = [...event.target.textTracks];
+
+        // console.log(selectedTrack);
+        console.dir(textTracks);
 
         // o mode da legenda utilizada é showing.
         const currentTextTrack = textTracks.find(track => track.mode === "showing");
@@ -194,8 +217,6 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
         return (audioRef.current.currentTime / audioRef.current.duration) * 100;
     }
 
-    console.log(getCurrentTime());
-
     return (
         <AudioContainer>
 
@@ -246,13 +267,34 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
                     </AudioPlayerTime>
                 </div>
 
-                <Caption css={{ textAlign: 'left' }}>
-                    {currentTrackText}
-                </Caption>
+                {
+                    tracks.length > 0 &&
+                    <div style={{ textAlign: 'left' }}>
+                        <Select
+                            id="cboLegenda"
+                            name="legenda"
+                            label="Selecione a legenda"
+                            extraAttributes={{
+                                onChange: event => {
+                                    const track = tracks.find(track => track.srcLang === event.target.value);
+
+                                    setSelectedTrack(track);
+                                }
+                            }}
+                        >
+                            {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}
+                        </Select>
+                        <Caption>
+                            {currentTrackText}
+                        </Caption>
+
+                        <DownloadLink
+                            {...captionFile}
+                        />
+                    </div>
+                }
             </AudioPlayer>
-            <DownloadLink
-                {...captionFile}
-            />
+
         </AudioContainer>
     )
 }
