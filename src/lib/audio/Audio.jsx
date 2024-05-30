@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from "react";
 import { lightTheme, } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import DownloadLink from "../links/download-link/DownloadLink";
+import { styled } from '@stitches/react';
 
 /**
  * @typedef Source
@@ -9,11 +11,33 @@ import DownloadLink from "../links/download-link/DownloadLink";
  */
 
 /**
+ * @typedef Track
+ * @property {string} src
+ * @property {string} srcLang
+ * @property {boolean} default
+ * @property {string} label
+ */
+
+/**
  * @typedef AudioProps
  * @property {Array<Source>} sources
- * @property {import("../links/download-link/DownloadLink").DownloadLinkProps} caption
+ * @property {import("../links/download-link/DownloadLink").DownloadLinkProps} captionFile
+ * @property {Array<Track>} tracks
  * 
  */
+
+const Caption = styled("p", {
+    backgroundColor: "rgb(71, 71, 71)",
+    color: "#fff",
+    padding: 5,
+    display: "inline-block",
+    borderRadius: 3
+});
+
+const AudioContainer = styled("div", {
+    maxWidth: 300,
+    textAlign: "center"
+})
 
 
 /**
@@ -29,11 +53,56 @@ import DownloadLink from "../links/download-link/DownloadLink";
  * @param {AudioProps} props
  * @returns 
  */
-const Audio = ({ sources, caption }) => {
+const Audio = ({ sources, captionFile, tracks = [] }) => {
+    //TODO: Permitir trocar a legenda.
+
+    // const getDefaultTrack = () => {
+    //     const track = tracks.find(t => t.default);
+
+    //     if (track) {
+    //         return track;
+    //     }
+
+    //     return tracks[0];
+    // }
+
+    // const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
+    const [currentTrackText, setCurrentTrackText] = useState("");
+
+    const audioRef = useRef();
+
+    /**
+     * Atualiza a legenda conforme o vídeo é reproduzido.
+     * @param {*} event 
+     * @returns 
+     */
+    const onTimeUpdate = event => {
+        if (tracks?.length === 0) return; // se não informou legendas, não precisa fazer nada.        
+        const textTracks = [...event.target.textTracks];
+
+        // o mode da legenda utilizada é showing.
+        const currentTextTrack = textTracks.find(track => track.mode === "showing");
+
+        const activeCues = currentTextTrack.activeCues;
+
+        // se não for falas, som e etc... no momento atual do vídeo, 
+        // limpa o estado.
+        if (activeCues.length == 0) {
+            setCurrentTrackText("");
+            return;
+        };
+
+        const currentCue = activeCues[0];
+
+        setCurrentTrackText(currentCue.text);
+    }
 
     return (
-        <div>
-            <audio className={`${lightTheme} ${fieldHightlight}`} controls>
+        <AudioContainer>
+            <Caption style={{ display: !currentTrackText ? "none" : "inline-block" }}>
+                {currentTrackText}
+            </Caption>
+            <audio ref={audioRef} onTimeUpdate={onTimeUpdate} className={`${lightTheme} ${fieldHightlight}`} controls>
                 {
                     sources.map((source, index) => (
                         <source
@@ -43,12 +112,24 @@ const Audio = ({ sources, caption }) => {
                         </source>
                     ))
                 }
+                {
+                    tracks.map(track => (
+                        <track
+                            key={`track_${track.label}_${track.srcLang}`}
+                            kind="captions"
+                            label={track.label}
+                            src={track.src}
+                            srcLang={track.srcLang}
+                            default={track.default}>
+                        </track>
+                    ))
+                }
             </audio>
             <br />
             <DownloadLink
-                {...caption}
+                {...captionFile}
             />
-        </div>
+        </AudioContainer>
     )
 }
 
