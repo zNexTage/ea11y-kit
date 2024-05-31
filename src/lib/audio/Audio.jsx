@@ -10,6 +10,8 @@ import Range from "../fields/range/Range";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_ALTERNATIVE_TO_AUDIO } from "../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../components/component-error-list";
+import PropTypes from "prop-types";
+
 
 /**
  * @typedef Source
@@ -358,7 +360,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                         min={0}
                                         onChange={onChangeVolume}
                                         label="Volume"
-                                        name={`volume_${rgVolumeId}`}
+                                        name={"volume"}
                                     />
                                 </VolumeContainer>
 
@@ -367,7 +369,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                     <div style={{ textAlign: 'left' }}>
                                         <Select
                                             id={cboLegendId}
-                                            name={`legenda_${cboLegendId}`}
+                                            name={"legenda"}
                                             label="Idioma da legenda"
                                             extraAttributes={{
                                                 onChange: event => {
@@ -403,6 +405,28 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
     )
+}
+
+Audio.propTypes = {
+    sources: PropTypes.arrayOf(
+        PropTypes.shape({
+            src: PropTypes.string.isRequired,
+            type: PropTypes.string.isRequired,
+        }).isRequired
+    ),
+    captionFile: PropTypes.objectOf(PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        fileName: PropTypes.string.isRequired,
+        extension: PropTypes.string.isRequired,
+        size: PropTypes.number.isRequired,
+        unit: PropTypes.string.isRequired,
+    })).isRequired,
+    tracks: PropTypes.arrayOf(PropTypes.shape({
+        src: PropTypes.string.isRequired,
+        srcLang: PropTypes.string.isRequired,
+        default: PropTypes.bool.isRequired,
+        label: PropTypes.string.isRequired,
+    }))
 }
 
 export default Audio;
