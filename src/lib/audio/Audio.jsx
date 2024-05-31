@@ -7,6 +7,9 @@ import useAudioPlayer from "../hooks/audio-player";
 import Button from "../fields/button/Button";
 import Select from "../fields/select/Select";
 import Range from "../fields/range/Range";
+import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
+import { PROVIDE_ALTERNATIVE_TO_AUDIO } from "../../utils/eMagGuidelineCode";
+import ComponentErrorList from "../../components/component-error-list";
 
 /**
  * @typedef Source
@@ -96,9 +99,22 @@ const VolumeContainer = styled("div", {
  * @param {AudioProps} props
  * @returns 
  */
-const Audio = ({ sources, captionFile, tracks = [] }) => {
+const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
     const rgVolumeId = useId();
+    const cboLegendId = useId();
+
+    const [violations, setViolations] = useState([]);
+
+    useEffect(() => {
+        const violationAux = [];
+
+        if (!captionFile) {
+            violationAux.push(new GuidelineViolation(PROVIDE_ALTERNATIVE_TO_AUDIO, "Deve-se fornecer uma transcrição descritiva do áudio via parâmetro `captionFile`. De acordo com o eMAG, prover uma alternativa textual para o áudio é essencial para beneficiar pessoas com deficiência auditiva, usuários que não possuem equipamento de som, que apenas desejam realizar a leitura do material e que estão sem tempo para ouvir um arquivo multimídia."))
+        }
+
+        setViolations([...violationAux]);
+    }, []);
 
     const getDefaultTrack = () => {
         const track = tracks.filter(t => t.default)[0];
@@ -178,6 +194,8 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
 
         // demonstra a legenda selecionada.
         const textTrack = textTracks.find(track => track.language === selectedTrack.srcLang);
+
+        if (!textTrack) return; // não faz nada se não localizar a legenda.
         textTrack.mode = "showing";
     }
 
@@ -255,114 +273,136 @@ const Audio = ({ sources, captionFile, tracks = [] }) => {
     const onChangeVolume = event => {
         const newVolume = Number.parseFloat(event.target.value);
 
+        // o volume do áudio é de 0 a 100
         audioRef.current.volume = newVolume / 100;
 
         setVolume(newVolume);
     }
 
     return (
-        <AudioContainer>
+        <>
+            {violations.length === 0 &&
+                <AudioContainer>
 
-            <audio
-                style={{ display: "none" }}
-                ref={audioRef}
-                onTimeUpdate={onTimeUpdate}
-                className={`${lightTheme} ${fieldHightlight}`}
-                controls
-            >
-                {
-                    sources.map((source, index) => (
-                        <source
-                            key={`audio_source_${index}`}
-                            src={source.src}
-                            type={source.type}>
-                        </source>
-                    ))
-                }
-                {
-                    tracks.map(track => (
-                        <track
-                            key={`track_${track.label}_${track.srcLang}`}
-                            kind="captions"
-                            label={track.label}
-                            src={track.src}
-                            srcLang={track.srcLang}
-                            default={track.default}>
-                        </track>
-                    ))
-                }
-            </audio>
-            <br />
-            <AudioPlayer>
-                <AudioPlayerTitle>
-                    Reprodutor de áudio
-                </AudioPlayerTitle>
+                    <audio
+                        style={{ display: "none" }}
+                        ref={audioRef}
+                        onTimeUpdate={onTimeUpdate}
+                        className={`${lightTheme} ${fieldHightlight}`}
+                        controls
+                    >
+                        {
+                            sources.map((source, index) => (
+                                <source
+                                    key={`audio_source_${index}`}
+                                    src={source.src}
+                                    type={source.type}>
+                                </source>
+                            ))
+                        }
+                        {
+                            tracks.map(track => (
+                                <track
+                                    key={`track_${track.label}_${track.srcLang}`}
+                                    kind="captions"
+                                    label={track.label}
+                                    src={track.src}
+                                    srcLang={track.srcLang}
+                                    default={track.default}>
+                                </track>
+                            ))
+                        }
+                    </audio>
+                    <br />
+                    <AudioPlayer>
+                        <AudioPlayerTitle>
+                            Reprodutor de áudio
+                        </AudioPlayerTitle>
 
 
-                <div>
-                    <AudioPlayerProgressControl>
-                        <Button
-                            text={isPlaying ? "Pausar" : "Reproduzir"}
-                            onClick={onPlayPauseClick}
-                        />
-                        <input
-                            className={`${lightTheme} ${fieldHightlight}`}
-                            aria-label="Posição atual do áudio"
-                            min={0}
-                            max={100}
-                            onChange={onProgressChange}
-                            value={getCurrentTime()}
-                            type="range" />
-                    </AudioPlayerProgressControl>
-                    <AudioPlayerTime>
-                        {formatTime(currentTime)} / {formatTime(duration)}
-                    </AudioPlayerTime>
-                </div>
+                        {sources.length > 0 &&
+                            <>
+                                <div>
+                                    <AudioPlayerProgressControl>
+                                        <Button
+                                            text={isPlaying ? "Pausar" : "Reproduzir"}
+                                            onClick={onPlayPauseClick}
+                                        />
+                                        <input
+                                            className={`${lightTheme} ${fieldHightlight}`}
+                                            aria-label="Posição atual do áudio"
+                                            min={0}
+                                            max={100}
+                                            onChange={onProgressChange}
+                                            value={getCurrentTime()}
+                                            type="range" />
+                                    </AudioPlayerProgressControl>
+                                    <AudioPlayerTime>
+                                        {/* Key -> "As chaves ajudam o React a identificar quais itens sofreram alterações, foram adicionados ou removidos"
+                                        por tanto, utiliza-se currentTime como key do span para que o conteúdo seja atualizado sempre que o tempo do vídeo mudar.
+                                        algo similar é feito para o duration, porque audioRef.current.duration inicia como null e depois atualiza com o tempo total 
+                                        do áudio. Entretanto, utilizar audioRef.current.duration diretamente não faz o componente atualizar com o valor correto, portanto
+                                        utiliza-se um estado.
+                                        */}
+                                        <span key={`current_time_${currentTime}`}>{formatTime(currentTime)}</span> / <span key={`duration_${duration}`}>{formatTime(duration)}</span> 
+                                    </AudioPlayerTime>
+                                </div>
 
-                <VolumeContainer>
-                    <span>
-                        {volume}
-                    </span>
-                    <Range
-                        value={volume}
-                        id={rgVolumeId}
-                        max={100}
-                        min={0}
-                        onChange={onChangeVolume}
-                        label="Volume"
-                        name={`volume_${rgVolumeId}`}
-                    />
-                </VolumeContainer>
+                                <VolumeContainer>
+                                    <span>
+                                        {volume}
+                                    </span>
+                                    <Range
+                                        value={volume}
+                                        id={rgVolumeId}
+                                        max={100}
+                                        min={0}
+                                        onChange={onChangeVolume}
+                                        label="Volume"
+                                        name={`volume_${rgVolumeId}`}
+                                    />
+                                </VolumeContainer>
 
-                {
-                    tracks.length > 0 &&
-                    <div style={{ textAlign: 'left' }}>
-                        <Select
-                            id="cboLegenda"
-                            name="legenda"
-                            label="Idioma da legenda"
-                            extraAttributes={{
-                                onChange: event => {
-                                    const track = tracks.find(track => track.srcLang === event.target.value);
+                                {
+                                    tracks.length > 0 &&
+                                    <div style={{ textAlign: 'left' }}>
+                                        <Select
+                                            id={cboLegendId}
+                                            name={`legenda_${cboLegendId}`}
+                                            label="Idioma da legenda"
+                                            extraAttributes={{
+                                                onChange: event => {
+                                                    const track = tracks.find(track => track.srcLang === event.target.value);
 
-                                    setSelectedTrack(track);
+                                                    setSelectedTrack(track);
+                                                }
+                                            }}
+                                        >
+                                            {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}
+                                        </Select>
+                                        <Caption>
+                                            {currentTrackText}
+                                        </Caption>
+
+                                    </div>
                                 }
-                            }}
-                        >
-                            {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}
-                        </Select>
-                        <Caption>
-                            {currentTrackText}
-                        </Caption>
+                                <DownloadLink
+                                    {...captionFile}
+                                />
+                            </>
+                        }
+                        {sources.length == 0 &&
+                            <span role="alert">
+                                Nenhum arquivo de áudio informado.
+                            </span>
+                        }
+                    </AudioPlayer>
 
-                    </div>
-                }
-                <DownloadLink
-                    {...captionFile}
-                />
-            </AudioPlayer>
+                </AudioContainer>
+            }
 
-        </AudioContainer>
+            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+        </>
     )
 }
 
