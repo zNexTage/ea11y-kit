@@ -8,12 +8,12 @@ import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 
 /**
- * @typedef ImageButtonProps
- * 
- * @property {string} src
- * @property {string} alt
- * @property {number} width
- * @property {number} height
+ * @typedef ImageButtonProps * 
+ * @property {import("@stitches/react").CSS} css
+ */
+
+/**
+ * @typedef {ImageButtonProps & React.HTMLProps<HTMLInputElement>} ExtendedImageButtonProps
  */
 
 /**
@@ -30,14 +30,14 @@ import { lightTheme } from "../../../stitches.config";
  * que servem para o mesmo propósito do botão do tipo submit, deve ser fornecida uma descrição 
  * textual para o botão através do atributo alt.".  Este componente exige que seja informado o atributo alt.
  * 
- * @param {ImageButtonProps} props
+ * @param {ExtendedImageButtonProps} props
  * @returns 
  */
 const ImageButton = ({
     src,
     alt,
-    width = 100,
-    height = 30
+    css,
+    ...rest
 }) => {
     const [errors, setErrors] = useState([]);
 
@@ -60,10 +60,10 @@ const ImageButton = ({
             {
                 errors.length === 0 &&
                 <input
+                    {...rest}
                     className={`${lightTheme} ${fieldHightlight}`}
+                    css={css}
                     type="image"
-                    width={width}
-                    height={height}
                     src={src}
                     alt={alt} />
             }
@@ -78,8 +78,7 @@ const ImageButton = ({
 ImageButton.propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
-    width: PropTypes.number,
-    height: PropTypes.number
+    css: PropTypes.object
 }
 
 export default ImageButton;
