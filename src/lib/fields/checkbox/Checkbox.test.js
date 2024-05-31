@@ -59,5 +59,45 @@ describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
         const field = screen.getByRole("checkbox");
 
         waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
+    });
+
+    it("Deve ser possível definir o valor inicial via props", () => {
+        render(
+            <Checkbox
+                id="teste"
+                isRequired={true}
+                label="teste"
+                type="text"
+                placeholder="Digite aqui..."
+                checked={true}
+            />
+        )
+
+        const field = screen.getByRole("checkbox");
+
+        expect(field).toBeChecked();
     });    
+
+    it("Deve ser invocado a função onChange ao selecionar ao checkbox", () => {
+        const mockOnChange = jest.fn();
+
+        render(
+            <Checkbox
+                id="teste"
+                isRequired={true}
+                label="teste"
+                type="text"
+                placeholder="Digite aqui..."
+                onChange={mockOnChange}
+            />
+        )
+
+        const field = screen.getByRole("checkbox");
+
+        fireEvent.change(field);
+
+        waitFor(()=> {
+            expect(mockOnChange).toHaveBeenCalled();
+        })
+    }); 
 });
