@@ -13,6 +13,8 @@ import { styled } from "@stitches/react";
  * @typedef WeekProps
  * @property {Array<number>?} fallbackYearOptions
  * @property {import("@stitches/react").CSS} css
+ * @property {import("@stitches/react").CSS} fallbackWeekCss
+ * @property {import("@stitches/react").CSS} fallbackWeekYearCss
  */
 
 /**
@@ -25,6 +27,8 @@ import { styled } from "@stitches/react";
  * @property {string} name
  * @property {string} id
  * @property {string} label 
+ * @property {import("@stitches/react").CSS} fallbackWeekCss
+ * @property {import("@stitches/react").CSS} fallbackWeekYearCss
  */
 
 /**
@@ -59,7 +63,9 @@ export const FallbackWeek = ({
     name,
     id,
     label,
-    required = false
+    required = false,
+    fallbackWeekCss,
+    fallbackWeekYearCss
 }) => {
 
     /**
@@ -188,6 +194,7 @@ export const FallbackWeek = ({
                             id={`fallback_year_${id}`}
                             name={`fallback_year_${name}`}
                             label="Ano"
+                            css={fallbackWeekYearCss}
                         >
                             {orderedYears.map(year => (
                                 <option key={`fallback_year_${year}`} value={year}>
@@ -202,6 +209,7 @@ export const FallbackWeek = ({
                             name={`fallback_week_${name}`}
                             required={required}
                             label="Semana"
+                            css={fallbackWeekCss}
 
                         >
                             {weeks.map((week) => (
@@ -252,7 +260,15 @@ const WeekStyled = styled("input", {});
  * @param {ExtendedWeekProps} props 
  * @returns {React.JSX.Element}
  */
-const Week = ({ id, label, name, required = false, css, fallbackYearOptions }) => {
+const Week = ({
+    id,
+    label,
+    name,
+    required = false,
+    css,
+    fallbackYearOptions,
+    fallbackWeekCss,
+    fallbackYearCss }) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
     const [isBrowserSupportsTypeWeek, setIsBrowserSupportsTypeWeek] = useState(true);
@@ -301,6 +317,9 @@ const Week = ({ id, label, name, required = false, css, fallbackYearOptions }) =
                             id={id}
                             label={label}
                             name={name}
+                            fallbackWeekCss={fallbackWeekCss}
+                            fallbackWeekYearCss={fallbackYearCss}
+
                         />
                     }
                 </>
@@ -316,7 +335,10 @@ Week.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
-    fallbackYearOptions: PropTypes.array.isRequired
+    fallbackYearOptions: PropTypes.array.isRequired,
+    css: PropTypes.object,
+    fallbackWeekCss: PropTypes.object,
+    fallbackYearCss: PropTypes.object,
 }
 
 export default Week;
