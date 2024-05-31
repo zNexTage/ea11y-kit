@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
@@ -6,17 +6,21 @@ import DownloadLink from "../../links/download-link";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
-import baseTheme, { lightTheme } from "../../../stitches.config";
+import { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 /**
  * @typedef UploadFieldProps
- * @property {string} id
- * @property {string} label
- * @property {boolean} isRequired
- * @property {string} accept
- * @property {string} acceptDescription
- * @property {bool} multiple
+ * @property {import("@stitches/react").CSS} css
  */
+
+/**
+ * @typedef {UploadFieldProps & React.HTMLProps<HTMLInputElement>} ExtendedUploadFileProps
+ */
+
+const UploadFieldStyled = styled("input", {
+    border: "none"
+});
 
 /**
  * Campo de entrada para anexo de arquivos configurado com as diretrizes do eMAG
@@ -46,7 +50,7 @@ import baseTheme, { lightTheme } from "../../../stitches.config";
  * - acceptDescription: descrição para ajudar o usuário a saber quais arquivos ele pode anexar. 
  * - multiple: define se pode anexar mais de um arquivo.
  * 
- * @param {UploadFieldProps} props
+ * @param {ExtendedUploadFileProps} props
  * @returns 
  */
 const UploadField = ({
@@ -55,7 +59,9 @@ const UploadField = ({
     isRequired,
     accept,
     acceptDescription,
-    multiple
+    multiple,
+    css,
+    onChange
 }) => {
     const [errors, setErrors] = useState([]);
     const [files, setFiles] = useState([]);
@@ -64,12 +70,12 @@ const UploadField = ({
 
     useEffect(() => {
         const uploadFieldViolations = [...violations];
-        
+
         /**
          * ao informar os formatos de arquivos permitidos (accept) é necessário descrever ao usuário
          * quais extensões o campo aceitará.
         */
-        if(accept && !acceptDescription){
+        if (accept && !acceptDescription) {
             uploadFieldViolations.push(
                 new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, "Ao informar a propriedade `accept`, é necessário informar a propriedade `acceptDescription`. Utiliza-se a propriedade `acceptDescription` para descrever ao usuário quais formatos de arquivo ele poderá anexar. Exemplo: Apenas imagens nos formatos PNG e JPG")
             )
@@ -78,15 +84,11 @@ const UploadField = ({
         setErrors([...uploadFieldViolations]);
     }, [violations, accept, acceptDescription]);
 
-    const uploadFieldCss = baseTheme.css({
-        border: 'none'
-    })
-
     /**
      * Captura o evento Change do input e atualiza o estado files com os arquivos enviados
      * @param {React.ChangeEvent<HTMLInputElement>} event 
      */
-    const onChange = event => {
+    const onChangeUploadField = event => {
         files.forEach(file => URL.revokeObjectURL(file.url));
 
         const newFiles = [].slice.call(event.target.files);
@@ -94,6 +96,8 @@ const UploadField = ({
         const normalizedFiles = newFiles.map(file => getUploadFileInfos(file));
 
         setFiles(_ => [...normalizedFiles]);
+
+        onChange && onChange(event);
     }
 
     /**
@@ -125,13 +129,14 @@ const UploadField = ({
                         {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
 
-                    <input
+                    <UploadFieldStyled
                         multiple={multiple}
-                        onChange={onChange}
+                        onChange={onChangeUploadField}
                         id={id}
                         accept={accept}
                         type="file"
-                        className={`${lightTheme} ${fieldCss} ${fieldHightlight} ${uploadFieldCss}`}
+                        className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
+                        css={css}
                     />
                     <span>
                         {
@@ -172,7 +177,7 @@ const UploadField = ({
 UploadField.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
+    required: PropTypes.bool,
     accept: PropTypes.string,
     acceptDescription: PropTypes.string,
     multiple: PropTypes.bool

@@ -99,4 +99,31 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
             expect(field).toHaveStyle("outline:  2px solid #F00;");
         });
     })
+
+    it("Deve ser possível customizar o componente via a propriedade css", () => {
+        render(
+            <UploadField
+                id="ID"
+                accept="image/jpg"
+                isRequired
+                label="Anexe sua foto"
+                acceptDescription="Apenas imagens JPG"
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+            />
+        );
+
+        const field = screen.getByLabelText("Anexe sua foto (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                "background-color": "red",
+                margin: 10,
+                padding: 10
+            })
+        });
+    })
 });
