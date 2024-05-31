@@ -5,6 +5,7 @@ import ComponentErrorList from "../../../components/component-error-list";
 import Select from "../select/Select";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import baseTheme, { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 /*
 Normaliza os números dos meses de acordo com o formato usado pelo input month padrão.
@@ -27,22 +28,33 @@ const MONTHS = [
 
 /**
  * @typedef FallbackMonthProps
- * @property {string} id
- * @property {string} name
- * @property {string} label
- * @property {boolean} required
+ * @property {import("@stitches/react").CSS} fallbackMonthCss
+ * @property {import("@stitches/react").CSS} fallbackYearCss
  * @property {number} yearRange
  */
 
 /**
  * @typedef MonthProps
- * @property {string} id
- * @property {string} label
- * @property {string} name
- * @property {boolean} isRequired
- * @property {HTMLInputElement|null} extraAttributes
+ * @property {import("@stitches/react").CSS} css
+ * @property {import("@stitches/react").CSS} fallbackMonthCss
+ * @property {import("@stitches/react").CSS} fallbackYearCss
+ * @property {number} fallbackYearRange
  */
 
+/**
+ * @typedef {MonthProps & React.HTMLProps<HTMLInputElement>} ExtendedMonthProps
+ */
+
+const fallbackContainer = baseTheme.css({
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '10px',
+    '@media(max-width: 800px)': {
+        gridTemplateColumns: '1fr!important',
+        gap: '3px!important',
+        gridTemplateRows: '1fr 1fr'
+    }
+});
 
 /**
  * Caso o navegador não suporte o campos de entrada com o tipo Month,
@@ -65,7 +77,7 @@ const MONTHS = [
  *  
  * @param {FallbackMonthProps} props
  */
-export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => {
+export const FallbackMonth = ({ required, id, yearRange = 40, name, label, fallbackMonthCss, fallbackYearCss }) => {
     // Obtém os anos anteriores com base no parâmetro range    
     const getYears = (range) => {
         const currentYear = new Date().getFullYear();
@@ -102,18 +114,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
         const selectedMonth = MONTHS.find(month => month.number === monthNumber);
 
         setMonth(selectedMonth);
-    }
-
-    const fallbackContainer = baseTheme.css({
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '10px',
-        '@media(max-width: 800px)': {
-            gridTemplateColumns: '1fr!important',
-            gap: '3px!important',
-            gridTemplateRows: '1fr 1fr'
-        }
-    });
+    }    
 
     return (
         <>
@@ -129,6 +130,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
                             label="Mês"
                             id={`fallback_month_${id}`}
                             name={`fallback_month_${name}`}
+                            css={fallbackMonthCss}
                             extraAttributes={{
                                 onChange: onChangeMonth
                             }}
@@ -140,6 +142,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
                             required={required}
                             id={`fallback_year_${id}`}
                             name={`fallback_year_${name}`}
+                            css={fallbackYearCss}
                             extraAttributes={{
                                 onChange: onChangeYear
                             }}
@@ -163,6 +166,8 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
     )
 }
 
+const MonthStyled = styled("input", {});
+
 /**
  * Campo de entrada para mês e ano configurado com as diretrizes do eMAG
   * Diretrizes adotadas:
@@ -184,9 +189,18 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label }) => 
  * é utilizado como "fallback"  um select para selecionar o mês e um select para selecionar o ano, conforme demonstrado
  * no exemplo da MDN: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#handling_browser_support
  * 
- * @param {MonthProps} props
+ * @param {ExtendedMonthProps} props
  */
-const Month = ({ id, label, name, isRequired = false, extraAttributes }) => {
+const Month = ({ id,
+    label,
+    type,
+    name,
+    required = false,
+    css,
+    fallbackMonthCss,
+    fallbackYearCss,
+    fallbackYearRange,
+    ...rest }) => {
     // FIXME: passar para o componente Fallback o yearRange.
 
     const violations = useFieldValidations(label, id);
@@ -199,7 +213,7 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes }) => {
     useEffect(() => {
         const errors = [...violations];
 
-        if (extraAttributes?.type) {
+        if (type) {
             console.warn("Não é possível alterar o tipo do componente Month");
         }
 
@@ -218,17 +232,18 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes }) => {
                         isBrowserSupportsTypeMonth ?
                             <div>
                                 <label htmlFor={id}>
-                                    {label}{isRequired && <small>&nbsp;(campo obrigatório)</small>}
+                                    {label}{required && <small>&nbsp;(campo obrigatório)</small>}
                                 </label>
-                                <input
+                                <MonthStyled
+                                    {...rest}
                                     ref={field}
-                                    {...extraAttributes}
                                     type="month"
                                     name={name}
                                     className={`${fieldCss} ${fieldHightlight} ${lightTheme}`}
+                                    css={css}
                                     id={id}
                                     pattern="[0-9]{4}-[0-9]{2}"
-                                    required={isRequired}
+                                    required={required}
                                 />
                             </div>
                             :
@@ -236,7 +251,8 @@ const Month = ({ id, label, name, isRequired = false, extraAttributes }) => {
                                 id={id}
                                 name={name}
                                 label={label}
-                                isRequired
+                                yearRange={fallbackYearRange}
+                                required={isRequired}
                             />
                     }
                 </>
@@ -253,8 +269,9 @@ Month.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
-    extraAttributes: PropTypes.object
+    css: PropTypes.object,
+    fallbackMonthCss: PropTypes.object,
+    fallbackYearCss: PropTypes.object,
 }
 
 export default Month;
