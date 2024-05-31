@@ -96,8 +96,8 @@ const Checkbox = ({
 Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
-    extraAttributes: PropTypes.object
+    css: PropTypes.object,
+    checked: PropTypes.bool
 }
 
 export default Checkbox;

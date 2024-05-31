@@ -41,7 +41,7 @@ const Button = ({ type = 'button', children, css, ...rest }) => {
 }
 
 Button.propTypes = {
-    text: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
     type: PropTypes.oneOf(['submit', 'reset', 'button']).isRequired
 }
 

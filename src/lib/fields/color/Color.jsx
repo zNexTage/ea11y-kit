@@ -97,7 +97,8 @@ Color.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    css: PropTypes.string
 }
 
 export default Color;
