@@ -104,4 +104,30 @@ describe("[Week] - Conformidade com as diretrizes do eMAG", () => {
             expect(field).toHaveStyle("outline:  2px solid #F00;")
         });
     })
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <Week
+                id="teste"
+                required={true}
+                name="semana"
+                label="teste"
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+            />
+        );
+
+        const field = screen.getByLabelText("teste (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                "background-color": "red",
+                margin: 10,
+                padding: 10
+            })
+        });
+    })
 });

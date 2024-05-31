@@ -7,14 +7,16 @@ import baseTheme, { lightTheme } from "../../../stitches.config";
 import React, { useEffect, useRef, useState } from "react";
 import useTotalWeeksInYear from "../../hooks/week/useTotalWeeksInYear";
 import Select from "../select";
+import { styled } from "@stitches/react";
 
 /** 
  * @typedef WeekProps
- * @property {string} id
- * @property {string} name
- * @property {string} label
- * @property {boolean} required
  * @property {Array<number>?} fallbackYearOptions
+ * @property {import("@stitches/react").CSS} css
+ */
+
+/**
+ * @typedef {WeekProps & React.HTMLProps<HTMLInputElement>} ExtendedWeekProps
  */
 
 /**
@@ -229,6 +231,8 @@ export const FallbackWeek = ({
     )
 }
 
+const WeekStyled = styled("input", {});
+
 /**
  * Campo de entrada para informar uma semana configurado com as diretrizes do eMAG.
  * 
@@ -245,10 +249,10 @@ export const FallbackWeek = ({
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
- * @param {WeekProps} props 
+ * @param {ExtendedWeekProps} props 
  * @returns {React.JSX.Element}
  */
-const Week = ({ id, label, name, required = false, fallbackYearOptions }) => {
+const Week = ({ id, label, name, required = false, css, fallbackYearOptions }) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
     const [isBrowserSupportsTypeWeek, setIsBrowserSupportsTypeWeek] = useState(true);
@@ -280,12 +284,13 @@ const Week = ({ id, label, name, required = false, fallbackYearOptions }) => {
                             {label} {required && <small>(campo obrigatório)</small>}
                         </label>
 
-                        <input
+                        <WeekStyled
                             ref={weekRef}
                             type="week"
                             name={name}
                             id={id}
                             className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
+                            css={css}
                         />
                     </div>}
 
