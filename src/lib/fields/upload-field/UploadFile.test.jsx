@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import UploadField from "./UploadField";
 
 describe("[UploadFile] - Violando diretriz 6.2 do eMAG", () => {
@@ -125,5 +125,31 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
                 padding: 10
             })
         });
+    })
+
+    it("Deve invocar a função onChange ao interagir com o componente", () => {
+        const mockOnChange = jest.fn();
+
+        render(
+            <UploadField
+                id="ID"
+                accept="image/jpg"
+                isRequired
+                label="Anexe sua foto"
+                onChange={mockOnChange}
+                acceptDescription="Apenas imagens JPG"
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+            />
+        );
+
+        const field = screen.getByLabelText("Anexe sua foto (campo obrigatório)");
+
+        fireEvent.change(field);
+
+        expect(mockOnChange).toHaveBeenCalled();
     })
 });
