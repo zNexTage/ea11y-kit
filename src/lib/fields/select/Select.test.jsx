@@ -145,4 +145,32 @@ describe("[Select] - Conformidade com as diretrizes do eMAG", () => {
             expect(field).toHaveStyle("outline:  2px solid #F00;")
         });
     })
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <Select
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+                id="selecione"
+                label="selecione"
+                name="selecione">
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
+        );
+
+        const field = screen.getByLabelText("selecione");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                'background-color': "red",
+                margin: 10,
+                padding: 10
+            });
+        });
+    })
 });
