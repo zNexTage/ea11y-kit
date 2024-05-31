@@ -13,7 +13,7 @@ import { lightTheme } from "../../../stitches.config";
  * @property {string} id
  * @property {string} name 
  * @property {boolean} required
- * @property {React.InputHTMLAttributes|null} extraAttributes
+ * @property {React.HTMLProps<HTMLSelectElement>|null} extraAttributes
  * @property {React.ReactNode} children
  */
 

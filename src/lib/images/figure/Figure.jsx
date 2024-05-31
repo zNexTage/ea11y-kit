@@ -9,7 +9,7 @@ import ComponentErrorList from "../../../components/component-error-list";
 /**
  * @typedef ImageProps
  * @property {string} caption
- * @property {HTMLImageElement} imgProps
+ * @property {React.HTMLProps<HTMLImageElement>} imgProps
  */
 
 
@@ -62,7 +62,7 @@ const Figure = ({ imgProps, caption }) => {
 }
 
 Figure.propTypes = {
-    imgProps: PropTypes.instanceOf(HTMLImageElement),
+    imgProps: PropTypes.object,
     caption: PropTypes.string.isRequired
 };
 

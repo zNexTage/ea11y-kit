@@ -18,7 +18,7 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url",
  */
 
 /**
- * @typedef {HTMLInputElement & TextboxProps} ExtendedTextboxProps
+ * @typedef {React.HTMLProps<HTMLInputElement> & TextboxProps} ExtendedTextboxProps
  */
 
 const TextboxStyled = styled("input", {});

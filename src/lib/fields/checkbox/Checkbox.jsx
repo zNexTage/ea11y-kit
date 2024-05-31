@@ -14,7 +14,7 @@ const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
  *  @property {string} label
  *  @property {string} id
  *  @property {boolean} isRequired 
- *  @property {HTMLInputElement|null} extraAttributes
+ *  @property {React.HTMLProps<HTMLInputElement>|null} extraAttributes
  */
 
 /**

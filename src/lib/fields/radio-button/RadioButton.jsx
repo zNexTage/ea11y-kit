@@ -15,7 +15,7 @@ const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
  * @property {string} name
  * @property {string} label 
  * @property {boolean} isRequired
- * @property {HTMLInputElement|null} extraAttributes
+ * @property {React.HTMLProps<HTMLInputElement>|null} extraAttributes
  */
 
 /**

@@ -9,7 +9,7 @@ const TARGET_BLANK = "_blank";
  * */
 
 /**
- * @typedef {LinkProps & HTMLAnchorElement} ExtendedLinkProps
+ * @typedef {LinkProps & React.HTMLProps<HTMLAnchorElement>} ExtendedLinkProps
  */
 
 /**
