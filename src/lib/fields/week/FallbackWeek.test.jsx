@@ -146,7 +146,7 @@ describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
 
         //TODO: Verificar este teste! Parece um falso positivo.
         waitFor(() => {
-            expect(field).toHaveClass({
+            expect(field).toHaveStyle({
                 "background-color": "red",
                 margin: 10,
                 padding: 10
