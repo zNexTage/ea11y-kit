@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Range from ".";
 
 describe("[Range] - Violando diretriz 6.2 do eMAG", () => {
@@ -112,22 +112,71 @@ describe("[Range] - Conformidade com as diretrizes do eMAG", () => {
         expect(Number.parseInt(range.defaultValue)).toEqual(500);
     });
 
-    // it("Deve alterar a orientação do Range ao definir orientation para vertical", () => {
-    //     render(
-    //         <Range
-    //             id="volume"
-    //             label="volume"
-    //             max={1000}
-    //             min={0}
-    //             name="volume"
-    //             orientation="vertical"
-    //         />
-    //     );
+    it("Deve alterar a orientação do Range ao definir orientation para vertical", () => {
+        render(
+            <Range
+                id="volume"
+                label="volume"
+                max={1000}
+                min={0}
+                name="volume"
+                orientation="vertical"
+            />
+        );
 
-    //     const range = screen.getByLabelText("volume");
+        const range = screen.getByLabelText("volume");
 
-    //     screen.debug(range, null)
+        waitFor(() => expect(range).toHaveStyle("writing-mode: vertical-lr"));
+    })
 
-    //     expect(range).toHaveStyle("writing-mode: vertical-lr");
-    // })
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <Range
+                id="volume"
+                label="volume"
+                max={1000}
+                min={0}
+                name="volume"
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+
+            />
+        );
+
+        const range = screen.getByLabelText("volume");
+
+        waitFor(() => {
+            expect(range).toHaveStyle({
+                "background-color": "red",
+                margin: 10,
+                padding: 10
+            })
+        })
+    })
+
+    it("Deve invocar a função onChange passada via props", () => {
+        const mockOnChange = jest.fn();
+
+        render(
+            <Range
+                id="volume"
+                label="volume"
+                max={1000}
+                min={0}
+                name="volume"
+                onChange={mockOnChange}
+            />
+        );
+
+        const range = screen.getByLabelText("volume");
+
+        fireEvent.change(range);
+
+        waitFor(() => {
+            expect(mockOnChange).toHaveBeenCalled()
+        });
+    })
 });

@@ -4,6 +4,7 @@ import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import baseTheme, { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 const RANGE_ORIENTATION_HORIZONTAL = 'horizontal';
 const RANGE_ORIENTATION_VERTICAL = 'vertical';
@@ -20,8 +21,17 @@ const RANGE_ORIENTATION_VERTICAL = 'vertical';
  * @property {(event)=>void|null} onChange
  * @property {'horizontal'|'vertical'} orientation
  * @property {string} unit
+ * @property {import("@stitches/react").CSS} css
  */
 
+const RangeStyled = styled("input", {
+    display: 'block',
+    width: "100%"
+});
+
+/**
+ * @typedef {RangeProps & HTMLInputElement} ExtendedRangeProps
+ */
 
 /**
  * Campo range configurado com as diretrizes do eMAG. 
@@ -38,7 +48,7 @@ const RANGE_ORIENTATION_VERTICAL = 'vertical';
  * O componente é renderizado apenas se estiver de acordo com as diretrizes do eMAG. Caso não esteja,
  * será renderizado uma lista contendo quais diretrizes foram violadas.
  *   
- * @param {RangeProps} props 
+ * @param {ExtendedRangeProps} props 
  * @returns 
  */
 const Range = ({
@@ -50,14 +60,12 @@ const Range = ({
     step = 1,
     value,
     onChange,
+    css,
     orientation = RANGE_ORIENTATION_HORIZONTAL,
-    unit = "%" }) => {
+    unit = "%",
+    ...rest
+}) => {
     const violations = useFieldValidations(label, id);
-
-    const rangeCss = baseTheme.css({
-        display: 'block',
-        width: "100%"
-    });
 
     const rangeVerticalCss = baseTheme.css({
         writingMode: "vertical-lr"
@@ -113,7 +121,8 @@ const Range = ({
                         {label}
                     </label>
 
-                    <input
+                    <RangeStyled
+                        {...rest}
                         type="range"
                         name={name}
                         id={id}
@@ -122,7 +131,8 @@ const Range = ({
                         step={step}
                         value={currentValue}
                         onChange={onChangeRange}
-                        className={`${rangeCss} ${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
+                        className={`${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
+                        css={css}
                     />
                 </div>
             }
@@ -140,8 +150,9 @@ Range.propTypes = {
     min: PropTypes.number,
     value: PropTypes.number,
     step: PropTypes.number,
-    orientation: PropTypes.string,
-    unit: PropTypes.string
+    orientation: PropTypes.oneOfType([RANGE_ORIENTATION_HORIZONTAL, RANGE_ORIENTATION_VERTICAL]),
+    unit: PropTypes.string,
+    css: PropTypes.object
 }
 
 export default Range;
