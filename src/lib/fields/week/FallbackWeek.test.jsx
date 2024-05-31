@@ -111,7 +111,7 @@ describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
                 label="Em qual semana do ano o curso vai começar?"
                 name="fallback_week"
                 fallbackWeekCss={{
-                    backgroundColor: "red",
+                    backgroundColor: "green",
                     margin: 10,
                     padding: 10
                 }}
@@ -121,13 +121,13 @@ describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
         const field = screen.getByLabelText("Semana (campo obrigatório)");
 
         waitFor(() => expect(field).toHaveStyle({
-            "background-color": "red",
+            "background-color": "green",
             margin: 10,
             padding: 10
         }));
     })
 
-    it("Deve ser possível customizar o select de ano via propriedade fallbackYearCss", () => {
+    it("Deve ser possível customizar o select de ano via propriedade fallbackWeekYearCss", () => {
         render(
             <FallbackWeek
                 id="txtWeek"

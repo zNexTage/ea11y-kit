@@ -268,7 +268,8 @@ const Week = ({
     css,
     fallbackYearOptions,
     fallbackWeekCss,
-    fallbackYearCss }) => {
+    fallbackWeekYearCss
+}) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
     const [isBrowserSupportsTypeWeek, setIsBrowserSupportsTypeWeek] = useState(true);
@@ -318,7 +319,7 @@ const Week = ({
                             label={label}
                             name={name}
                             fallbackWeekCss={fallbackWeekCss}
-                            fallbackWeekYearCss={fallbackYearCss}
+                            fallbackWeekYearCss={fallbackWeekYearCss}
 
                         />
                     }
@@ -338,7 +339,7 @@ Week.propTypes = {
     fallbackYearOptions: PropTypes.array.isRequired,
     css: PropTypes.object,
     fallbackWeekCss: PropTypes.object,
-    fallbackYearCss: PropTypes.object,
+    fallbackWeekYearCss: PropTypes.object,
 }
 
 export default Week;
