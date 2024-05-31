@@ -82,7 +82,7 @@ export const FallbackWeek = ({
     }
 
     const [errors, setErrors] = useState([]);
-    
+
     const violations = useFieldValidations(label, id);
 
     // ordena os anos em ordem decrescente.
@@ -181,9 +181,7 @@ export const FallbackWeek = ({
                     <p>{label}</p>
                     <div className={`${fallbackContainer}`}>
                         <Select
-                            extraAttributes={{
-                                onChange: onYearChange
-                            }}
+                            onChange={onYearChange}
                             required={required}
                             id={`fallback_year_${id}`}
                             name={`fallback_year_${name}`}
@@ -197,9 +195,7 @@ export const FallbackWeek = ({
                         </Select>
 
                         <Select
-                            extraAttributes={{
-                                onChange: onWeekChange
-                            }}
+                            onChange={onWeekChange}
                             id={`fallback_week_${id}`}
                             name={`fallback_week_${name}`}
                             required={required}

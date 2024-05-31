@@ -372,12 +372,10 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                             id={cboLegendId}
                                             name={"legenda"}
                                             label="Idioma da legenda"
-                                            extraAttributes={{
-                                                onChange: event => {
-                                                    const track = tracks.find(track => track.srcLang === event.target.value);
+                                            onChange={event => {
+                                                const track = tracks.find(track => track.srcLang === event.target.value);
 
-                                                    setSelectedTrack(track);
-                                                }
+                                                setSelectedTrack(track);
                                             }}
                                         >
                                             {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}

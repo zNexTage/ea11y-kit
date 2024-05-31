@@ -114,7 +114,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label, fallb
         const selectedMonth = MONTHS.find(month => month.number === monthNumber);
 
         setMonth(selectedMonth);
-    }    
+    }
 
     return (
         <>
@@ -131,9 +131,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label, fallb
                             id={`fallback_month_${id}`}
                             name={`fallback_month_${name}`}
                             css={fallbackMonthCss}
-                            extraAttributes={{
-                                onChange: onChangeMonth
-                            }}
+                            onChange={onChangeMonth}
                         >
                             {MONTHS.map((m, index) => <option value={m.number}>{m.text}</option>)}
                         </Select>
@@ -143,9 +141,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label, fallb
                             id={`fallback_year_${id}`}
                             name={`fallback_year_${name}`}
                             css={fallbackYearCss}
-                            extraAttributes={{
-                                onChange: onChangeYear
-                            }}
+                            onChange={onChangeYear}
                         >
                             {years.map((y, index) => <option value={y}>{y}</option>)}
                         </Select>
@@ -252,7 +248,7 @@ const Month = ({ id,
                                 name={name}
                                 label={label}
                                 yearRange={fallbackYearRange}
-                                required={isRequired}
+                                required={required}
                             />
                     }
                 </>
