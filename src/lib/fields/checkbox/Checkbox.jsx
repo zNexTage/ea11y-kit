@@ -43,7 +43,7 @@ const Checkbox = ({
     id,
     label,
     css,
-    type,
+    type = "checkbox",
     onChange,
     checked,
     ...rest
