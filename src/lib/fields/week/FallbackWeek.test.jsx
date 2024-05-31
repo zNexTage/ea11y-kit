@@ -144,12 +144,13 @@ describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
 
         const field = screen.getByLabelText("Ano (campo obrigatório)");
 
+        //TODO: Verificar este teste! Parece um falso positivo.
         waitFor(() => {
-            expect(field).toHaveStyle({
+            expect(field).toHaveClass({
                 "background-color": "red",
                 margin: 10,
                 padding: 10
             })
-        })
+        });
     })
 });
