@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ComponentErrorList from "../../../components/component-error-list";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
@@ -17,6 +17,7 @@ const RANGE_ORIENTATION_VERTICAL = 'vertical';
  * @property {number} max
  * @property {number} value
  * @property {number} step
+ * @property {(event)=>void|null} onChange
  * @property {'horizontal'|'vertical'} orientation
  * @property {string} unit
  */
@@ -48,12 +49,14 @@ const Range = ({
     max = 100,
     step = 1,
     value,
+    onChange,
     orientation = RANGE_ORIENTATION_HORIZONTAL,
     unit = "%" }) => {
     const violations = useFieldValidations(label, id);
 
     const rangeCss = baseTheme.css({
-        display: 'block'
+        display: 'block',
+        width: "100%"
     });
 
     const rangeVerticalCss = baseTheme.css({
@@ -90,9 +93,16 @@ const Range = ({
      * 
      * @param {Event} event 
      */
-    const onChange = event => {
+    const onChangeRange = event => {
         setCurrentValue(event.target.value);
+
+        onChange && onChange(event);
     }
+
+    // Sempre quando value mudar, invoca o método para validar o valor e atualizar o estado.
+    useEffect(() => {
+        setCurrentValue(getDefaultValue());
+    }, [value]);
 
     return (
         <>
@@ -111,12 +121,9 @@ const Range = ({
                         max={max}
                         step={step}
                         value={currentValue}
-                        onChange={onChange}
+                        onChange={onChangeRange}
                         className={`${rangeCss} ${lightTheme} ${fieldHightlight} ${orientation === RANGE_ORIENTATION_VERTICAL && rangeVerticalCss} `}
                     />
-                    <small>
-                        Valor atual: {currentValue}{unit}
-                    </small>
                 </div>
             }
 

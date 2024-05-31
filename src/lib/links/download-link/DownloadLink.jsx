@@ -83,21 +83,11 @@ const DownloadLink = ({
         setViolations([...violationsAux]);
     }, []);
 
-    /**
-     * Captura interação pelo teclado e permite interagir com o link usando a tecla espaço.
-     * @param {KeyboardEvent} event 
-     */
-    const onKeyDown = event => {
-        if (event.code == KeyboardKeys.SPACE) {
-            downloadLinkRef.current.click();
-        }
-    }
-
     return (
         <>
             {
                 violations.length === 0 &&
-                <Link ref={downloadLinkRef} href={href} onKeyDown={onKeyDown} download={true} >
+                <Link ref={downloadLinkRef} href={href} download={true} >
                     {fileName} ({extension} {size}{unit})
                 </Link>
             }

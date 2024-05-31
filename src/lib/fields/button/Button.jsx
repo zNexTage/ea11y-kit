@@ -18,9 +18,9 @@ import { lightTheme } from "../../../stitches.config";
  * @param {ButtonProps} props 
  * @returns 
  */
-const Button = ({ text = 'Enviar', type = 'button' }) => {
+const Button = ({ text = 'Enviar', type = 'button', onClick }) => {
     return (
-        <button className={`${lightTheme} ${fieldHightlight}`} type={type}>
+        <button className={`${lightTheme} ${fieldHightlight}`} onClick={onClick} type={type}>
             {text}
         </button>
     )
