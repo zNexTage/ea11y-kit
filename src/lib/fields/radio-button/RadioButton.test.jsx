@@ -43,11 +43,11 @@ describe("[RadioButton] - Violando diretriz 6.2 do eMAG", () => {
 });
 
 describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
-    it("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
+    it("Deve aparecer a indicação (campo obrigatório) quando required for igual a true", () => {
         render(
             <RadioButton
                 id="teste"
-                isRequired={true}
+                required={true}
                 label="teste"
             />
         )
@@ -62,7 +62,7 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
         render(
             <RadioButton
                 id="teste"
-                isRequired={true}
+                required={true}
                 label="teste"
             />
         );
@@ -82,7 +82,7 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
             <>
                 <RadioButton
                     id="nightfall"
-                    isRequired={true}
+                    required={true}
                     label="Nightfall"
                     name="blind guardian"
                 />
@@ -120,7 +120,7 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
             <>
                 <RadioButton
                     id="nightfall"
-                    isRequired={true}
+                    required={true}
                     label="Nightfall"
                     name="blind guardian"
                 />
@@ -160,5 +160,92 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
             expect(secondRb).not.toBeChecked();
         })
     });
+
+    it("Deve ser possível definir um valor inicial", () => {
+        render(
+            <>
+                <RadioButton
+                    id="nightfall"
+                    label="Nightfall"
+                    name="blind guardian"
+                    checked
+                />
+            </>
+        )
+
+        const field = screen.getByLabelText("Nightfall");
+
+        expect(field).toBeChecked();
+    })
+
+    it("Deve invocar a função onKeyDown passada via props", () => {
+        const mockOnKeyDown = jest.fn();
+
+        render(
+            <>
+                <RadioButton
+                    id="nightfall"
+                    label="Nightfall"
+                    name="blind guardian"
+                    onKeyDown={mockOnKeyDown}
+                    checked
+                />
+            </>
+        )
+
+        const field = screen.getByLabelText("Nightfall");
+
+        fireEvent.keyDown(field);
+
+        expect(mockOnKeyDown).toHaveBeenCalled();
+    })
+
+    it("Deve invocar a função onChange passada via props", () => {
+        const mockOnChange = jest.fn();
+
+        render(
+            <>
+                <RadioButton
+                    id="nightfall"
+                    label="Nightfall"
+                    name="blind guardian"
+                    onChange={mockOnChange}
+                    checked
+                />
+            </>
+        )
+
+        const field = screen.getByLabelText("Nightfall");
+
+        fireEvent.change(field);
+
+        waitFor(() => expect(mockOnChange).toHaveBeenCalled());
+    })
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <RadioButton
+                id="nightfall"
+                label="Nightfall"
+                name="blind guardian"
+                checked
+                css={{
+                    backgroundColor: 'red',
+                    margin: 10,
+                    padding: 10
+                }}
+            />
+        )
+
+        const field = screen.getByLabelText("Nightfall");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                "background-color": 'red',
+                margin: 10,
+                padding: 10
+            });
+        })
+    })
 });
 
