@@ -326,9 +326,10 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                 <div>
                                     <AudioPlayerProgressControl>
                                         <Button
-                                            text={isPlaying ? "Pausar" : "Reproduzir"}
                                             onClick={onPlayPauseClick}
-                                        />
+                                        >
+                                            {isPlaying ? "Pausar" : "Reproduzir"}
+                                        </Button>
                                         <input
                                             className={`${lightTheme} ${fieldHightlight}`}
                                             aria-label="Posição atual do áudio"
