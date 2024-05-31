@@ -103,5 +103,29 @@ describe("[Color] - Conformidade com as diretrizes do eMAG", () => {
             expect(field).toHaveStyle("border: 1px solid #F00;");
             expect(field).toHaveStyle("outline:  2px solid #F00;")
         });
+    });
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <Color
+                css={{
+                    backgroundColor: "red",
+                    padding: 10,
+                    margin: 20
+                }}
+                name="color"
+                label="color"
+                id="color"
+                required
+            />
+        );
+
+        const field = screen.getByLabelText("color (campo obrigatório)");
+        
+        waitFor(() => {
+            expect(field).toHaveStyle("background-color: red");
+            expect(field).toHaveStyle("padding: 10");
+            expect(field).toHaveStyle("margin: 20");
+        });
     })
 });
