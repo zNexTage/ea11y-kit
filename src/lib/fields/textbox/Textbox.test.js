@@ -88,11 +88,11 @@ describe("[Textbox] - Omitindo outros atributos", () => {
 });
 
 describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
-    it("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
+    it("Deve aparecer a indicação (campo obrigatório) quando required for igual a true", () => {
         render(
             <Textbox
                 id="teste"
-                isRequired={true}
+                required={true}
                 label="teste"
                 name="teste"
                 type="text"
@@ -110,7 +110,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
         render(
             <Textbox
                 id="teste"
-                isRequired={true}
+                required={true}
                 label="teste"
                 name="teste"
                 type="text"
@@ -125,6 +125,32 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
         waitFor(() => {
             expect(field).toHaveStyle("border: 1px solid #F00;");
             expect(field).toHaveStyle("outline:  2px solid #F00;")
+        });
+    });
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <Textbox
+                css={{
+                    backgroundColor: "red",
+                    padding: 10,
+                    margin: 20
+                }}
+                id="teste"
+                required={true}
+                label="teste"
+                name="teste"
+                type="text"
+                placeholder="Digite aqui..."
+            />
+        );
+
+        const field = screen.getByLabelText("teste (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle("background-color: red");
+            expect(field).toHaveStyle("padding: 10");
+            expect(field).toHaveStyle("margin: 20");
         });
     })
 });
