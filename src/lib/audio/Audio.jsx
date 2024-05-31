@@ -142,11 +142,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
     const { pause, play, isPlaying } = useAudioPlayer(audioRef.current);
 
-    useEffect(() => {
-        setDuration(audioRef.current?.duration);
-        setVolume(audioRef.current?.volume * 100);
-    }, [audioRef.current]);
-
 
 
     /**
@@ -290,6 +285,10 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                         onTimeUpdate={onTimeUpdate}
                         className={`${lightTheme} ${fieldHightlight}`}
                         controls
+                        onLoadedData={event => {
+                            setDuration(event.target.duration);
+                            setVolume(event.target.volume * 100);
+                        }}
                     >
                         {
                             sources.map((source, index) => (
@@ -344,7 +343,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                         do áudio. Entretanto, utilizar audioRef.current.duration diretamente não faz o componente atualizar com o valor correto, portanto
                                         utiliza-se um estado.
                                         */}
-                                        <span key={`current_time_${currentTime}`}>{formatTime(currentTime)}</span> / <span key={`duration_${duration}`}>{formatTime(duration)}</span> 
+                                        <span key={`current_time_${currentTime}`}>{formatTime(currentTime)}</span> / <span key={`duration_${duration}`}>{formatTime(duration)}</span>
                                     </AudioPlayerTime>
                                 </div>
 
