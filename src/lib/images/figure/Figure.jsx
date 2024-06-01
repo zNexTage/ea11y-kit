@@ -1,17 +1,24 @@
 
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import Image from "../image";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES } from "../../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../../components/component-error-list";
+import { styled } from "@stitches/react";
 
 /**
- * @typedef ImageProps
+ * @typedef FigureProps
  * @property {string} caption
- * @property {React.HTMLProps<HTMLImageElement>} imgProps
+ * @property {React.ReactNode} children
+ * @property {import("@stitches/react").CSS} css
  */
 
+
+/**
+ * @typedef {FigureProps & React.HTMLProps<HTMLElement>} ExtendedFigureProps
+ */
+
+const FigureStyled = styled("figure", {});
 
 /**
  * Componente Figure para renderização de imagens com legendas.
@@ -22,36 +29,33 @@ import ComponentErrorList from "../../../components/component-error-list";
  * para tanto o atributo alt." portanto, o atributo alt é obrigatório.
  * 
  * 
- * @param {ImageProps} props
+ * @param {ExtendedFigureProps} props
  * @returns 
  */
-const Figure = ({ imgProps, caption }) => {
+const Figure = ({ caption, children, css, ...rest }) => {
 
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         const errorsAux = [];
 
-        if (!imgProps?.alt) { // informou o texto alternativo para a imagem? 
-            errorsAux.push(new GuidelineViolation(PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES, 'O atributo `alt` é obrigatório e deve ser informado para que leitores de tela possam descrever a imagem para os usuários.'));
-        }
-
         if (!caption) { // informou a legenda para a imagem?
             errorsAux.push(new GuidelineViolation(PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES, 'O atributo `caption` (legenda) é obrigatório e deve ser informado para descrever com mais detalhes o conteúdo da imagem.'));
         }
 
         setErrors([...errorsAux]);
-    }, [caption, imgProps]);
+    }, [caption]);
+
 
     return (
         <>
             {errors.length === 0 &&
-                <figure>
-                    <Image {...imgProps} />
+                <FigureStyled css={css} {...rest}>
+                    {children}
                     <figcaption>
                         {caption}
                     </figcaption>
-                </figure>
+                </FigureStyled>
             }
 
             {errors.length > 0 &&
