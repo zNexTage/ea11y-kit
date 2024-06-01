@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { styled } from "@stitches/react"
 import { useEffect, useState } from "react";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
@@ -35,7 +36,7 @@ const Caption = styled("caption", {
 
 /**
  * Componente raíz para a montagem de uma tabela pré-configurado com as diretrizes do eMAG.
- *  * 
+ *   
  * 
  * Diretrizes adotadas:
  * 
@@ -44,69 +45,13 @@ const Caption = styled("caption", {
  * quando a tabela for extensa. Nesse sentido, summary é uma propriedade opcional.
  * 
  * 3.10 – Associar células de dados às células de cabeçalho: essa diretriz aborda a necessidade de estruturar corretamente a tabela, para tanto deve-se
- * utilizar apropriadamente o elemento <th> e <td>, além de ser necessário utilizar thead, tbody e tfoot para agrupar as seções da tabela. Nesse sentido, 
+ * utilizar apropriadamente o elemento "th" e "td", além de ser necessário utilizar "thead", "tbody" e "tfoot" para agrupar as seções da tabela. Nesse sentido, 
  * o componente adota o uso das tags thead, tbody e tfoot. O conteúdo de cada seção é informado via as propriedades: theadChildren, tbodyChildren e tfootChildren. Dessa forma,
  * basta passar para cada seção as linhas e colunas. 
- * Por exemplo:
- * <Table.Root
-            caption={{
-                title: "Tabela 1 - Conquistas na carreira de Ayrton Senna",
-            }}
-            theadChildren={(
-                <Table.Row>
-                    <Table.HeaderCell>
-                        Ano
-                    </Table.HeaderCell>
-                    <Table.HeaderCell>
-                        Equipe
-                    </Table.HeaderCell>
-                </Table.Row>
-            )}
-            tbodyChildren={(
-                <>
-                <Table.Row>
-                    <Table.DataCell>
-                       1980
-                    </Table.DataCell>
-                    <Table.DataCell>
-                        8
-                    </Table.DataCell>
-                </Table.Row>
-
-                <Table.Row>
-                    <Table.DataCell>
-                       1990
-                    </Table.DataCell>
-                    <Table.DataCell>
-                        6
-                    </Table.DataCell>
-                </Table.Row>
-
-                <Table.Row>
-                    <Table.DataCell>
-                       1991
-                    </Table.DataCell>
-                    <Table.DataCell>
-                        7
-                    </Table.DataCell>
-                </Table.Row>
-                </>
-            )}
-            tfootChildren={(
-                <Table.Row>
-                    <Table.HeaderCell scope="row">
-                        Total de vitórias
-                    </Table.HeaderCell>
-                    <Table.DataCell>
-                        21
-                    </Table.DataCell>
-                </Table.Row>
-            )}
-        />
  * outro ponto, a diretriz 3.10 cita que para tabelas mais complexas deve-se associar as células de dados com as células de cabeçalho. 
  * de acordo com o eMAG: "A maneira mais adequada de realizar esse procedimento é utilizar os atributos id/headers ou scope/col. No primeiro, pode-se associar qualquer célula de conteúdo a qualquer célula de cabeçalho, utilizando o mesmo valor para o atributo id e para o header. No segundo caso, a associação é automática, sendo mais utilizado em tabelas de associação direta, nas quais é dado o valor col para o atributo scope nos cabeçalhos. Nos exemplos a seguir, é possível verificar a utilização do id/headers e do scope/col."
- * https://emag.governoeletronico.gov.br/
- * Levando em conta que a associação deve ser feita em tabelas complexas, o componente não obrigará que seja informado "id/headers ou scope/col.". Entretanto,
+ * <a href="https://emag.governoeletronico.gov.br/" target="_blank">Veja mais sobre essa diretriz aqui (abre em nova guia)</a>.
+ *  Levando em conta que a associação deve ser feita em tabelas complexas, o componente não obrigará que seja informado "id/headers ou scope/col.". Entretanto,
  * para a situação descrita pela diretriz do eMAG, o uso de tais atributos deve ser realizado. 
  * 
  * @param {TableProps} props 
@@ -167,6 +112,14 @@ const Root = ({
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
     )
+}
+
+Root.propTypes = {
+    summary: PropTypes.string,
+    theadChildren: PropTypes.node,
+    tbodyChildren: PropTypes.node,
+    tfootChildren: PropTypes.node,
+    caption: PropTypes.object
 }
 
 export default Root;
