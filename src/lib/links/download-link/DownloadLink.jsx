@@ -4,7 +4,6 @@ import GuidelineViolation from "../../../exceptions/GuidelineViolation/Guideline
 import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
-import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 import Link from "../link";
 
 /**
@@ -15,7 +14,9 @@ import Link from "../link";
  * @property {string} extension
  * @property {string} size
  * @property {string} unit
+ * @property {import("@stitches/react").CSS} css
  */
+
 
 /**
  * Âncora para download de arquivos configurada com as diretrizes do eMAG
@@ -58,7 +59,8 @@ const DownloadLink = ({
     fileName,
     extension,
     size,
-    unit
+    unit,
+    css
 }) => {
     const [violations, setViolations] = useState([]);
 
@@ -87,7 +89,11 @@ const DownloadLink = ({
         <>
             {
                 violations.length === 0 &&
-                <Link ref={downloadLinkRef} href={href} download={true} >
+                <Link
+                    css={css}
+                    ref={downloadLinkRef}
+                    href={href}
+                    download={true} >
                     {fileName} ({extension} {size}{unit})
                 </Link>
             }
