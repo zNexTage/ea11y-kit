@@ -7,20 +7,21 @@ import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url", "date", "datetime-local", "time"];
 
 /**
  *  @typedef TextboxProps
- *  @property {string} label
- *  @property {string} name
- *  @property {string} id
- *  @property {string} placeholder
- *  @property {number} maxLength
- *  @property {boolean} isRequired 
+ *  @property {import("@stitches/react").CSS} css
  *  @property {("email"|"number"|"password"|"search"|"text"|"url")} type
- *  @property {HTMLInputElement|null} extraAttributes
  */
+
+/**
+ * @typedef {React.HTMLProps<HTMLInputElement> & TextboxProps} ExtendedTextboxProps
+ */
+
+const TextboxStyled = styled("input", {});
 
 /** 
  * Campo de texto configurado com as diretrizes do eMAG. 
@@ -45,7 +46,7 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url",
  * será renderizado uma lista contendo quais diretrizes foram violadas.
  * 
  * 
- * @param {TextboxProps} props 
+ * @param {ExtendedTextboxProps} props 
  * @returns {React.JSX.Element} 
  */
 const Textbox = ({
@@ -55,8 +56,10 @@ const Textbox = ({
     id,
     name,
     maxLength,
-    isRequired = false,
+    required = false,
     type,
+    css,
+    ...rest
 }) => {
     const [errors, setErrors] = useState([]);
 
@@ -92,17 +95,18 @@ const Textbox = ({
             {errors.length === 0 &&
                 <div>
                     <label htmlFor={id}>
-                        {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
+                        {required ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
-                    <input
-                        {...extraAttributes}
+                    <TextboxStyled
+                        {...rest}
                         placeholder={placeholder}
                         maxLength={maxLength}
                         name={name}
                         className={`${fieldCss} ${fieldHightlight} ${lightTheme}`}
+                        css={css}
                         id={id}
                         type={type}
-                        required={isRequired || false}
+                        required={required || false}
                     />
                 </div>
             }
@@ -118,8 +122,8 @@ Textbox.propTypes = {
     isRequired: PropTypes.bool,
     type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
     maxLength: PropTypes.number,
-    name: PropTypes.string.isRequired,
-    extraAttributes: PropTypes.object
+    css: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired
 }
 
 export default Textbox;

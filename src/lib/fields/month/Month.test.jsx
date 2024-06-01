@@ -7,18 +7,6 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
             <Month
                 id="mes"
                 name="mes"
-                fallbackMonthProps={{
-                    monthField: {
-                        id: "txtmes",
-                        label: "mes",
-                        name: "mes"
-                    },
-                    yearField: {
-                        id: "ano",
-                        label: "ano",
-                        name: "ano"
-                    }
-                }}
             />
         );
 
@@ -40,18 +28,6 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
             <Month
                 label="mes"
                 name="mes"
-                fallbackMonthProps={{
-                    monthField: {
-                        id: "txtmes",
-                        label: "mes",
-                        name: "mes"
-                    },
-                    yearField: {
-                        id: "ano",
-                        label: "ano",
-                        name: "ano"
-                    }
-                }}
             />
         );
 
@@ -74,7 +50,7 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
         render(
             <Month
                 id="teste"
-                isRequired={true}
+                required={true}
                 label="teste"
                 name="mes"
                 fallbackMonthProps={{
@@ -102,20 +78,9 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
         render(
             <Month
                 id="teste"
-                isRequired={true}
+                required={true}
                 label="teste"
-                fallbackMonthProps={{
-                    monthField: {
-                        id: "txtmes",
-                        label: "mes",
-                        name: "mes"
-                    },
-                    yearField: {
-                        id: "ano",
-                        label: "ano",
-                        name: "ano"
-                    }
-                }}
+
             />
         );
 
@@ -126,6 +91,31 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
         waitFor(() => {
             expect(field).toHaveStyle("border: 1px solid #F00;");
             expect(field).toHaveStyle("outline:  2px solid #F00;")
+        });
+    });
+
+    it("Deve ser possível customizar o componente via prop css", () => {
+        render(
+            <Month
+                id="teste"
+                required={true}
+                label="teste"
+                css={{
+                    backgroundColor: 'red',
+                    margin: 10,
+                    padding: 10
+                }}
+            />
+        );
+
+        const field = screen.getByLabelText("teste (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                'background-color': 'red',
+                margin: 10,
+                padding: 10
+            });
         });
     })
 });

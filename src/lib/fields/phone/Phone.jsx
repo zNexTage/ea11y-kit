@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
@@ -6,6 +6,7 @@ import InvalidAttribute from "../../../exceptions/InvalidAttribute";
 import ComponentErrorList from "../../../components/component-error-list";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 const PHONE_LANDLINE_MIN_LENGTH = 12;
 const PHONE_CELLPHONE_MIN_LENGTH = 13;
@@ -17,13 +18,15 @@ const WHICH_FORMAT_CELLPHONE = "cellphone";
 
 /**
  * @typedef PhoneProps
- * @property {string} label
- * @property {boolean} isRequired
- * @property {string} placeholder
- * @property {string} name
- * @property {string} id
+ * @property {import("@stitches/react").CSS} css
  * @property {'cellphone'|'phone'|'both'} whichFormat
  */
+
+/**
+ * @typedef {PhoneProps & React.HTMLProps<HTMLInputElement>} ExtendedPhoneProps
+ */
+
+const PhoneStyled = styled("input", {});
 
 /**
  * Campo de entrada para telefone fixo e/ou celulares pré-configurado com as diretrizes do eMAG
@@ -46,15 +49,20 @@ const WHICH_FORMAT_CELLPHONE = "cellphone";
  * O componente é renderizado apenas se estiver de acordo com as diretrizes do eMAG. Caso não esteja,
  * será renderizado uma lista contendo quais diretrizes foram violadas.
  * 
- * @param {PhoneProps} props 
+ * @param {ExtendedPhoneProps} props 
  * @returns 
  */
-const Phone = ({ isRequired = false,
+const Phone = ({
+    required = false,
     whichFormat = WHICH_FORMAT_BOTH,
     label,
     placeholder,
     name,
-    id
+    css,
+    id,
+    onChange,
+    onPaste,
+    ...rest
 }) => {
     const [currentValue, setCurrentValue] = useState("");
 
@@ -159,12 +167,16 @@ const Phone = ({ isRequired = false,
      * Formata o valor digitado pelo usuário para o formato de número de telefone fixo ou celular.
      * @param {React.ChangeEvent<HTMLInputElement>} event 
      */
-    const onChange = event => {
+    const onChangePhone = event => {
         const inputValue = event.target.value;
 
         const result = getFormattedValue(inputValue);
 
         setCurrentValue(result);
+
+        // passa para onChange o valor formatado
+        event.target.value = result;
+        onChange && onChange(event);
     }
 
     /**
@@ -203,12 +215,16 @@ const Phone = ({ isRequired = false,
      * Formata o número colocado no campo de texto
      * @param {ClipboardEvent } event 
      */
-    const onPaste = event => {
+    const onPastePhone = event => {
         const value = (event.clipboardData || window.clipboardData).getData("text");
 
         const phoneNumber = getFormattedValue(value);
 
         setCurrentValue(phoneNumber);
+
+        // passa para onPaste o valor formatado.
+        event.target.value = phoneNumber;
+        onPaste && onPaste(event);
     }
 
 
@@ -216,19 +232,21 @@ const Phone = ({ isRequired = false,
         <>
             {errors.length === 0 && <div>
                 <label htmlFor={id}>
-                    {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label} <small>{getAllowedFormatHelpText()}</small>
+                    {required ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label} <small>{getAllowedFormatHelpText()}</small>
                 </label>
-                <input
+                <PhoneStyled
+                    {...rest}
                     placeholder={placeholder}
                     name={name}
                     pattern={"[0-9]{2} [0-9]{4,6}-[0-9]{3,4}$"}
                     className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
+                    css={css}
                     id={id}
                     type="tel"
-                    required={isRequired}
+                    required={required}
                     value={currentValue}
-                    onChange={onChange}
-                    onPaste={onPaste}
+                    onChange={onChangePhone}
+                    onPaste={onPastePhone}
                     minLength={getMinLength()}
                 />
             </div>
@@ -241,7 +259,7 @@ const Phone = ({ isRequired = false,
 
 Phone.propTypes = {
     label: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
+    required: PropTypes.bool,
     placeholder: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

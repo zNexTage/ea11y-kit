@@ -7,7 +7,7 @@ describe("[Phone] - Violando diretriz 6.2 do eMAG", () => {
             <Phone
                 id="ID"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Teste"
                 name="teste"
             />
@@ -29,7 +29,7 @@ describe("[Phone] - Violando diretriz 6.2 do eMAG", () => {
             <Phone
                 label="Teste"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Teste"
                 name="teste"
             />
@@ -53,7 +53,7 @@ describe("[Phone] - Omitindo outros atributos", () => {
             <Phone
                 label="Teste"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Teste"
             />
         );
@@ -71,13 +71,13 @@ describe("[Phone] - Omitindo outros atributos", () => {
 });
 
 describe("[Phone] - Conformidade com as diretrizes do eMAG", () => {
-    it("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
+    it("Deve aparecer a indicação (campo obrigatório) quando required for igual a true", () => {
         render(
             <Phone
                 id="phone"
                 label="Telefone"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Informe seu telefone..."
                 name="phone"
             />
@@ -95,7 +95,7 @@ describe("[Phone] - Conformidade com as diretrizes do eMAG", () => {
                 id="phone"
                 label="Telefone"
                 whichFormat="phone"
-                isRequired
+                required
                 placeholder="Informe seu telefone..."
                 name="phone"
             />
@@ -112,7 +112,7 @@ describe("[Phone] - Conformidade com as diretrizes do eMAG", () => {
                 id="phone"
                 label="Telefone"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Informe seu telefone e celular..."
                 name="phone"
             />
@@ -129,7 +129,7 @@ describe("[Phone] - Conformidade com as diretrizes do eMAG", () => {
                 id="cellphone"
                 label="Telefone"
                 whichFormat="cellphone"
-                isRequired
+                required
                 placeholder="Informe seu celular..."
                 name="cellphone"
             />
@@ -146,7 +146,7 @@ describe("[Phone] - Conformidade com as diretrizes do eMAG", () => {
                 id="cellphone"
                 label="Telefone"
                 whichFormat="cellphone"
-                isRequired
+                required
                 placeholder="Informe seu celular..."
                 name="cellphone"
             />
@@ -170,7 +170,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Celular"
                 whichFormat="cellphone"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -188,7 +188,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Telefone Fixo"
                 whichFormat="phone"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -206,7 +206,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Telefones fixos / Celular"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -224,7 +224,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Telefones fixos / Celular"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -242,7 +242,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Telefone Fixo"
                 whichFormat="phone"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -260,7 +260,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Telefones fixos / Celular"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -278,7 +278,7 @@ describe("[Phone] - Formatação", () => {
                 id="phone"
                 label="Telefones fixos / Celular"
                 whichFormat="both"
-                isRequired
+                required
                 placeholder="Informe seu telefone fixo ou celular..."
                 name="phone"
             />
@@ -289,4 +289,52 @@ describe("[Phone] - Formatação", () => {
         fireEvent.paste(field, { clipboardData: { getData: () => 'asdasdas' }, });
         expect(field).toHaveValue("");
     });
+
+    it("Deve receber o valor formatado através da função onChange", () => {
+        const onChange = jest.fn();
+
+        render(
+            <Phone
+                id="phone"
+                label="Telefones fixos / Celular"
+                whichFormat="both"
+                required
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+                onChange={onChange}
+            />
+        );
+
+        const field = screen.getByLabelText("Telefones fixos / Celular (campo obrigatório) (00) 90000-0000 / (00) 0000-0000");
+
+        fireEvent.change(field, { target: { value: "11956841201" } });
+
+        waitFor(() => {
+            expect(onChange).toHaveBeenCalledWith({ target: { value: "(11) 95684-1201" } });
+        });
+    })
+
+    it("Deve receber o valor formatado através da função onPaste", () => {
+        const onPaste = jest.fn();
+
+        render(
+            <Phone
+                id="phone"
+                label="Telefones fixos / Celular"
+                whichFormat="both"
+                required
+                placeholder="Informe seu telefone fixo ou celular..."
+                name="phone"
+                onChange={onPaste}
+            />
+        );
+
+        const field = screen.getByLabelText("Telefones fixos / Celular (campo obrigatório) (00) 90000-0000 / (00) 0000-0000");
+
+        fireEvent.paste(field, { clipboardData: { getData: () => '11956841201' }, });
+
+        waitFor(() => {
+            expect(onPaste).toHaveBeenCalledWith({ target: { value: "(11) 95684-1201" } });
+        });
+    })
 })

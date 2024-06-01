@@ -59,5 +59,27 @@ describe("[ImageButton] - Conformidade com as diretrizes do eMAG", () => {
             expect(button).toHaveStyle("border: 1px solid #F00;");
             expect(button).toHaveStyle("outline:  2px solid #F00;")
         });
+    });
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <ImageButton
+                alt="teste"
+                css={{
+                    width: 10,
+                    height: 10
+                }}
+                src="https://raw.githubusercontent.com/mdn/learning-area/master/html/forms/image-type-example/login.png"
+            />
+        );
+
+        const button = screen.getByAltText("teste");
+
+        waitFor(() => {
+            expect(button).toHaveStyle({
+                width: 10,
+                height: 10
+            });
+        });
     })
 });

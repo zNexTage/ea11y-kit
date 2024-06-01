@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Select from "./Select";
 
 describe("[Select] - Violando diretriz 6.2 do eMAG", () => {
@@ -144,5 +144,87 @@ describe("[Select] - Conformidade com as diretrizes do eMAG", () => {
             expect(field).toHaveStyle("border: 1px solid #F00;");
             expect(field).toHaveStyle("outline:  2px solid #F00;")
         });
+    })
+
+    it("Deve ser possível customizar o componente via propriedade css", () => {
+        render(
+            <Select
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+                id="selecione"
+                label="selecione"
+                name="selecione">
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
+        );
+
+        const field = screen.getByLabelText("selecione");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                'background-color': "red",
+                margin: 10,
+                padding: 10
+            });
+        });
+    })
+
+    it("Deve alterar o valor do select interagir com o elemento", () => {
+        render(
+            <Select
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+                id="selecione"
+                label="selecione"
+                name="selecione">
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
+        );
+
+        const field = screen.getByLabelText("selecione");
+
+        fireEvent.change(field, { target: { value: '2022' } });
+
+        expect(field).toHaveValue('2022');
+    })
+
+    
+    it("Deve invocar a função onChange ao interagir com o elemento", () => {
+        const onChange = jest.fn();
+
+        render(
+            <Select
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+                id="selecione"
+                label="selecione"
+                onChange={onChange}
+                name="selecione">
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                <option value='2022'>2022</option>
+            </Select>
+        );
+
+        const field = screen.getByLabelText("selecione");
+
+        fireEvent.change(field, { target: { value: '2022' } });
+
+        expect(field).toHaveValue('2022');
+
+        expect(onChange).toHaveBeenCalled();
     })
 });

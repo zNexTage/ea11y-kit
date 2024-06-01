@@ -14,7 +14,7 @@ import { PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES } from "../../../utils/eMagG
  * para tanto o atributo alt."
  * portanto, o atributo alt é obrigatório.
  * 
- * @param {HTMLImageElement} props 
+ * @param {React.HTMLProps<HTMLImageElement>} props 
  * @returns {React.JSX.Element}
  */
 const Image = ({ src, alt, ...extraProps }) => {

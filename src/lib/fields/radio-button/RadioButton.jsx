@@ -5,18 +5,21 @@ import ComponentErrorList from "../../../components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
 const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
 
 /**
  * @typedef RadioButtonProps
- * @property {string} id
- * @property {string} name
- * @property {string} label 
- * @property {boolean} isRequired
- * @property {HTMLInputElement|null} extraAttributes
+ * @property {import("@stitches/react").CSS} css
  */
+
+/**
+ * @typedef {RadioButtonProps & React.HTMLProps<HTMLInputElement>} ExtendedRadioButtonProps
+ */
+
+const RadioButtonStyled = styled("input", {});
 
 /**
  * Campo radio configurado com as diretrizes do eMAG. 
@@ -35,15 +38,15 @@ const FOCUS_OUT_KEYS = [KeyboardKeys.ARROW_DOWN, KeyboardKeys.ARROW_UP];
  *  O componente é renderizado apenas se estiver de acordo com as diretrizes do eMAG. Caso não esteja,
  * será renderizado uma lista contendo quais diretrizes foram violadas. * 
  * 
- * @param {RadioButtonProps} props
+ * @param {ExtendedRadioButtonProps} props
  * @returns 
  */
-const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) => {
+const RadioButton = ({ id, type, name, label, onKeyDown, onChange, checked, required = false, css, ...rest }) => {
     const violations = useFieldValidations(label, id);
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(checked || false);
 
     useEffect(() => {
-        if (extraAttributes?.type) {
+        if (type) {
             console.warn("Não é possível alterar o type do componente Radio.");
         }
     }, []);
@@ -52,7 +55,7 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
      * Permite seleção e remoção de seleção via teclado.
      * @param {KeyboardEvent} event 
      */
-    const onKeyDown = event => {
+    const onKeyDownRadioButton = event => {
         const key = event.code;
 
         //  verifica se foi pressionado a tecla Enter ou espaço.
@@ -61,17 +64,18 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
         } else if (FOCUS_OUT_KEYS.includes(key)) { // caso tenha sido pressionada as setas, significa que o usuário vai navegar para o próximo Radio, portanto remove a seleção.
             setIsChecked(false);
         }
+
+        onKeyDown && onKeyDown(event);
     }
 
     /**
      * Seleciona o radio
      * @param {Event} event 
      */
-    const onChange = event => {
-        console.log("ID: " + id);
-        console.log("State : " + isChecked);
-        console.log("Event : " + event.target.checked);
+    const onChangeRadioButton = event => {
         setIsChecked(event.target.checked);
+
+        onChange && onChange(event);
     }
 
     return (
@@ -79,19 +83,20 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
             {violations.length === 0 &&
                 <div>
                     <label htmlFor={id}>
-                        {label}{isRequired && <>&nbsp;<small>(campo obrigatório)</small></>}
+                        {label}{required && <>&nbsp;<small>(campo obrigatório)</small></>}
                     </label>
-                    <input
-                        {...extraAttributes}
+                    <RadioButtonStyled
+                        {...rest}
                         key={`${id}_${isChecked}`}
-                        className={`${lightTheme} ${fieldHightlight} ${extraAttributes?.className}`}
+                        className={`${lightTheme} ${fieldHightlight}`}
+                        css={css}
                         type="radio"
                         name={name}
                         id={id}
                         checked={isChecked}
-                        onChange={onChange}
-                        onKeyDown={onKeyDown}
-                        required={isRequired}
+                        onChange={onChangeRadioButton}
+                        onKeyDown={onKeyDownRadioButton}
+                        required={required}
                     />
                 </div>
             }
@@ -101,12 +106,5 @@ const RadioButton = ({ id, name, label, isRequired = false, extraAttributes }) =
     )
 }
 
-RadioButton.propTypes = {
-    label: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
-    extraAttributes: PropTypes.object
-}
 
 export default RadioButton;

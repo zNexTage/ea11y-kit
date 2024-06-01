@@ -13,7 +13,10 @@ export default {
  * ou seja, quando todos os parâmetros forem passados corretamente.
  */
 export const AccordingToGuidelines = () => (
-    <Button />
+    <Button
+    >
+        Enviar
+    </Button>
 );
 
 AccordingToGuidelines.storyName = "Conformidade com as diretrizes do eMAG";

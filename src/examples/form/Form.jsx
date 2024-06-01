@@ -168,7 +168,9 @@ const Form = () => {
                     placeholder="Informe o motivo da sua visita"
                 />
             </fieldset>
-            <Button text="Enviar" type="submit" />
+            <Button type="submit">
+                Enviar
+            </Button>
         </form>
     )
 }

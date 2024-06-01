@@ -127,4 +127,31 @@ describe("[Textarea] - Conformidade com as diretrizes do eMAG", () => {
             expect(field).toHaveStyle("outline:  2px solid #F00;")
         });
     })
+
+    it("Deve ser possível customizar o css via props", () => {
+        render(
+            <Textarea
+                id="txtDescricao"
+                label="Descrição"
+                placeholder="Digite aqui a descrição do produto"
+                required
+                name="descricao"
+                css={{
+                    backgroundColor: "red",
+                    margin: 10,
+                    padding: 10
+                }}
+            />
+        );
+
+        const field = screen.getByLabelText("Descrição (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                "background-color": "red",
+                margin: 10,
+                padding: 10
+            })
+        });
+    })
 });

@@ -8,17 +8,18 @@ import ComponentErrorList from "../../../components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 /**
  * @typedef TextareaProps
- * @property {string} id
- * @property {string} name
- * @property {string} label 
- * @property {string} placeholder 
- * @property {number} rows
- * @property {number} cols
- * @property {boolean} required
+ * @property {import("@stitches/react").CSS} css
  */
+
+/**
+ * @typedef {TextareaProps & React.HTMLProps<HTMLTextAreaElement>} ExtendedTextareaProps
+ */
+
+const TextareaStyled = styled("textarea", {});
 
 /**
  * Campo de texto com múltiplas linhas pré-configurado com as diretrizes do eMAG.
@@ -35,11 +36,11 @@ import { lightTheme } from "../../../stitches.config";
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * - O atributo *placeholder* é obrigatório para os campos e deverá apresentar uma dica de preenchimento do campo.
  * A dica é importante para os leitores de tela. 
- * @param {TextareaProps} props 
+ * @param {ExtendedTextareaProps} props 
  * @returns 
  */
 const Textarea = ({
-    label, id, name, rows = 4, cols = 50, required = false, placeholder
+    label, id, name, rows = 4, cols = 50, required = false, placeholder, css, ...rest
 }) => {
     const [errors, setErrors] = useState([]);
 
@@ -70,15 +71,17 @@ const Textarea = ({
                     <label htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
-                    <textarea
+                    <TextareaStyled
+                        {...rest}
                         required={required}
                         rows={rows}
                         cols={cols}
                         className={`${lightTheme} ${fieldCss} ${fieldHightlight} `}
+                        css={css}
                         name={name}
                         placeholder={placeholder}
                         id={id}>
-                    </textarea>
+                    </TextareaStyled>
                 </div>
             }
 
@@ -94,7 +97,8 @@ Textarea.propTypes = {
     placeholder: PropTypes.string.isRequired,
     rows: PropTypes.number.isRequired,
     cols: PropTypes.number.isRequired,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    css: PropTypes.object
 }
 
 export default Textarea;

@@ -5,14 +5,21 @@ import { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import baseTheme, { lightTheme } from "../../../stitches.config";
+import { styled } from "@stitches/react";
 
 /**
  * @typedef ColorProps
- * @property {string} id
- * @property {string} name,
- * @property {string}  label
- * @property {boolean}  required 
+ * @property {import("@stitches/react").CSS} css
  */
+
+/**
+ * @typedef {ColorProps & React.HTMLProps<HTMLInputElement>} ExtendedColorProps
+ */
+
+
+const ColorStyled = styled("input", {
+    display: "block"
+});
 
 /**
  * Campo para seleção de cores
@@ -28,22 +35,21 @@ import baseTheme, { lightTheme } from "../../../stitches.config";
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
- * @param {ColorProps} props
+ * @param {ExtendedColorProps} props
  * @returns 
  */
 const Color = ({
     id,
     name,
     label,
-    required
+    required,
+    css,
+    type,
+    ...rest
 }) => {
 
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
-
-    const colorStyle = baseTheme.css({
-        display: "block"
-    });
 
     useEffect(() => {
         const errorsAux = [...violations];
@@ -53,6 +59,10 @@ const Color = ({
         }
 
         setErrors([...errorsAux]);
+
+        if(!type){
+            console.warn("Não é possível alterar o type do componente Color");
+        }
     }, []);
 
     return (
@@ -63,8 +73,10 @@ const Color = ({
                     <label htmlFor={id}>
                         {label} {required && <small>(campo obrigatório)</small>}
                     </label>
-                    <input
-                        className={`${colorStyle} ${lightTheme} ${fieldHightlight}`}
+                    <ColorStyled
+                        {...rest}
+                        className={`${lightTheme} ${fieldHightlight}`}
+                        css={css}
                         type="color"
                         name={name}
                         id={id}
@@ -85,7 +97,8 @@ Color.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    css: PropTypes.string
 }
 
 export default Color;

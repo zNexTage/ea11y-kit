@@ -48,7 +48,7 @@ describe("[FallbackMonth] - Violando diretriz 6.2 do eMAG", () => {
 
 });
 
-describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
+describe("[FallbackMonth] - Conformidade com as diretrizes do eMAG", () => {
     it("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
         render(
             <FallbackMonth
@@ -104,6 +104,58 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
         waitFor(() => {
             expect(field).toHaveStyle("border: 1px solid #F00;");
             expect(field).toHaveStyle("outline:  2px solid #F00;")
+        });
+    })
+
+    it("Deve ser possível customizar o select do mês via props", () => {
+        render(
+            <FallbackMonth
+                id="txtMes"
+                label="Em qual mês você deseja nos visitar?"
+                name="mes"
+                fallbackMonthCss={{
+                    backgroundColor: 'red',
+                    margin: 10,
+                    padding: 10
+                }}
+                required
+            />
+        );
+
+        const field = screen.getByLabelText("Mês (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                'background-color': 'red',
+                margin: 10,
+                padding: 10
+            })
+        });
+    })
+
+    it("Deve ser possível customizar o select do ano via props", () => {
+        render(
+            <FallbackMonth
+                id="txtMes"
+                label="Em qual mês você deseja nos visitar?"
+                name="mes"
+                fallbackYearCss={{
+                    backgroundColor: 'red',
+                    margin: 10,
+                    padding: 10
+                }}
+                required
+            />
+        );
+
+        const field = screen.getByLabelText("Ano (campo obrigatório)");
+
+        waitFor(() => {
+            expect(field).toHaveStyle({
+                'background-color': 'red',
+                margin: 10,
+                padding: 10
+            })
         });
     })
 });

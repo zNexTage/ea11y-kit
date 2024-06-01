@@ -7,14 +7,18 @@ import baseTheme, { lightTheme } from "../../../stitches.config";
 import React, { useEffect, useRef, useState } from "react";
 import useTotalWeeksInYear from "../../hooks/week/useTotalWeeksInYear";
 import Select from "../select";
+import { styled } from "@stitches/react";
 
 /** 
  * @typedef WeekProps
- * @property {string} id
- * @property {string} name
- * @property {string} label
- * @property {boolean} required
  * @property {Array<number>?} fallbackYearOptions
+ * @property {import("@stitches/react").CSS} css
+ * @property {import("@stitches/react").CSS} fallbackWeekCss
+ * @property {import("@stitches/react").CSS} fallbackWeekYearCss
+ */
+
+/**
+ * @typedef {WeekProps & React.HTMLProps<HTMLInputElement>} ExtendedWeekProps
  */
 
 /**
@@ -23,6 +27,8 @@ import Select from "../select";
  * @property {string} name
  * @property {string} id
  * @property {string} label 
+ * @property {import("@stitches/react").CSS} fallbackWeekCss
+ * @property {import("@stitches/react").CSS} fallbackWeekYearCss
  */
 
 /**
@@ -57,7 +63,9 @@ export const FallbackWeek = ({
     name,
     id,
     label,
-    required = false
+    required = false,
+    fallbackWeekCss,
+    fallbackWeekYearCss
 }) => {
 
     /**
@@ -82,7 +90,7 @@ export const FallbackWeek = ({
     }
 
     const [errors, setErrors] = useState([]);
-    
+
     const violations = useFieldValidations(label, id);
 
     // ordena os anos em ordem decrescente.
@@ -181,13 +189,12 @@ export const FallbackWeek = ({
                     <p>{label}</p>
                     <div className={`${fallbackContainer}`}>
                         <Select
-                            extraAttributes={{
-                                onChange: onYearChange
-                            }}
+                            onChange={onYearChange}
                             required={required}
                             id={`fallback_year_${id}`}
                             name={`fallback_year_${name}`}
                             label="Ano"
+                            css={fallbackWeekYearCss}
                         >
                             {orderedYears.map(year => (
                                 <option key={`fallback_year_${year}`} value={year}>
@@ -197,13 +204,12 @@ export const FallbackWeek = ({
                         </Select>
 
                         <Select
-                            extraAttributes={{
-                                onChange: onWeekChange
-                            }}
+                            onChange={onWeekChange}
                             id={`fallback_week_${id}`}
                             name={`fallback_week_${name}`}
                             required={required}
                             label="Semana"
+                            css={fallbackWeekCss}
 
                         >
                             {weeks.map((week) => (
@@ -233,6 +239,8 @@ export const FallbackWeek = ({
     )
 }
 
+const WeekStyled = styled("input", {});
+
 /**
  * Campo de entrada para informar uma semana configurado com as diretrizes do eMAG.
  * 
@@ -249,10 +257,19 @@ export const FallbackWeek = ({
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
- * @param {WeekProps} props 
+ * @param {ExtendedWeekProps} props 
  * @returns {React.JSX.Element}
  */
-const Week = ({ id, label, name, required = false, fallbackYearOptions }) => {
+const Week = ({
+    id,
+    label,
+    name,
+    required = false,
+    css,
+    fallbackYearOptions,
+    fallbackWeekCss,
+    fallbackWeekYearCss
+}) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
     const [isBrowserSupportsTypeWeek, setIsBrowserSupportsTypeWeek] = useState(true);
@@ -284,12 +301,13 @@ const Week = ({ id, label, name, required = false, fallbackYearOptions }) => {
                             {label} {required && <small>(campo obrigatório)</small>}
                         </label>
 
-                        <input
+                        <WeekStyled
                             ref={weekRef}
                             type="week"
                             name={name}
                             id={id}
                             className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
+                            css={css}
                         />
                     </div>}
 
@@ -300,6 +318,9 @@ const Week = ({ id, label, name, required = false, fallbackYearOptions }) => {
                             id={id}
                             label={label}
                             name={name}
+                            fallbackWeekCss={fallbackWeekCss}
+                            fallbackWeekYearCss={fallbackWeekYearCss}
+
                         />
                     }
                 </>
@@ -315,7 +336,10 @@ Week.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
-    fallbackYearOptions: PropTypes.array.isRequired
+    fallbackYearOptions: PropTypes.array.isRequired,
+    css: PropTypes.object,
+    fallbackWeekCss: PropTypes.object,
+    fallbackWeekYearCss: PropTypes.object,
 }
 
 export default Week;

@@ -2,20 +2,20 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import ComponentErrorList from "../../../components/component-error-list";
-import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
-
-// Enter e tecla espaço.
-const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
+import { styled } from "@stitches/react";
 
 /**
  *  @typedef CheckboxProps
- *  @property {string} label
- *  @property {string} id
- *  @property {boolean} isRequired 
- *  @property {HTMLInputElement|null} extraAttributes
+ *  @property {import("@stitches/react").CSS} css
  */
+
+/**
+ * @typedef {CheckboxProps & React.HTMLProps<HTMLInputElement>} ExtendedCheckboxProps
+ */
+
+const CheckboxStyled = styled("input", {});
 
 /**
  * Campo selecionavel configurado com as diretrizes do eMAG. 
@@ -36,15 +36,19 @@ const INTERACTION_KEYS = [KeyboardKeys.ENTER, KeyboardKeys.NUMPAD_ENTER];
  *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
  * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
  * 
- * @param {CheckboxProps} props 
+ * @param {ExtendedCheckboxProps} props 
  * @returns 
  */
 const Checkbox = ({
     id,
     label,
-    extraAttributes
+    css,
+    type = "checkbox",
+    onChange,
+    checked,
+    ...rest
 }) => {
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(checked || false);
 
     const violations = useFieldValidations(label, id);
 
@@ -52,15 +56,17 @@ const Checkbox = ({
      * Marca/desmarca o checkbox através da interação pelo mouse.
      * @param {MouseEvent} event 
      */
-    const onChange = event => {
+    const onChangeCheckbox = event => {
         setIsChecked(!isChecked);
+
+        onChange && onChange(event);
     }
 
     useEffect(() => {
-        if (extraAttributes && extraAttributes.type !== "checkbox") {
+        if (type !== "checkbox") {
             console.warn(`Não é possível alterar atributo type do Checkbox.`);
         }
-    }, [extraAttributes]);
+    }, [type]);
 
 
     return (
@@ -70,12 +76,13 @@ const Checkbox = ({
                     <label htmlFor={id}>
                         {label}
                     </label>
-                    <input
-                        {...extraAttributes}
+                    <CheckboxStyled
+                        {...rest}
                         role="checkbox"
                         className={`${lightTheme} ${fieldHightlight}`}
+                        css={css}
                         checked={isChecked}
-                        onChange={onChange}
+                        onChange={onChangeCheckbox}
                         type="checkbox"
                         name={id}
                         id={id} />
@@ -89,8 +96,8 @@ const Checkbox = ({
 Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
-    extraAttributes: PropTypes.object
+    css: PropTypes.object,
+    checked: PropTypes.bool
 }
 
 export default Checkbox;
