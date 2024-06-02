@@ -18,7 +18,22 @@ import { styled } from "@stitches/react";
  * @typedef {FigureProps & React.HTMLProps<HTMLElement>} ExtendedFigureProps
  */
 
-const FigureStyled = styled("figure", {});
+const FigureStyled = styled("figure", {
+    border: "thin #c0c0c0 solid",
+    display: "flex",
+    flexFlow: "column",
+    margin: "auto",
+    width: "100%",
+    height: "100%",
+    padding: 5
+});
+
+const FigcaptionStyled = styled("figcaption", {
+    backgroundColor: "#222",
+    color: "#fff",
+    padding: "3px",
+    textAlign: "center"
+})
 
 /**
  * Componente Figure para renderização de imagens com legendas.
@@ -52,9 +67,9 @@ const Figure = ({ caption, children, css, ...rest }) => {
             {errors.length === 0 &&
                 <FigureStyled css={css} {...rest}>
                     {children}
-                    <figcaption>
+                    <FigcaptionStyled>
                         {caption}
-                    </figcaption>
+                    </FigcaptionStyled>
                 </FigureStyled>
             }
 
