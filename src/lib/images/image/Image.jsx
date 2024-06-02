@@ -3,7 +3,15 @@ import React, { useEffect, useState } from "react";
 import ComponentErrorList from "../../../components/component-error-list/ComponentErrorList";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES } from "../../../utils/eMagGuidelineCode";
+import { styled } from "@stitches/react";
 
+
+const ImageStyled = styled("img", {});
+
+/**
+ * @typedef ImageProps
+ * @property {import("@stitches/react").CSS} css
+ */
 
 /**
  * Componente Image pré-configurado com as diretrizes do eMAG
@@ -14,10 +22,10 @@ import { PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES } from "../../../utils/eMagG
  * para tanto o atributo alt."
  * portanto, o atributo alt é obrigatório.
  * 
- * @param {React.HTMLProps<HTMLImageElement>} props 
+ * @param {React.HTMLProps<HTMLImageElement> & ImageProps} props 
  * @returns {React.JSX.Element}
  */
-const Image = ({ src, alt, ...extraProps }) => {
+const Image = ({ src, alt, css, ...extraProps }) => {
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
@@ -33,10 +41,11 @@ const Image = ({ src, alt, ...extraProps }) => {
     return (
         <>
             {errors.length === 0 &&
-                <img
+                <ImageStyled
                     {...extraProps}
                     src={src}
                     alt={alt}
+                    css={css}
                 />
             }
 
