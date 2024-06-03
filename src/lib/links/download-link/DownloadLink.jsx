@@ -94,7 +94,7 @@ const DownloadLink = ({
                     ref={downloadLinkRef}
                     href={href}
                     download={true} >
-                    {fileName} ({extension} {size}{unit})
+                    {fileName} ({extension}, {size}{unit})
                 </Link>
             }
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
