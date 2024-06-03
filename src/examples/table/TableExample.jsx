@@ -17,7 +17,11 @@ const TableExample = () => {
     return (
         <Table.Root
             caption={{
-                title: "Tabela 2 - Lista de Produtos"
+                title: "Tabela 1 - Lista de Produtos",
+                css: {
+                    marginBottom: 10,
+                    fontWeight: "bold"
+                }
             }}
             summary="Tabela listando produtos"
             theadChildren={(
