@@ -11,6 +11,7 @@ import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineVio
 import { PROVIDE_ALTERNATIVE_TO_AUDIO } from "../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../components/component-error-list";
 import PropTypes from "prop-types";
+import usePlayer from "../hooks/player";
 
 
 /**
@@ -144,6 +145,8 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
     const { pause, play, isPlaying } = useAudioPlayer(audioRef.current);
 
+    const { formatTime } = usePlayer();
+
 
 
     /**
@@ -158,21 +161,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
         }
 
         play();
-    }
-
-    /**
-     * Converte segundos para minutos
-     * @param {number} seconds 
-     */
-    const formatTime = seconds => {
-        if (!seconds) {
-            return "00:00";
-        }
-
-        const minutes = Math.floor(seconds / 60);
-        const secondsAux = Math.floor(seconds % 60);
-
-        return `${minutes}:${secondsAux < 10 ? '0' : ''}${secondsAux}`;
     }
 
     /**
