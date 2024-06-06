@@ -61,7 +61,7 @@ const Video = ({ sources, css, controls, ...rest }) => {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
-    const { formatTime } = usePlayer();
+    const { formatTime, onProgressTimeChange } = usePlayer();
 
     /**
      * Inicializa o vídeo
@@ -95,6 +95,13 @@ const Video = ({ sources, css, controls, ...rest }) => {
         setCurrentTime(event.target.currentTime);
     }
 
+    const onProgressChange = event => {
+        const timeSeek = onProgressTimeChange(event.target.value, duration);
+
+        setCurrentTime(timeSeek);
+        videoRef.current.currentTime = timeSeek;
+    }
+
     return (
         <VideoContainer>
             <VideoStyled
@@ -119,9 +126,13 @@ const Video = ({ sources, css, controls, ...rest }) => {
             </VideoStyled>
 
 
-
             <VideoProgressContainer>
-                <VideoProgressoBar value={0} aria-label="Barra de progresso do vídeo" type="range" />
+                <VideoProgressoBar
+                    min={0}
+                    max={100}
+                    onChange={onProgressChange}
+                    value={(currentTime / duration) * 100}
+                    aria-label="Barra de progresso do vídeo" type="range" />
                 <VideoDuration>
                     {formatTime(currentTime)} / {formatTime(duration)}
                 </VideoDuration>
