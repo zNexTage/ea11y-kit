@@ -108,6 +108,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
     const cboLegendId = useId();
 
     const [violations, setViolations] = useState([]);
+    
 
     useEffect(() => {
         const violationAux = [];
@@ -145,7 +146,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
     const { pause, play, isPlaying } = useAudioPlayer(audioRef.current);
 
-    const { formatTime } = usePlayer();
+    const { formatTime, changeCaptionLang } = usePlayer();
 
 
 
@@ -162,29 +163,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
         play();
     }
-
-    /**
-     * Troca a linguagem da legenda.
-     * @returns 
-     */
-    const changeLegendLang = () => {
-        if (!tracks || tracks?.length === 0) return;
-
-        const textTracks = [...audioRef.current.textTracks];
-
-        // desabilita as outras legendas.
-        textTracks.forEach(track => {
-            track.mode = "disabled";
-        });
-
-        // demonstra a legenda selecionada.
-        const textTrack = textTracks.find(track => track.language === selectedTrack.srcLang);
-
-        if (!textTrack) return; // não faz nada se não localizar a legenda.
-        textTrack.mode = "showing";
-    }
-
-    useEffect(changeLegendLang, [selectedTrack]);
 
     /**
      * Atualiza as legendas conforme o áudio é reproduzido
@@ -363,7 +341,9 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                             onChange={event => {
                                                 const track = tracks.find(track => track.srcLang === event.target.value);
 
-                                                setSelectedTrack(track);
+                                                const newTrack = changeCaptionLang(audioRef.current.textTracks, track);
+                                                
+                                                setSelectedTrack(newTrack);
                                             }}
                                         >
                                             {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}
