@@ -3,6 +3,7 @@
  * @returns 
  */
 const usePlayer = () => {
+
     /**
      * Converte segundos para minutos
      * @param {number} seconds 
@@ -18,8 +19,21 @@ const usePlayer = () => {
         return `${minutes}:${secondsAux < 10 ? '0' : ''}${secondsAux}`;
     }
 
+    /**
+     * Altera o tempo do vídeo para o tempo requisitado no range.
+     * @param {number} timeSeek - tempo do vídeo que foi requisitado
+     * @param {*} elementDuration  - duração total do vídeo
+     * @returns 
+     */
+    const onProgressTimeChange = (timeSeek, elementDuration) => {
+        const value = Number.parseFloat(timeSeek);
+
+        return (value * elementDuration) / 100;
+    }
+
     return {
-        formatTime
+        formatTime,
+        onProgressTimeChange,
     }
 };
 
