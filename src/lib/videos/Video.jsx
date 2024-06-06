@@ -2,6 +2,8 @@ import { styled } from "@stitches/react";
 import Button from "../fields/button/Button";
 import usePlayer from "../hooks/player";
 import { useRef, useState } from "react";
+import { lightTheme } from "../../stitches.config";
+import { fieldHightlight } from "../fields/shared-styles/Field.style";
 
 const VideoContainer = styled("div", {
     maxWidth: 800,
@@ -128,6 +130,7 @@ const Video = ({ sources, css, controls, ...rest }) => {
 
             <VideoProgressContainer>
                 <VideoProgressoBar
+                    className={`${lightTheme} ${fieldHightlight}`}
                     min={0}
                     max={100}
                     onChange={onProgressChange}
