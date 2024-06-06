@@ -196,7 +196,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
         const textTracks = [...event.target.textTracks];
 
-        // o mode da legenda utilizada é showing.
+        // obtém a legenda que está sendo utilizada.
         const currentTextTrack = textTracks.find(track => track.mode === "showing");
 
         if (!currentTextTrack) return;
