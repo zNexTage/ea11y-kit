@@ -1,9 +1,44 @@
 import { styled } from "@stitches/react";
 import Button from "../fields/button/Button";
 import usePlayer from "../hooks/player";
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { lightTheme } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
+import Select from "../fields/select";
+
+
+
+/**
+ * @typedef Source
+ * @property {string} src
+ * @property {string} type
+ */
+
+/**
+ * @typedef Track
+ * @property {string} src
+ * @property {string} srcLang
+ * @property {boolean} default
+ * @property {string} label
+ */
+
+/**
+ * @typedef VideoSource
+ * @property {string} src
+ * @property {string} type 
+ **/
+
+/**
+ * @typedef VideoProps
+ * @property {import("@stitches/react").CSS} css
+ * @property {Array<VideoSource>} sources 
+ * @property {Array<Track>} tracks
+ */
+
+/**
+ * @typedef {VideoProps & React.HTMLProps<HTMLVideoElement>}  ExtendedVideoProps
+ */
+
 
 const VideoContainer = styled("div", {
     maxWidth: 800,
@@ -33,22 +68,14 @@ const VideoDuration = styled("p", {
     margin: 0
 });
 
-
-/**
- * @typedef VideoSource
- * @property {string} src
- * @property {string} type 
- **/
-
-/**
- * @typedef VideoProps
- * @property {import("@stitches/react").CSS} css
- * @property {Array<VideoSource>} sources 
- */
-
-/**
- * @typedef {VideoProps & React.HTMLProps<HTMLVideoElement>}  ExtendedVideoProps
- */
+const VideoControls = styled("div", {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    "&>div": {
+        flex: 1
+    }
+})
 
 
 /**
@@ -56,14 +83,14 @@ const VideoDuration = styled("p", {
  * @param {ExtendedVideoProps} props 
  * @returns 
  */
-const Video = ({ sources, css, controls, ...rest }) => {
+const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
     const videoRef = useRef();
+    const { formatTime, onProgressTimeChange, changeCaptionLang, getDefaultTrack } = usePlayer();
+    const cboVideoId = useId();
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
-
-    const { formatTime, onProgressTimeChange } = usePlayer();
 
     /**
      * Inicializa o vídeo
@@ -97,6 +124,10 @@ const Video = ({ sources, css, controls, ...rest }) => {
         setCurrentTime(event.target.currentTime);
     }
 
+    /**
+     * Atualiza o tempo conforme o vídeo é reproduzido.
+     * @param {*} event 
+     */
     const onProgressChange = event => {
         const timeSeek = onProgressTimeChange(event.target.value, duration);
 
@@ -125,6 +156,19 @@ const Video = ({ sources, css, controls, ...rest }) => {
                 <p>
                     Seu navegador não suporta reprodução de vídeo.
                 </p>
+
+                {
+                    tracks.map(track => (
+                        <track
+                            key={`video_track_${track.label}_${track.srcLang}`}
+                            kind="captions"
+                            label={track.label}
+                            src={track.src}
+                            srcLang={track.srcLang}
+                            default={track.default}>
+                        </track>
+                    ))
+                }
             </VideoStyled>
 
 
@@ -141,28 +185,50 @@ const Video = ({ sources, css, controls, ...rest }) => {
                 </VideoDuration>
             </VideoProgressContainer>
 
-            <div>
-                {
-                    !isPlaying ?
-                        <Button
-                            onClick={play}
-                            css={{
-                                marginRight: 10
-                            }}>
-                            Reproduzir
-                        </Button> :
-                        <Button
-                            onClick={pause}
-                            css={{
-                                marginRight: 10
-                            }}>
-                            Pausar
-                        </Button>
-                }
-                <Button onClick={stop}>
-                    Parar
-                </Button>
-            </div>
+            <VideoControls>
+                <div>
+                    {
+                        !isPlaying ?
+                            <Button
+                                onClick={play}
+                                css={{
+                                    marginRight: 10
+                                }}>
+                                Reproduzir
+                            </Button> :
+                            <Button
+                                onClick={pause}
+                                css={{
+                                    marginRight: 10
+                                }}>
+                                Pausar
+                            </Button>
+                    }
+                    <Button onClick={stop}>
+                        Parar
+                    </Button>
+                </div>
+
+                <Select
+                    name={`cboVideoCaption${cboVideoId}`}
+                    label="Legendas"
+                    onChange={event => {
+                        const selectedTrack = event.target.value;
+
+                        const track = tracks.find(track => track.srcLang === selectedTrack);
+
+                        changeCaptionLang([...videoRef.current.textTracks], track);
+                    }}
+                    id={`cboVideoCaption${cboVideoId}`}>
+                    {
+                        tracks.map(t => (
+                            <option value={t.srcLang} key={`track_${cboVideoId}_${t.srcLang}`}>
+                                {t.label}
+                            </option>
+                        ))
+                    }
+                </Select>
+            </VideoControls>
         </VideoContainer>
     )
 }
