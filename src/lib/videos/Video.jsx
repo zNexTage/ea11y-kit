@@ -1,5 +1,6 @@
 import { styled } from "@stitches/react";
 import Button from "../fields/button/Button";
+import usePlayer from "../hooks/player";
 import { useRef, useState } from "react";
 
 const VideoContainer = styled("div", {
@@ -9,13 +10,27 @@ const VideoContainer = styled("div", {
     borderRadius: 5,
 });
 
+const VideoProgressContainer = styled("div", {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "5px 0"
+});
+
 const VideoProgressoBar = styled("input", {
-    width: "100%"
+    width: "100%",
+    flex: 1,
+    marginRight: 25
 });
 
 const VideoStyled = styled("video", {
     width: "100%"
 });
+
+const VideoDuration = styled("p", {
+    margin: 0
+});
+
 
 /**
  * @typedef VideoSource
@@ -43,6 +58,10 @@ const Video = ({ sources, css, controls, ...rest }) => {
     const videoRef = useRef();
 
     const [isPlaying, setIsPlaying] = useState(false);
+    const [duration, setDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
+
+    const { formatTime } = usePlayer();
 
     /**
      * Inicializa o vídeo
@@ -68,11 +87,23 @@ const Video = ({ sources, css, controls, ...rest }) => {
         pause();
     }
 
+    /**
+     * Atualiza o estado com o tempo atual do vídeo.
+     * @param {*} event 
+     */
+    const onTimeUpdate = event => {
+        setCurrentTime(event.target.currentTime);
+    }
+
     return (
         <VideoContainer>
             <VideoStyled
                 ref={videoRef}
                 css={css}
+                onTimeUpdate={onTimeUpdate}
+                onLoadedData={event => {
+                    setDuration(event.target.duration);
+                }}
                 {...rest}>
                 {sources.map((source, index) => (
                     <source
@@ -87,9 +118,14 @@ const Video = ({ sources, css, controls, ...rest }) => {
                 </p>
             </VideoStyled>
 
-            <div>
+
+
+            <VideoProgressContainer>
                 <VideoProgressoBar value={0} aria-label="Barra de progresso do vídeo" type="range" />
-            </div>
+                <VideoDuration>
+                    {formatTime(currentTime)} / {formatTime(duration)}
+                </VideoDuration>
+            </VideoProgressContainer>
 
             <div>
                 {
