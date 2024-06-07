@@ -130,13 +130,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
         return tracks[0];
     }
 
-    useEffect(() => {
-        // Sempre quando as legendas forem trocadas, altera a legend selecionada.
-        setSelectedTrack(getDefaultTrack());
-    }, [tracks]);
-
-    const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
-
     const [currentTrackText, setCurrentTrackText] = useState("");
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -341,9 +334,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                             onChange={event => {
                                                 const track = tracks.find(track => track.srcLang === event.target.value);
 
-                                                const newTrack = changeCaptionLang(audioRef.current.textTracks, track);
-                                                
-                                                setSelectedTrack(newTrack);
+                                                changeCaptionLang(audioRef.current.textTracks, track);
                                             }}
                                         >
                                             {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}
