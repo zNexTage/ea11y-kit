@@ -194,6 +194,20 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
     }
 
     /**
+     * Pausa/inicia o vídeo ao clica-lo
+     * @param {*} event 
+     * @returns 
+     */
+    const onVideoClick = event => {
+        if (isPlaying) {
+            pause();
+            return
+        }
+
+        play();
+    }
+
+    /**
      * Sai do modo fullscreen
      * @returns 
      */
@@ -217,6 +231,7 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
     return (
         <VideoContainer ref={videoContainerRef}>
             <VideoStyled
+                onClick={onVideoClick}
                 ref={videoRef}
                 css={css}
                 className={`${lightTheme} ${fieldHightlight}`}
@@ -320,14 +335,14 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
                     </div>
 
                     <div>
-                    <Range
-                        label="Volume"
-                        id={volumeId}
-                        min={0}
-                        max={100}
-                        value={volume}
-                        onChange={onVolumeChange}
-                    />
+                        <Range
+                            label="Volume"
+                            id={volumeId}
+                            min={0}
+                            max={100}
+                            value={volume}
+                            onChange={onVolumeChange}
+                        />
                     </div>
 
                     <Select
