@@ -6,6 +6,7 @@ import { lightTheme } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import Select from "../fields/select";
 import useFullscreenAPI from "../hooks/fullscreen-api";
+import Range from "../fields/range/Range";
 
 
 
@@ -47,8 +48,7 @@ const VideoContainer = styled("div", {
     padding: 5,
     borderRadius: 5,
     "&:fullscreen": {
-        color: "#FFF",
-
+        color: "#FFF"
     }
 });
 
@@ -79,11 +79,12 @@ const VideoControls = styled("div", {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 10,
     "&>div": {
-        flex: 1
+        flex: 1,
+        marginRight: 15
     }
 });
-
 
 /**
  * 
@@ -97,13 +98,17 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
 
     const cboVideoId = useId();
 
+    const volumeId = useId();
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
+    const [volume, setVolume] = useState(100);
 
     const [isFullscreen, setIsFullscreen] = useState(false);
 
     const { isBrowserSupports, exitFullscreen, activeFullscreen } = useFullscreenAPI();
+
 
     useEffect(() => {
         const video = videoContainerRef?.current;
@@ -198,11 +203,23 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
         exitFullscreen();
     }
 
+    /**
+     * Altera o volume do vídeo.
+     * @param {*} event 
+     */
+    const onVolumeChange = event => {
+        const newVolume = Number.parseInt(event.target.value);
+
+        setVolume(newVolume);
+        videoRef.current.volume = newVolume / 100;
+    }
+
     return (
         <VideoContainer ref={videoContainerRef}>
             <VideoStyled
                 ref={videoRef}
                 css={css}
+                className={`${lightTheme} ${fieldHightlight}`}
                 onTimeUpdate={onTimeUpdate}
                 onLoadedData={event => {
                     setDuration(event.target.duration);
@@ -302,6 +319,17 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
 
                     </div>
 
+                    <div>
+                    <Range
+                        label="Volume"
+                        id={volumeId}
+                        min={0}
+                        max={100}
+                        value={volume}
+                        onChange={onVolumeChange}
+                    />
+                    </div>
+
                     <Select
                         name={`cboVideoCaption${cboVideoId}`}
                         label="Legendas"
@@ -321,7 +349,11 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
                             ))
                         }
                     </Select>
+
+
                 </VideoControls>
+
+
             </div>
         </VideoContainer>
     )
