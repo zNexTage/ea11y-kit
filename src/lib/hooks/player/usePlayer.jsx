@@ -53,13 +53,16 @@ const usePlayer = () => {
      * @returns 
      */
     const changeCaptionLang = (textTracks, selectedTrack) => {
+
+        const textTracksArr = [...textTracks];
+
         // desabilita as outras legendas.
-        textTracks.forEach(track => {
+        textTracksArr.forEach(track => {
             track.mode = "disabled";
         });
 
         // demonstra a legenda selecionada.
-        const textTrack = textTracks.find(track => track.language === selectedTrack.srcLang);
+        const textTrack = textTracksArr.find(track => track.language === selectedTrack.srcLang);
 
         if (!textTrack) return; // não faz nada se não localizar a legenda.
         textTrack.mode = "showing";
