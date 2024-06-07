@@ -1,5 +1,5 @@
 import { styled } from "@stitches/react";
-import Button from "../fields/button/Button";
+import { default as BaseButton } from "../fields/button/Button";
 import usePlayer from "../hooks/player";
 import { useEffect, useId, useRef, useState } from "react";
 import { lightTheme } from "../../stitches.config";
@@ -41,6 +41,11 @@ import Range from "../fields/range/Range";
  * @typedef {VideoProps & React.HTMLProps<HTMLVideoElement>}  ExtendedVideoProps
  */
 
+const ControlButton = styled(BaseButton, {
+    "&:fullscreen": {
+        border: "2px solid #DDD"
+    }
+});
 
 const VideoContainer = styled("div", {
     maxWidth: 800,
@@ -67,7 +72,7 @@ const VideoProgressoBar = styled("input", {
 
 const VideoStyled = styled("video", {
     width: "100%",
-    height: "87%",
+    height: "80%",
     minHeight: "15em",
 });
 
@@ -85,6 +90,19 @@ const VideoControls = styled("div", {
         marginRight: 15
     }
 });
+
+const VolumeContainer = styled("div", {
+    textAlign: "left",
+    display: "flex",
+    alignItems: "center",
+    "&>span": {
+        flex: .2
+    },
+    "&>div": {
+        width: "100%",
+        flex: 1
+    }
+})
 
 /**
  * 
@@ -285,56 +303,64 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
                     <div>
                         {
                             !isPlaying ?
-                                <Button
+                                <ControlButton
+                                    className={`${lightTheme} ${fieldHightlight}`}
                                     onClick={play}
                                     css={{
                                         marginRight: 10
                                     }}>
                                     Reproduzir
-                                </Button> :
-                                <Button
+                                </ControlButton> :
+                                <ControlButton
+                                    className={`${lightTheme} ${fieldHightlight}`}
                                     onClick={pause}
                                     css={{
                                         marginRight: 10
                                     }}>
                                     Pausar
-                                </Button>
+                                </ControlButton>
 
                         }
-                        <Button
+                        <ControlButton
+                            className={`${lightTheme} ${fieldHightlight}`}
                             css={{
                                 marginRight: 10
                             }} onClick={stop}>
                             Parar
-                        </Button>
+                        </ControlButton>
 
                         {isBrowserSupports &&
                             <>
                                 {!isFullscreen &&
-                                    <Button
+                                    <ControlButton
+                                        className={`${lightTheme} ${fieldHightlight}`}
                                         onClick={fullscreen}
                                         css={{
                                             marginRight: 10
                                         }}>
                                         Tela cheia
-                                    </Button>
+                                    </ControlButton>
                                 }
 
                                 {isFullscreen &&
-                                    <Button
+                                    <ControlButton
+                                        className={`${lightTheme} ${fieldHightlight}`}
                                         onClick={closeFullscreen}
                                         css={{
                                             marginRight: 10
                                         }}>
                                         Sair tela cheia
-                                    </Button>
+                                    </ControlButton>
                                 }
                             </>
                         }
 
                     </div>
 
-                    <div>
+                    <VolumeContainer>
+                        <span>
+                            {volume}
+                        </span>
                         <Range
                             label="Volume"
                             id={volumeId}
@@ -343,7 +369,7 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
                             value={volume}
                             onChange={onVolumeChange}
                         />
-                    </div>
+                    </VolumeContainer>
 
                     <Select
                         name={`cboVideoCaption${cboVideoId}`}
