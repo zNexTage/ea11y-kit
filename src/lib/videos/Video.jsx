@@ -1,10 +1,11 @@
 import { styled } from "@stitches/react";
 import Button from "../fields/button/Button";
 import usePlayer from "../hooks/player";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { lightTheme } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import Select from "../fields/select";
+import useFullscreenAPI from "../hooks/fullscreen-api";
 
 
 
@@ -45,6 +46,10 @@ const VideoContainer = styled("div", {
     border: "2px solid #ddd",
     padding: 5,
     borderRadius: 5,
+    "&:fullscreen": {
+        color: "#FFF",
+
+    }
 });
 
 const VideoProgressContainer = styled("div", {
@@ -61,7 +66,9 @@ const VideoProgressoBar = styled("input", {
 });
 
 const VideoStyled = styled("video", {
-    width: "100%"
+    width: "100%",
+    height: "87%",
+    minHeight: "15em",
 });
 
 const VideoDuration = styled("p", {
@@ -75,7 +82,7 @@ const VideoControls = styled("div", {
     "&>div": {
         flex: 1
     }
-})
+});
 
 
 /**
@@ -85,12 +92,35 @@ const VideoControls = styled("div", {
  */
 const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
     const videoRef = useRef();
-    const { formatTime, onProgressTimeChange, changeCaptionLang, getDefaultTrack } = usePlayer();
+    const videoContainerRef = useRef();
+    const { formatTime, onProgressTimeChange, changeCaptionLang } = usePlayer();
+
     const cboVideoId = useId();
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
+
+    const [isFullscreen, setIsFullscreen] = useState(false);
+
+    const { isBrowserSupports, exitFullscreen, activeFullscreen } = useFullscreenAPI();
+
+    useEffect(() => {
+        const video = videoContainerRef?.current;
+
+        if (!video) return;
+
+        // Aparentemente o React não implementa o onFullscreenChange
+        // https://stackoverflow.com/questions/64485142/is-fullscreenchange-event-supported-in-react
+        video.addEventListener("fullscreenchange", event => {
+            if (!!document.fullscreenElement) {
+                setIsFullscreen(true);
+            } else {
+                setIsFullscreen(false);
+            }
+        })
+    }, []);
+
 
     /**
      * Inicializa o vídeo
@@ -135,8 +165,41 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
         videoRef.current.currentTime = timeSeek;
     }
 
+    /**
+     * Ativa o modo fullscreen
+     * @param {*} event 
+     * @returns 
+     */
+    const fullscreen = async event => {
+        if (!isBrowserSupports) return;
+
+        const video = videoContainerRef.current;
+
+        try {
+            const result = activeFullscreen(video);
+
+            if (!result) {
+                console.log("Não foi possível ativar o modo fullscreen");
+                alert("Ops! Não foi possível ativar o modo fullscreen.");
+            }
+        }
+        catch (err) {
+            alert("Ocorreu um erro ao tentar habilitar o modo tela cheia.");
+        }
+    }
+
+    /**
+     * Sai do modo fullscreen
+     * @returns 
+     */
+    const closeFullscreen = () => {
+        if (!isBrowserSupports) return;
+
+        exitFullscreen();
+    }
+
     return (
-        <VideoContainer>
+        <VideoContainer ref={videoContainerRef}>
             <VideoStyled
                 ref={videoRef}
                 css={css}
@@ -172,63 +235,94 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
             </VideoStyled>
 
 
-            <VideoProgressContainer>
-                <VideoProgressoBar
-                    className={`${lightTheme} ${fieldHightlight}`}
-                    min={0}
-                    max={100}
-                    onChange={onProgressChange}
-                    value={(currentTime / duration) * 100}
-                    aria-label="Barra de progresso do vídeo" type="range" />
-                <VideoDuration>
-                    {formatTime(currentTime)} / {formatTime(duration)}
-                </VideoDuration>
-            </VideoProgressContainer>
+            <div>
+                <VideoProgressContainer>
+                    <VideoProgressoBar
+                        className={`${lightTheme} ${fieldHightlight}`}
+                        min={0}
+                        max={100}
+                        onChange={onProgressChange}
+                        value={(currentTime / duration) * 100}
+                        aria-label="Barra de progresso do vídeo" type="range" />
+                    <VideoDuration>
+                        {formatTime(currentTime)} / {formatTime(duration)}
+                    </VideoDuration>
+                </VideoProgressContainer>
 
-            <VideoControls>
-                <div>
-                    {
-                        !isPlaying ?
-                            <Button
-                                onClick={play}
-                                css={{
-                                    marginRight: 10
-                                }}>
-                                Reproduzir
-                            </Button> :
-                            <Button
-                                onClick={pause}
-                                css={{
-                                    marginRight: 10
-                                }}>
-                                Pausar
-                            </Button>
-                    }
-                    <Button onClick={stop}>
-                        Parar
-                    </Button>
-                </div>
+                <VideoControls>
+                    <div>
+                        {
+                            !isPlaying ?
+                                <Button
+                                    onClick={play}
+                                    css={{
+                                        marginRight: 10
+                                    }}>
+                                    Reproduzir
+                                </Button> :
+                                <Button
+                                    onClick={pause}
+                                    css={{
+                                        marginRight: 10
+                                    }}>
+                                    Pausar
+                                </Button>
 
-                <Select
-                    name={`cboVideoCaption${cboVideoId}`}
-                    label="Legendas"
-                    onChange={event => {
-                        const selectedTrack = event.target.value;
+                        }
+                        <Button
+                            css={{
+                                marginRight: 10
+                            }} onClick={stop}>
+                            Parar
+                        </Button>
 
-                        const track = tracks.find(track => track.srcLang === selectedTrack);
+                        {isBrowserSupports &&
+                            <>
+                                {!isFullscreen &&
+                                    <Button
+                                        onClick={fullscreen}
+                                        css={{
+                                            marginRight: 10
+                                        }}>
+                                        Tela cheia
+                                    </Button>
+                                }
 
-                        changeCaptionLang([...videoRef.current.textTracks], track);
-                    }}
-                    id={`cboVideoCaption${cboVideoId}`}>
-                    {
-                        tracks.map(t => (
-                            <option value={t.srcLang} key={`track_${cboVideoId}_${t.srcLang}`}>
-                                {t.label}
-                            </option>
-                        ))
-                    }
-                </Select>
-            </VideoControls>
+                                {isFullscreen &&
+                                    <Button
+                                        onClick={closeFullscreen}
+                                        css={{
+                                            marginRight: 10
+                                        }}>
+                                        Sair tela cheia
+                                    </Button>
+                                }
+                            </>
+                        }
+
+                    </div>
+
+                    <Select
+                        name={`cboVideoCaption${cboVideoId}`}
+                        label="Legendas"
+                        onChange={event => {
+                            const selectedTrack = event.target.value;
+
+                            const track = tracks.find(track => track.srcLang === selectedTrack);
+
+                            changeCaptionLang(videoRef.current.textTracks, track);
+                        }}
+                        id={`cboVideoCaption${cboVideoId}`}>
+                        {
+                            tracks.map(t => (
+                                <option value={t.srcLang} key={`track_${cboVideoId}_${t.srcLang}`}>
+                                    {t.label}
+                                </option>
+                            ))
+                        }
+                    </Select>
+                </VideoControls>
+            </div>
         </VideoContainer>
     )
 }
