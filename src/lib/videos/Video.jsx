@@ -8,8 +8,8 @@ import Select from "../fields/select";
 import useFullscreenAPI from "../hooks/fullscreen-api";
 import Range from "../fields/range/Range";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faPause, faStop, faExpand, faMinimize, faDownload } from '@fortawesome/free-solid-svg-icons'
-
+import { faPlay, faPause, faStop, faExpand, faMinimize } from '@fortawesome/free-solid-svg-icons'
+import DownloadLink from "../links/download-link/DownloadLink";
 
 
 /**
@@ -37,6 +37,7 @@ import { faPlay, faPause, faStop, faExpand, faMinimize, faDownload } from '@fort
  * @property {import("@stitches/react").CSS} css
  * @property {Array<VideoSource>} sources 
  * @property {Array<Track>} tracks
+ * @property {import("../links/download-link/DownloadLink").DownloadLinkProps} textualAlternativeFile
  */
 
 /**
@@ -104,14 +105,14 @@ const VolumeContainer = styled("div", {
         width: "100%",
         flex: 1
     }
-})
+});
 
 /**
  * 
  * @param {ExtendedVideoProps} props 
  * @returns 
  */
-const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
+const Video = ({ sources, css, controls, tracks = [], textualAlternativeFile, ...rest }) => {
     const videoRef = useRef();
     const videoContainerRef = useRef();
     const { formatTime, onProgressTimeChange, changeCaptionLang } = usePlayer();
@@ -288,6 +289,17 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
 
 
             <div>
+                <DownloadLink
+                    css={{
+                        textAlign: "center",
+                        display: "block",
+                    }}
+                    extension={textualAlternativeFile.extension}
+                    fileName={textualAlternativeFile.fileName}
+                    href={textualAlternativeFile.href}
+                    size={textualAlternativeFile.size}
+                    unit={textualAlternativeFile.unit}
+                />
                 <VideoProgressContainer>
 
                     <div>
@@ -344,15 +356,6 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
 
                             </>
                         }
-
-                        <ControlButton
-                            className={`${lightTheme} ${fieldHightlight}`}
-                            onClick={fullscreen}
-                            css={{
-                                marginRight: 10
-                            }}>
-                            <FontAwesomeIcon icon={faDownload} title="Baixar vídeo" />
-                        </ControlButton>
                     </div>
 
                     <VideoProgressoBar
