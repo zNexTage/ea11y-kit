@@ -7,6 +7,8 @@ import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import Select from "../fields/select";
 import useFullscreenAPI from "../hooks/fullscreen-api";
 import Range from "../fields/range/Range";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay, faPause, faStop, faExpand, faMinimize, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -287,6 +289,72 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
 
             <div>
                 <VideoProgressContainer>
+
+                    <div>
+                        {!isPlaying ?
+                            <ControlButton
+                                className={`${lightTheme} ${fieldHightlight}`}
+                                onClick={play}
+                                css={{
+                                    marginRight: 10
+                                }}>
+                                <FontAwesomeIcon title="Reproduzir" icon={faPlay} />
+                            </ControlButton> :
+                            <ControlButton
+                                className={`${lightTheme} ${fieldHightlight}`}
+                                onClick={pause}
+                                css={{
+                                    marginRight: 10
+                                }}>
+                                <FontAwesomeIcon title="Pausar" icon={faPause} />
+                            </ControlButton>
+                        }
+
+                        <ControlButton
+                            className={`${lightTheme} ${fieldHightlight}`}
+                            css={{
+                                marginRight: 10
+                            }} onClick={stop}>
+                            <FontAwesomeIcon title="Parar" icon={faStop} />
+                        </ControlButton>
+
+                        {isBrowserSupports &&
+                            <>
+                                {!isFullscreen &&
+                                    <ControlButton
+                                        className={`${lightTheme} ${fieldHightlight}`}
+                                        onClick={fullscreen}
+                                        css={{
+                                            marginRight: 10
+                                        }}>
+                                        <FontAwesomeIcon icon={faExpand} title="Tela cheia" />
+                                    </ControlButton>
+                                }
+
+                                {isFullscreen &&
+                                    <ControlButton
+                                        className={`${lightTheme} ${fieldHightlight}`}
+                                        onClick={closeFullscreen}
+                                        css={{
+                                            marginRight: 10
+                                        }}>
+                                        <FontAwesomeIcon icon={faMinimize} title="Sair tela cheia" />
+                                    </ControlButton>
+                                }
+
+                            </>
+                        }
+
+                        <ControlButton
+                            className={`${lightTheme} ${fieldHightlight}`}
+                            onClick={fullscreen}
+                            css={{
+                                marginRight: 10
+                            }}>
+                            <FontAwesomeIcon icon={faDownload} title="Baixar vídeo" />
+                        </ControlButton>
+                    </div>
+
                     <VideoProgressoBar
                         className={`${lightTheme} ${fieldHightlight}`}
                         min={0}
@@ -300,63 +368,6 @@ const Video = ({ sources, css, controls, tracks = [], ...rest }) => {
                 </VideoProgressContainer>
 
                 <VideoControls>
-                    <div>
-                        {
-                            !isPlaying ?
-                                <ControlButton
-                                    className={`${lightTheme} ${fieldHightlight}`}
-                                    onClick={play}
-                                    css={{
-                                        marginRight: 10
-                                    }}>
-                                    Reproduzir
-                                </ControlButton> :
-                                <ControlButton
-                                    className={`${lightTheme} ${fieldHightlight}`}
-                                    onClick={pause}
-                                    css={{
-                                        marginRight: 10
-                                    }}>
-                                    Pausar
-                                </ControlButton>
-
-                        }
-                        <ControlButton
-                            className={`${lightTheme} ${fieldHightlight}`}
-                            css={{
-                                marginRight: 10
-                            }} onClick={stop}>
-                            Parar
-                        </ControlButton>
-
-                        {isBrowserSupports &&
-                            <>
-                                {!isFullscreen &&
-                                    <ControlButton
-                                        className={`${lightTheme} ${fieldHightlight}`}
-                                        onClick={fullscreen}
-                                        css={{
-                                            marginRight: 10
-                                        }}>
-                                        Tela cheia
-                                    </ControlButton>
-                                }
-
-                                {isFullscreen &&
-                                    <ControlButton
-                                        className={`${lightTheme} ${fieldHightlight}`}
-                                        onClick={closeFullscreen}
-                                        css={{
-                                            marginRight: 10
-                                        }}>
-                                        Sair tela cheia
-                                    </ControlButton>
-                                }
-                            </>
-                        }
-
-                    </div>
-
                     <VolumeContainer>
                         <span>
                             {volume}
