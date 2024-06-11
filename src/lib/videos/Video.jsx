@@ -293,6 +293,20 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
         videoRef.current.volume = newVolume / 100;
     }
 
+    /**
+     * retorna o tempo atual do vídeo.
+     * @returns {number} - o tempo atual do vídeo
+     */
+    const getVideoCurrentTime = () => {
+        const result = (currentTime / duration) * 100;
+
+        if(isNaN(result)){
+            return 0;
+        }
+
+        return result;
+    }
+
     return (
         <>
             {violations.length === 0 &&
@@ -420,7 +434,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                                 min={0}
                                 max={100}
                                 onChange={onProgressChange}
-                                value={(currentTime / duration) * 100}
+                                value={getVideoCurrentTime()}
                                 aria-label="Barra de progresso do vídeo" type="range" />
                             <VideoDuration>
                                 {formatTime(currentTime)} / {formatTime(duration)}
