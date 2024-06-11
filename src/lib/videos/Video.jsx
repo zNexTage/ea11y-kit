@@ -15,6 +15,7 @@ import { PROVIDE_ALTERNATIVE_TO_VIDEO } from "../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../components/component-error-list";
 import RequiredAttribute from "../../exceptions/RequiredAttribute";
 
+const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapters"];
 
 /**
  * @typedef Source
@@ -28,6 +29,7 @@ import RequiredAttribute from "../../exceptions/RequiredAttribute";
  * @property {string} srcLang
  * @property {boolean} default
  * @property {string} label
+ * @property {"subtitles"|"captions"|"descriptions"|"chapters"} kind
  */
 
 /**
@@ -121,7 +123,8 @@ const VolumeContainer = styled("div", {
  * a leitura do material ou que não têm tempo para ouvir um arquivo multimídia.
  * Além disso, deve-se fornecer uma alternativa textual (arquivo) do vídeo através da propriedade textualAlternativeFile para que o usuário
  * 5.3 -  Oferecer audiodescrição para vídeo pré-gravado. Audiodescrição é considerado opcional, e deve-se ser fornecido quando
- * "vídeos que transmitem conteúdo visual que não está disponível na faixa de áudio devem possuir uma audiodescrição." (eMAG, 2014)
+ * "vídeos que transmitem conteúdo visual que não está disponível na faixa de áudio devem possuir uma audiodescrição." (eMAG, 2014). É possível informar audidescrição
+ * via "tracks", bastando definir o kind para "descriptions".
  * 4-4 - Possibilitar que o elemento com foco seja visualmente evidente: os controles de interação recebem uma borda ao serem focados.
  * @param {ExtendedVideoProps} props 
  * @returns 
@@ -171,7 +174,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                 new RequiredAttribute("Atenção! É necessário informar a propriedade 'sources' para especificar pelo menos um link do vídeo. Pode-se utilizar o 'sources' para disponibilizar o mesmo vídeo, mas em outros formatos através do atributo 'type'.")
             )
         }
-        
+
         if (!textualAlternativeFile) {
             errorsAux.push(
                 new GuidelineViolation(PROVIDE_ALTERNATIVE_TO_VIDEO,
@@ -317,16 +320,22 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                         </p>
 
                         {
-                            tracks?.map(track => (
-                                <track
-                                    key={`video_track_${track.label}_${track.srcLang}`}
-                                    kind="captions"
-                                    label={track.label}
-                                    src={track.src}
-                                    srcLang={track.srcLang}
-                                    default={track.default}>
-                                </track>
-                            ))
+                            tracks?.map(track => {
+                                const isValidKind = KIND_AVAILABLE_OPTIONS.includes(track.kind);
+
+                                const defaultKind = "captions";
+
+                                return (
+                                    <track
+                                        key={`video_track_${track.label}_${track.srcLang}`}
+                                        kind={isValidKind ? track.kind : defaultKind}
+                                        label={track.label}
+                                        src={track.src}
+                                        srcLang={track.srcLang}
+                                        default={track.default}>
+                                    </track>
+                                )
+                            })
                         }
                     </VideoStyled>
 
