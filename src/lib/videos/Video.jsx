@@ -112,7 +112,17 @@ const VolumeContainer = styled("div", {
 });
 
 /**
+ * Componente vídeo pré-configurado com as diretrizes do eMAG
  * 
+ * Diretrizes adotadas:
+ * 
+ * 5.1 - Fornecer alternativa para vídeo: As legendas são obrigatórias e devem ser fornecidas via prop 'tracks'. 
+ * De acordo com o eMAG(2014), as legendas são essenciais para pessoas com deficiência auditiva, mas também são importantes para usuários que não possuem equipamento de som, que preferem realizar 
+ * a leitura do material ou que não têm tempo para ouvir um arquivo multimídia.
+ * Além disso, deve-se fornecer uma alternativa textual (arquivo) do vídeo através da propriedade textualAlternativeFile para que o usuário
+ * 5.3 -  Oferecer audiodescrição para vídeo pré-gravado. Audiodescrição é considerado opcional, e deve-se ser fornecido quando
+ * "vídeos que transmitem conteúdo visual que não está disponível na faixa de áudio devem possuir uma audiodescrição." (eMAG, 2014)
+ * 4-4 - Possibilitar que o elemento com foco seja visualmente evidente: os controles de interação recebem uma borda ao serem focados.
  * @param {ExtendedVideoProps} props 
  * @returns 
  */
