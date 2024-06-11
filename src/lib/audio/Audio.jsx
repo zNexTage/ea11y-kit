@@ -11,6 +11,7 @@ import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineVio
 import { PROVIDE_ALTERNATIVE_TO_AUDIO } from "../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../components/component-error-list";
 import PropTypes from "prop-types";
+import usePlayer from "../hooks/player";
 
 
 /**
@@ -107,6 +108,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
     const cboLegendId = useId();
 
     const [violations, setViolations] = useState([]);
+    
 
     useEffect(() => {
         const violationAux = [];
@@ -128,13 +130,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
         return tracks[0];
     }
 
-    useEffect(() => {
-        // Sempre quando as legendas forem trocadas, altera a legend selecionada.
-        setSelectedTrack(getDefaultTrack());
-    }, [tracks]);
-
-    const [selectedTrack, setSelectedTrack] = useState(getDefaultTrack());
-
     const [currentTrackText, setCurrentTrackText] = useState("");
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -143,6 +138,8 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
     const audioRef = useRef();
 
     const { pause, play, isPlaying } = useAudioPlayer(audioRef.current);
+
+    const { formatTime, changeCaptionLang } = usePlayer();
 
 
 
@@ -161,44 +158,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
     }
 
     /**
-     * Converte segundos para minutos
-     * @param {number} seconds 
-     */
-    const formatTime = seconds => {
-        if (!seconds) {
-            return "00:00";
-        }
-
-        const minutes = Math.floor(seconds / 60);
-        const secondsAux = Math.floor(seconds % 60);
-
-        return `${minutes}:${secondsAux < 10 ? '0' : ''}${secondsAux}`;
-    }
-
-    /**
-     * Troca a linguagem da legenda.
-     * @returns 
-     */
-    const changeLegendLang = () => {
-        if (!tracks || tracks?.length === 0) return;
-
-        const textTracks = [...audioRef.current.textTracks];
-
-        // desabilita as outras legendas.
-        textTracks.forEach(track => {
-            track.mode = "disabled";
-        });
-
-        // demonstra a legenda selecionada.
-        const textTrack = textTracks.find(track => track.language === selectedTrack.srcLang);
-
-        if (!textTrack) return; // não faz nada se não localizar a legenda.
-        textTrack.mode = "showing";
-    }
-
-    useEffect(changeLegendLang, [selectedTrack]);
-
-    /**
      * Atualiza as legendas conforme o áudio é reproduzido
      * @param {*} event 
      * @returns 
@@ -208,7 +167,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
         const textTracks = [...event.target.textTracks];
 
-        // o mode da legenda utilizada é showing.
+        // obtém a legenda que está sendo utilizada.
         const currentTextTrack = textTracks.find(track => track.mode === "showing");
 
         if (!currentTextTrack) return;
@@ -375,7 +334,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                                             onChange={event => {
                                                 const track = tracks.find(track => track.srcLang === event.target.value);
 
-                                                setSelectedTrack(track);
+                                                changeCaptionLang(audioRef.current.textTracks, track);
                                             }}
                                         >
                                             {tracks.map(track => (<option key={track.srcLang} value={track.srcLang}>{track.label}</option>))}

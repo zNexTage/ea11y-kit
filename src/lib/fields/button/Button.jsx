@@ -14,8 +14,12 @@ import React from "react";
  * @typedef {React.HTMLProps<HTMLButtonElement> & ButtonProps} ExtendedButtonProps
  */
 
-const ButtonStyled = styled("button", () => {
-
+const ButtonStyled = styled("button", {
+    padding: 8,
+    backgroundColor: "#FFF",
+    border: "2px solid #000",
+    borderRadius: 5,
+    cursor: "pointer",
 });
 
 /**

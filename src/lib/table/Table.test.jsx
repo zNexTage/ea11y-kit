@@ -29,17 +29,13 @@ describe("[Table] - Conformidade com as diretrizes do eMAG", () => {
                     <>
                         <Table.Row>
                             <Table.HeaderCell>
-                                <Table.DataCell>
-                                    Nome
-                                </Table.DataCell>
+                                Nome
                             </Table.HeaderCell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.HeaderCell>
-                                <Table.DataCell>
-                                    Ayrton Senna
-                                </Table.DataCell>
+                                Ayrton Senna
                             </Table.HeaderCell>
                         </Table.Row>
                     </>
@@ -60,17 +56,13 @@ describe("[Table] - Conformidade com as diretrizes do eMAG", () => {
                     <>
                         <Table.Row>
                             <Table.HeaderCell>
-                                <Table.DataCell>
-                                    Nome
-                                </Table.DataCell>
+                                Nome
                             </Table.HeaderCell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.HeaderCell>
-                                <Table.DataCell>
-                                    Ayrton Senna
-                                </Table.DataCell>
+                                Ayrton Senna
                             </Table.HeaderCell>
                         </Table.Row>
                     </>
@@ -92,17 +84,13 @@ describe("[Table] - Conformidade com as diretrizes do eMAG", () => {
                     <>
                         <Table.Row>
                             <Table.HeaderCell>
-                                <Table.DataCell>
-                                    Nome
-                                </Table.DataCell>
+                                Nome
                             </Table.HeaderCell>
                         </Table.Row>
 
                         <Table.Row>
                             <Table.HeaderCell>
-                                <Table.DataCell>
-                                    Ayrton Senna
-                                </Table.DataCell>
+                                Ayrton Senna
                             </Table.HeaderCell>
                         </Table.Row>
                     </>
