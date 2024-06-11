@@ -53,18 +53,6 @@ describe("[Month] - Conformidade com as diretrizes do eMAG", () => {
                 required={true}
                 label="teste"
                 name="mes"
-                fallbackMonthProps={{
-                    monthField: {
-                        id: "txtmes",
-                        label: "mes",
-                        name: "mes"
-                    },
-                    yearField: {
-                        id: "ano",
-                        label: "ano",
-                        name: "ano"
-                    }
-                }}
             />
         )
 
