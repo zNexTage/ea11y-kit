@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidelineCode";
 import ComponentErrorList from "../../../components/component-error-list";
@@ -54,17 +54,15 @@ import Link from "../link";
  * @param {DownloadLinkProps} props 
  * @returns {React.JSX.Element}
  */
-const DownloadLink = ({
+const DownloadLink = forwardRef(({
     href,
     fileName,
     extension,
     size,
     unit,
     css
-}) => {
+}, ref) => {
     const [violations, setViolations] = useState([]);
-
-    const downloadLinkRef = useRef();
 
     useEffect(() => {
         //Verifica se as propriedades informadas infligem alguma diretriz do eMAG.
@@ -91,7 +89,7 @@ const DownloadLink = ({
                 violations.length === 0 &&
                 <Link
                     css={css}
-                    ref={downloadLinkRef}
+                    ref={ref}
                     href={href}
                     download={true} >
                     {fileName} ({extension}, {size}{unit})
@@ -100,7 +98,7 @@ const DownloadLink = ({
             {violations.length > 0 && <ComponentErrorList errors={violations} />}
         </>
     )
-}
+});
 
 DownloadLink.propTypes = {
     href: PropTypes.string.isRequired,
