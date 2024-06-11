@@ -10,6 +10,10 @@ import Range from "../fields/range/Range";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faPause, faStop, faExpand, faMinimize } from '@fortawesome/free-solid-svg-icons'
 import DownloadLink from "../links/download-link/DownloadLink";
+import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
+import { PROVIDE_ALTERNATIVE_TO_VIDEO } from "../../utils/eMagGuidelineCode";
+import ComponentErrorList from "../../components/component-error-list";
+import RequiredAttribute from "../../exceptions/RequiredAttribute";
 
 
 /**
@@ -112,7 +116,7 @@ const VolumeContainer = styled("div", {
  * @param {ExtendedVideoProps} props 
  * @returns 
  */
-const Video = ({ sources, css, controls, tracks = [], textualAlternativeFile, ...rest }) => {
+const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest }) => {
     const videoRef = useRef();
     const videoContainerRef = useRef();
     const { formatTime, onProgressTimeChange, changeCaptionLang } = usePlayer();
@@ -130,6 +134,8 @@ const Video = ({ sources, css, controls, tracks = [], textualAlternativeFile, ..
 
     const { isBrowserSupports, exitFullscreen, activeFullscreen } = useFullscreenAPI();
 
+    const [violations, setViolations] = useState([]);
+
 
     useEffect(() => {
         const video = videoContainerRef?.current;
@@ -144,9 +150,34 @@ const Video = ({ sources, css, controls, tracks = [], textualAlternativeFile, ..
             } else {
                 setIsFullscreen(false);
             }
-        })
+        });
     }, []);
 
+    useEffect(() => {
+        const errorsAux = [];
+
+        if (!sources || sources?.length === 0) {
+            errorsAux.push(
+                new RequiredAttribute("Atenção! É necessário informar a propriedade 'sources' para especificar pelo menos um link do vídeo. Pode-se utilizar o 'sources' para disponibilizar o mesmo vídeo, mas em outros formatos através do atributo 'type'.")
+            )
+        }
+        
+        if (!textualAlternativeFile) {
+            errorsAux.push(
+                new GuidelineViolation(PROVIDE_ALTERNATIVE_TO_VIDEO,
+                    "É necessário prover uma alternativa textual para o vídeo para que usuários com deficiência auditiva, que não possuem equipamento de som, que preferem realizar a leitura do material ou que não têm tempo para ouvir um arquivo multimídia possam acompanhar o vídeo.")
+            );
+        }
+
+        if (!tracks || tracks?.length === 0) {
+            errorsAux.push(
+                new GuidelineViolation(PROVIDE_ALTERNATIVE_TO_VIDEO,
+                    "É necessário prover legenda para o vídeo para que usuários com deficiência auditiva, que não possuem equipamento de som, que preferem realizar a leitura do material ou que não têm tempo para ouvir um arquivo multimídia possam acompanhar o vídeo.")
+            );
+        }
+
+        setViolations([...errorsAux]);
+    }, [tracks, sources, textualAlternativeFile]);
 
     /**
      * Inicializa o vídeo
@@ -250,167 +281,176 @@ const Video = ({ sources, css, controls, tracks = [], textualAlternativeFile, ..
     }
 
     return (
-        <VideoContainer ref={videoContainerRef}>
-            <VideoStyled
-                onClick={onVideoClick}
-                ref={videoRef}
-                css={css}
-                className={`${lightTheme} ${fieldHightlight}`}
-                onTimeUpdate={onTimeUpdate}
-                onLoadedData={event => {
-                    setDuration(event.target.duration);
-                }}
-                {...rest}>
-                {sources.map((source, index) => (
-                    <source
-                        key={`videosource_${index}`}
-                        src={source.src}
-                        type={source.type}
-                    />
-                ))}
-
-                <p>
-                    Seu navegador não suporta reprodução de vídeo.
-                </p>
-
-                {
-                    tracks.map(track => (
-                        <track
-                            key={`video_track_${track.label}_${track.srcLang}`}
-                            kind="captions"
-                            label={track.label}
-                            src={track.src}
-                            srcLang={track.srcLang}
-                            default={track.default}>
-                        </track>
-                    ))
-                }
-            </VideoStyled>
-
-
-            <div>
-                <DownloadLink
-                    css={{
-                        textAlign: "center",
-                        display: "block",
-                    }}
-                    extension={textualAlternativeFile.extension}
-                    fileName={textualAlternativeFile.fileName}
-                    href={textualAlternativeFile.href}
-                    size={textualAlternativeFile.size}
-                    unit={textualAlternativeFile.unit}
-                />
-                <VideoProgressContainer>
-
-                    <div>
-                        {!isPlaying ?
-                            <ControlButton
-                                className={`${lightTheme} ${fieldHightlight}`}
-                                onClick={play}
-                                css={{
-                                    marginRight: 10
-                                }}>
-                                <FontAwesomeIcon title="Reproduzir" icon={faPlay} />
-                            </ControlButton> :
-                            <ControlButton
-                                className={`${lightTheme} ${fieldHightlight}`}
-                                onClick={pause}
-                                css={{
-                                    marginRight: 10
-                                }}>
-                                <FontAwesomeIcon title="Pausar" icon={faPause} />
-                            </ControlButton>
-                        }
-
-                        <ControlButton
-                            className={`${lightTheme} ${fieldHightlight}`}
-                            css={{
-                                marginRight: 10
-                            }} onClick={stop}>
-                            <FontAwesomeIcon title="Parar" icon={faStop} />
-                        </ControlButton>
-
-                        {isBrowserSupports &&
-                            <>
-                                {!isFullscreen &&
-                                    <ControlButton
-                                        className={`${lightTheme} ${fieldHightlight}`}
-                                        onClick={fullscreen}
-                                        css={{
-                                            marginRight: 10
-                                        }}>
-                                        <FontAwesomeIcon icon={faExpand} title="Tela cheia" />
-                                    </ControlButton>
-                                }
-
-                                {isFullscreen &&
-                                    <ControlButton
-                                        className={`${lightTheme} ${fieldHightlight}`}
-                                        onClick={closeFullscreen}
-                                        css={{
-                                            marginRight: 10
-                                        }}>
-                                        <FontAwesomeIcon icon={faMinimize} title="Sair tela cheia" />
-                                    </ControlButton>
-                                }
-
-                            </>
-                        }
-                    </div>
-
-                    <VideoProgressoBar
+        <>
+            {violations.length === 0 &&
+                <VideoContainer ref={videoContainerRef}>
+                    <VideoStyled
+                        onClick={onVideoClick}
+                        ref={videoRef}
+                        css={css}
                         className={`${lightTheme} ${fieldHightlight}`}
-                        min={0}
-                        max={100}
-                        onChange={onProgressChange}
-                        value={(currentTime / duration) * 100}
-                        aria-label="Barra de progresso do vídeo" type="range" />
-                    <VideoDuration>
-                        {formatTime(currentTime)} / {formatTime(duration)}
-                    </VideoDuration>
-                </VideoProgressContainer>
-
-                <VideoControls>
-                    <VolumeContainer>
-                        <span>
-                            {volume}
-                        </span>
-                        <Range
-                            label="Volume"
-                            id={volumeId}
-                            min={0}
-                            max={100}
-                            value={volume}
-                            onChange={onVolumeChange}
-                        />
-                    </VolumeContainer>
-
-                    <Select
-                        name={`cboVideoCaption${cboVideoId}`}
-                        label="Legendas"
-                        onChange={event => {
-                            const selectedTrack = event.target.value;
-
-                            const track = tracks.find(track => track.srcLang === selectedTrack);
-
-                            changeCaptionLang(videoRef.current.textTracks, track);
+                        onTimeUpdate={onTimeUpdate}
+                        onLoadedData={event => {
+                            setDuration(event.target.duration);
                         }}
-                        id={`cboVideoCaption${cboVideoId}`}>
+                        {...rest}>
+                        {sources?.map((source, index) => (
+                            <source
+                                key={`videosource_${index}`}
+                                src={source.src}
+                                type={source.type}
+                            />
+                        ))}
+
+                        <p>
+                            Seu navegador não suporta reprodução de vídeo.
+                        </p>
+
                         {
-                            tracks.map(t => (
-                                <option value={t.srcLang} key={`track_${cboVideoId}_${t.srcLang}`}>
-                                    {t.label}
-                                </option>
+                            tracks?.map(track => (
+                                <track
+                                    key={`video_track_${track.label}_${track.srcLang}`}
+                                    kind="captions"
+                                    label={track.label}
+                                    src={track.src}
+                                    srcLang={track.srcLang}
+                                    default={track.default}>
+                                </track>
                             ))
                         }
-                    </Select>
+                    </VideoStyled>
 
 
-                </VideoControls>
+                    <div>
+                        <DownloadLink
+                            css={{
+                                textAlign: "center",
+                                display: "block",
+                            }}
+                            extension={textualAlternativeFile?.extension}
+                            fileName={textualAlternativeFile?.fileName}
+                            href={textualAlternativeFile?.href}
+                            size={textualAlternativeFile?.size}
+                            unit={textualAlternativeFile?.unit}
+                        />
+                        <VideoProgressContainer>
+
+                            <div>
+                                {!isPlaying ?
+                                    <ControlButton
+                                        className={`${lightTheme} ${fieldHightlight}`}
+                                        onClick={play}
+                                        css={{
+                                            marginRight: 10
+                                        }}>
+                                        <FontAwesomeIcon title="Reproduzir" icon={faPlay} />
+                                    </ControlButton> :
+                                    <ControlButton
+                                        className={`${lightTheme} ${fieldHightlight}`}
+                                        onClick={pause}
+                                        css={{
+                                            marginRight: 10
+                                        }}>
+                                        <FontAwesomeIcon title="Pausar" icon={faPause} />
+                                    </ControlButton>
+                                }
+
+                                <ControlButton
+                                    className={`${lightTheme} ${fieldHightlight}`}
+                                    css={{
+                                        marginRight: 10
+                                    }} onClick={stop}>
+                                    <FontAwesomeIcon title="Parar" icon={faStop} />
+                                </ControlButton>
+
+                                {isBrowserSupports &&
+                                    <>
+                                        {!isFullscreen &&
+                                            <ControlButton
+                                                className={`${lightTheme} ${fieldHightlight}`}
+                                                onClick={fullscreen}
+                                                css={{
+                                                    marginRight: 10
+                                                }}>
+                                                <FontAwesomeIcon icon={faExpand} title="Tela cheia" />
+                                            </ControlButton>
+                                        }
+
+                                        {isFullscreen &&
+                                            <ControlButton
+                                                className={`${lightTheme} ${fieldHightlight}`}
+                                                onClick={closeFullscreen}
+                                                css={{
+                                                    marginRight: 10
+                                                }}>
+                                                <FontAwesomeIcon icon={faMinimize} title="Sair tela cheia" />
+                                            </ControlButton>
+                                        }
+
+                                    </>
+                                }
+                            </div>
+
+                            <VideoProgressoBar
+                                className={`${lightTheme} ${fieldHightlight}`}
+                                min={0}
+                                max={100}
+                                onChange={onProgressChange}
+                                value={(currentTime / duration) * 100}
+                                aria-label="Barra de progresso do vídeo" type="range" />
+                            <VideoDuration>
+                                {formatTime(currentTime)} / {formatTime(duration)}
+                            </VideoDuration>
+                        </VideoProgressContainer>
+
+                        <VideoControls>
+                            <VolumeContainer>
+                                <span>
+                                    {volume}
+                                </span>
+                                <Range
+                                    label="Volume"
+                                    id={volumeId}
+                                    min={0}
+                                    max={100}
+                                    value={volume}
+                                    onChange={onVolumeChange}
+                                />
+                            </VolumeContainer>
+
+                            <Select
+                                name={`cboVideoCaption${cboVideoId}`}
+                                label="Legendas"
+                                onChange={event => {
+                                    const selectedTrack = event.target.value;
+
+                                    const track = tracks.find(track => track.srcLang === selectedTrack);
+
+                                    changeCaptionLang(videoRef.current.textTracks, track);
+                                }}
+                                id={`cboVideoCaption${cboVideoId}`}>
+                                {
+                                    tracks?.map(t => (
+                                        <option value={t.srcLang} key={`track_${cboVideoId}_${t.srcLang}`}>
+                                            {t.label}
+                                        </option>
+                                    ))
+                                }
+                            </Select>
 
 
-            </div>
-        </VideoContainer>
+                        </VideoControls>
+
+
+                    </div>
+                </VideoContainer>
+            }
+
+            {
+                violations.length > 0 &&
+                <ComponentErrorList errors={violations} />
+            }
+        </>
     )
 }
 
