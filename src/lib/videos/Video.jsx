@@ -357,6 +357,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                             <div>
                                 {!isPlaying ?
                                     <ControlButton
+                                        type="button"
                                         className={`${lightTheme} ${fieldHightlight}`}
                                         onClick={play}
                                         css={{
@@ -365,6 +366,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                                         <FontAwesomeIcon title="Reproduzir" icon={faPlay} />
                                     </ControlButton> :
                                     <ControlButton
+                                        type="button"
                                         className={`${lightTheme} ${fieldHightlight}`}
                                         onClick={pause}
                                         css={{
@@ -375,6 +377,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                                 }
 
                                 <ControlButton
+                                    type="button"
                                     className={`${lightTheme} ${fieldHightlight}`}
                                     css={{
                                         marginRight: 10
@@ -386,6 +389,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
                                     <>
                                         {!isFullscreen &&
                                             <ControlButton
+                                                type="button"
                                                 className={`${lightTheme} ${fieldHightlight}`}
                                                 onClick={fullscreen}
                                                 css={{
@@ -397,6 +401,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
 
                                         {isFullscreen &&
                                             <ControlButton
+                                                type="button"
                                                 className={`${lightTheme} ${fieldHightlight}`}
                                                 onClick={closeFullscreen}
                                                 css={{
