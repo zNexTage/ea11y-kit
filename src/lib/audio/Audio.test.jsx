@@ -191,7 +191,7 @@ describe("[Audio] - Conformidade com o eMAG", () => {
             />
         )
 
-        const fileLink = screen.getByText("Transcrição textual da demonstração do jogo Sintel (.txt 1KB)");
+        const fileLink = screen.getByText("Transcrição textual da demonstração do jogo Sintel (.txt, 1KB)");
 
         expect(fileLink).toBeInTheDocument();
     })
