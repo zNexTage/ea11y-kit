@@ -39,8 +39,7 @@ import { styled } from "@stitches/react";
  * 
  * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.
- * Além da borda, foi reforçado o destaque do componente através do atributo outline.
- * 
+ * Além da borda, foi reforçado o destaque do componente através do atributo outline. * 
  * 
  *  Recomendação 6.2 – Associar etiquetas aos seus campos: 
  *  - O atributo id é obrigatório, e é utilizado para vincular a label ao campo de texto e identificar o input;

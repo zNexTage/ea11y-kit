@@ -66,7 +66,6 @@ const Root = ({
 }) => {
     const { title, css, ...rest } = caption || {};
     const [violations, setViolations] = useState([]);
-    console.log(summary)
 
     useEffect(() => {
         const errorsAux = [];

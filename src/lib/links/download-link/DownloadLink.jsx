@@ -24,20 +24,7 @@ import Link from "../link";
  * Diretrizes adotadas:
  * 
  * Atenção a diretriz
- * Recomendação 1.9 – Não abrir novas instâncias sem a solicitação do usuário
- * o eMAG não recomenda "O uso do atributo target=“_blank”;", pois "os usuários com deficiência visual podem 
- * ter dificuldade em identificar que uma nova janela foi aberta. Além disso, estando em uma nova janela, 
- * não conseguirão retornar à página anterior utilizando a opção voltar do navegador.". Entretanto, como o componente
- * permitira visualizar o arquivo anexado, será utilizado o target _blank para que o arquivo seja aberto em uma nova guia.
- * Entretanto, o eMAG descreve o seguinte para situações onde é necessário o uso do target _blank:
- * "Quando for realmente necessária a abertura de um link em nova janela, é recomendado que tal ação seja 
- * informada ao usuário no próprio texto do link. Isso permite ao usuário decidir se quer ou não sair da 
- * janela ou aba em que se encontra e, caso decida acessar o link, ele saberá que se trata de uma nova aba 
- * ou janela." Logo a frente do nome do arquivo e da extensão será acrescentado o texto (abre em nova guia).
- * 
- * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
- * É possível interagir com o link utilizando o espaço do teclado.
- * 
+ *  
  * Recomendação 3.5 – Descrever links clara e sucintamente
  * - O componente utiliza como base a exigência: "Em links de arquivos para download, é necessário informar a extensão e o tamanho do arquivo no próprio texto do link" 
  * 

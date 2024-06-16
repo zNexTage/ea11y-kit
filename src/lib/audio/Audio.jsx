@@ -99,6 +99,8 @@ const VolumeContainer = styled("div", {
  * 5.4 – Fornecer controle de áudio para som - o componente fornece elementos para pausar, play, volume e ativar legendas;
  * 4.4 – Possibilitar que o elemento com foco seja visualmente evidente - ao focar no elemento e nos itens interativos,
  * é demonstrado uma borda;
+ * 
+ * TODO: Permitir customização via props.
  * @param {AudioProps} props
  * @returns 
  */
@@ -119,16 +121,6 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
 
         setViolations([...violationAux]);
     }, []);
-
-    const getDefaultTrack = () => {
-        const track = tracks.filter(t => t.default)[0];
-
-        if (track) {
-            return track;
-        }
-
-        return tracks[0];
-    }
 
     const [currentTrackText, setCurrentTrackText] = useState("");
     const [currentTime, setCurrentTime] = useState(0);

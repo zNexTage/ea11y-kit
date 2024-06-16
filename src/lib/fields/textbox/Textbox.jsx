@@ -50,14 +50,13 @@ const TextboxStyled = styled("input", {});
  * @returns {React.JSX.Element} 
  */
 const Textbox = ({
-    label,
-    extraAttributes,
+    label,    
     placeholder,
     id,
     name,
     maxLength,
     required = false,
-    type,
+    type = "text",
     css,
     ...rest
 }) => {
@@ -120,7 +119,7 @@ Textbox.propTypes = {
     label: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    isRequired: PropTypes.bool,
+    required: PropTypes.bool,
     type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
     maxLength: PropTypes.number,
     css: PropTypes.object.isRequired,

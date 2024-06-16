@@ -41,7 +41,7 @@ const FigcaptionStyled = styled("figcaption", {
  * Diretrizes adotadas:
  * 
  * 3.6 – Fornecer alternativa em texto para as imagens do sítio: "Deve ser fornecida uma descrição para as imagens da página, utilizando-se, 
- * para tanto o atributo alt." portanto, o atributo alt é obrigatório.
+ * para tanto o atributo alt." portanto, o atributo alt e caption são obrigatórios.
  * 
  * 
  * @param {ExtendedFigureProps} props
@@ -81,8 +81,9 @@ const Figure = ({ caption, children, css, ...rest }) => {
 }
 
 Figure.propTypes = {
-    imgProps: PropTypes.object,
-    caption: PropTypes.string.isRequired
+    caption: PropTypes.string,
+    children: PropTypes.node,
+    css: PropTypes.object
 };
 
 export default Figure;

@@ -126,12 +126,13 @@ const VolumeContainer = styled("div", {
  * - 5.3 -  Oferecer audiodescrição para vídeo pré-gravado. Audiodescrição é considerado opcional, e deve-se ser fornecido quando
  * "vídeos que transmitem conteúdo visual que não está disponível na faixa de áudio devem possuir uma audiodescrição." (eMAG, 2014). É possível informar audidescrição
  * via "tracks", bastando definir o kind para "descriptions".
+ * 5.4 – Fornecer controle de áudio para som - É fornecido controles para reproduzir, pausar, parar e alterar o volume do vídeo.
  * - 4-4 - Possibilitar que o elemento com foco seja visualmente evidente: os controles de interação recebem uma borda ao serem focados.
  * 
  * @param {ExtendedVideoProps} props 
  * @returns 
  */
-const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest }) => {
+const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
     const videoRef = useRef();
     const videoContainerRef = useRef();
     const { formatTime, onProgressTimeChange, changeCaptionLang } = usePlayer();
@@ -314,6 +315,7 @@ const Video = ({ sources, css, controls, tracks, textualAlternativeFile, ...rest
             {violations.length === 0 &&
                 <VideoContainer ref={videoContainerRef}>
                     <VideoStyled
+                        controls={false}
                         onClick={onVideoClick}
                         ref={videoRef}
                         css={css}
