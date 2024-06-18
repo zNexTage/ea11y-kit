@@ -12,13 +12,14 @@ const AvatarExample = () => {
     return (
         <>
 
-            <Avatar
+            {/* <Avatar
                 size='80'
                 src="https://assetsio.gnwcdn.com/max1_QWnkQA8.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"
                 sx={{ width: 100, height: 100 }}
             >
                 MP
             </Avatar>
+            <br />
 
             <Avatar
                 alt='Max Payne'
@@ -26,6 +27,7 @@ const AvatarExample = () => {
                 src="https://assetsio.gnwcdn.com/max1_QWnkQA8.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"
                 sx={{ width: 100, height: 100 }}
             />
+            <br />
 
             <Avatar
                 size='80'
@@ -36,26 +38,35 @@ const AvatarExample = () => {
 
             <h2>
                 Imagens com src inválido
-            </h2>
-
-            <Avatar
-                size='80'
-                src="https://sm.dign.com/ign_br/news/dm/max-payne-/max-payne-1-and-2-remake-has-same-development-budget-as-alan_j1qh.jpg"
-                sx={{ width: 100, height: 100 }}
-            >
-                MP
-            </Avatar>
+            </h2> */}
 
             <Avatar
                 alt='Max Payne'
                 size='80'
-                src="https://sm.dign.com/ign_br/news/dm/max-payne-/max-payne-1-and-2-remake-has-same-development-budget-as-alan_j1qh.jpg"
+                src="https://assetsio.gnwcdn.com/max1_QWnkQA8.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"
                 sx={{ width: 100, height: 100 }}
             />
 
             <Avatar
                 size='80'
-                src="https://sm.dign.com/ign_br/news/dm/max-payne-/max-payne-1-and-2-remake-has-same-development-budget-as-alan_j1qh.jpg"
+                src="https://url-invalida/imagem_nao_existente.jpg"
+                sx={{ width: 100, height: 100 }}
+            >
+                MP
+            </Avatar>
+            <br />
+
+            <Avatar
+                alt='Max Payne'
+                size='80'
+                src="https://url-invalida/imagem_nao_existente.jpg"
+                sx={{ width: 100, height: 100 }}
+            />
+            <br />
+
+            <Avatar
+                size='80'
+                src="https://url-invalida/imagem_nao_existente.jpg"
                 sx={{ width: 100, height: 100 }}
             />
         </>
