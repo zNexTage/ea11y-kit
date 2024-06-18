@@ -20,7 +20,6 @@ const RANGE_ORIENTATION_VERTICAL = 'vertical';
  * @property {number} step
  * @property {(event)=>void|null} onChange
  * @property {'horizontal'|'vertical'} orientation
- * @property {string} unit
  * @property {import("@stitches/react").CSS} css
  */
 
@@ -62,7 +61,6 @@ const Range = ({
     onChange,
     css,
     orientation = RANGE_ORIENTATION_HORIZONTAL,
-    unit = "%",
     ...rest
 }) => {
     const violations = useFieldValidations(label, id);
@@ -151,7 +149,6 @@ Range.propTypes = {
     value: PropTypes.number,
     step: PropTypes.number,
     orientation: PropTypes.oneOfType([RANGE_ORIENTATION_HORIZONTAL, RANGE_ORIENTATION_VERTICAL]),
-    unit: PropTypes.string,
     css: PropTypes.object
 }
 
