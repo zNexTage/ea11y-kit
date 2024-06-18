@@ -23,8 +23,51 @@ Botão `<button>` configurado com as diretrizes do eMAG. Não há bem uma diretr
 Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLButtonElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement).
 
 ### Checkbox
+Checkbox permite trabalhar com campos selecionaveis. Seguindo as diretrizes do eMAG, o componente exige que seja informado um `id` e uma `label`, que permite identificar o campo. Além disso, a prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label, conforme descreve a diretriz **6.5 – Fornecer instruções para entrada de dados**.
+
+#### Diretrizes adotadas
+
+- 2.1 - Disponibilizar todas as funções da página via teclado;
+  - Por padrão, o elemento `<input type="checkbox">` permite interação via tecla espaço;
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+  - Ao focar no elemento é adicionado uma borda;
+- 6.2 – Associar etiquetas aos seus campos
+  - Deve-se informar, obrigatoriamente, uma `label` e um `id`para identificar o campo.
+  
+#### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| name | Define o nome do campo. | Sim | |
+| onChange | Define uma função callback para quando o componente for selecionado ou não selecionado. | Não | |
+| checked | Define se o checkbox está selecionado ou não selecionado | Não | |
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+
+Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
+ 
 
 ### Color
+Input do tipo (type) `color` que permite trabalhar com seleção de cores. Seguindo as diretrizes do eMAG, o componente exige que seja informado um `id` e uma `label`, que permite identificar o campo. Além disso, a prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
+
+##### Diretrizes adotadas
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+  - Ao focar no elemento é adicionado uma borda;
+- 6.2 – Associar etiquetas aos seus campos
+  - Deve-se fornecer um `id` e uma `label` para identificar o campo;
+- 6.5 – Fornecer instruções para entrada de dados;
+  - Ao definir o campo como obrigatório através da prop `required`, é adicionado a instrução `(campo obrigatório)` na frente da label.
+
+##### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| name | Define o nome do campo. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+
 
 ### Image Button
 Botão gráfico para submissão de formulários (`<input type='image' />`). É exigido que seja fornecido um texto alternativo para a imagem utilizada no botão, conforme a diretriz **6.1 – Fornecer alternativa em texto para os botões de imagem de formuláriosdo eMAG**.
@@ -48,15 +91,64 @@ Além disso, pode se passar qualquer propriedade e método oferecido pela interf
 
 ### Phone
 
-### Radio Button
+### RadioButton
 
 ### Range
 
 ### Select
 
 ### Textarea
+Textarea permite trabalhar com entrada de textos extensos. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, através da prop obrigatória `placeholder` é descrito ao usuário o que deve ser inserido no campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
 
-### Upload field
+#### Diretrizes adotadas
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
+    - Uma borda é adicionada ao elemento ao ser focado.
+- 6.2 – Associar etiquetas aos seus campos;
+    - A propriedade `label` e `id` são obrigatórias.
+- 6.5 – Fornecer instruções para entrada de dados.
+    - A propriedade `placeholder` é obrigatória.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
+
+#### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| placeholder | Define uma instrução sobre o dado que deve ser informado | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| name | Define o nome do campo. | Sim | | 
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+
+Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLTextAreaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement).
+
+
+### UploadField
+Campo para anexação de arquivos. Adotando os diretrizes do eMAG, o componente exige um `id` e `label` para identificar o campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label. Além disso, `accept` e `acceptDescription` trabalham juntos para fornecer um meio para apresentar e descrever para o usuário quais arquivos podem ser anexados.
+
+
+#### Diretrizes adotadas
+
+- 3.5 – Descrever links clara e sucintamente
+  - É demonstrado para o usuário detalhes do arquivo que ele anexou, como: nome do arquivo, tamanho do arquivo em kb e a extensão
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+  - Ao focar no elemento é demontrado uma borda;
+- 6.2 – Associar etiquetas aos seus campos
+  - A propriedade `label` e `id` são obrigatórias;
+- 6.5 – Fornecer instruções para entrada de dados
+   - A propriedade `placeholder` é obrigatória;
+   - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
+
+##### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| required | Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+| accept | Define quais formatos devem ser anexados. Deve-se informar uma string e separar cada extensão utilizando vírgulas. Ex: image/png, image/jpeg. [Clique aqui para ver quais formatos podem ser informados](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept) | Não | |
+| acceptDescription | Apresenta para o usuário quais formatos devem ser anexados. | É obrigatório quando é informado o `accept`. | |
+
+Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
 
 ### Textbox
 Textbox permite trabalhar com campo de entrada para email, número, senha, pesquisa, texto, URL, data (date e datetime-local) e hora. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, através da prop obrigatória `placeholder` é descrito ao usuário o que deve ser inserido no campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
@@ -68,6 +160,7 @@ Textbox permite trabalhar com campo de entrada para email, número, senha, pesqu
     - A propriedade `label` e `id` são obrigatórias.
 - 6.5 – Fornecer instruções para entrada de dados.
     - A propriedade `placeholder` é obrigatória.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
 
 #### Props API
 | Prop | Descrição | Obrigatória | Valor padrão |
