@@ -94,8 +94,30 @@ Além disso, pode se passar qualquer propriedade e método oferecido pela interf
 ### RadioButton
 
 ### Range
+Controle deslizante que permite selecionar um valor. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, permite estabelecer um valor mínimo e máximo, além de ser possível alterar a orientação entre horizontal e vertical.
+
+##### Diretrizes adotadas
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
+    - Uma borda é adicionada ao elemento ao ser focado.
+- 6.2 – Associar etiquetas aos seus campos;
+    - A propriedade `label` e `id` são obrigatórias.
+
+##### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| name | Define o nome do campo. | Sim | | 
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+| min | Define o valor mínimo aceito pelo campo. | Não | 0 | 
+| max | Define o valor máximo aceito pelo campo. | Não | 100 | 
+| step | Define o valor de incremento ou salto entre valores do campo. | Não | 1 | 
+| value | Define o valor atual do campo. | Não |  | 
+| onChange | Define uma função callback para quando o usuário interage com o componente. | Não | |
+| orientation | Define a orientação do campo, podendo ser: horizontal ou vertical | Não | horizontal | 
 
 ### Select
+
 
 ### Textarea
 Textarea permite trabalhar com entrada de textos extensos. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, através da prop obrigatória `placeholder` é descrito ao usuário o que deve ser inserido no campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
