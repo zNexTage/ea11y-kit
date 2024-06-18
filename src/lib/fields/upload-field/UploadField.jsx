@@ -44,7 +44,7 @@ const UploadFieldStyled = styled("input", {
  * **Parâmetros:**
  * - id: Permite identificar o input e associá-lo a label;
  * - label: Etiqueta que diz ao usuário o que ele deve anexar;
- * - isRequired: define se o anexo é obrigatório ou não;
+ * - required: define se o anexo é obrigatório ou não;
  * - accept: define as extensões aceitas. Deve-se informar uma string e separar cada extensão utilizando vírgulas. Ex: image/png, image/jpeg. 
  * Para mais detalhes, acesse: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept
  * - acceptDescription: descrição para ajudar o usuário a saber quais arquivos ele pode anexar. 
@@ -56,12 +56,13 @@ const UploadFieldStyled = styled("input", {
 const UploadField = ({
     id,
     label,
-    isRequired,
+    required,
     accept,
     acceptDescription,
     multiple,
     css,
-    onChange
+    onChange,
+    ...rest
 }) => {
     const [errors, setErrors] = useState([]);
     const [files, setFiles] = useState([]);
@@ -126,7 +127,7 @@ const UploadField = ({
                 errors.length === 0 &&
                 <>
                     <label htmlFor={id}>
-                        {isRequired ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
+                        {required ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
 
                     <UploadFieldStyled
@@ -137,6 +138,7 @@ const UploadField = ({
                         type="file"
                         className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
                         css={css}
+                        {...rest}
                     />
                     <span>
                         {
@@ -180,7 +182,10 @@ UploadField.propTypes = {
     required: PropTypes.bool,
     accept: PropTypes.string,
     acceptDescription: PropTypes.string,
-    multiple: PropTypes.bool
+    multiple: PropTypes.bool,
+    css: PropTypes.object,
+    onChange: PropTypes.func
 }
+
 
 export default UploadField;

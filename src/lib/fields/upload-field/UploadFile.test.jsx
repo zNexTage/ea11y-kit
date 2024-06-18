@@ -63,12 +63,12 @@ describe("[UploadFile] - Violando diretriz 6.5 do eMAG", () => {
 });
 
 describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
-    test("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
+    test("Deve aparecer a indicação (campo obrigatório) quando required for igual a true", () => {
         render(
             <UploadField
                 id="ID"
                 accept="image/jpg"
-                isRequired
+                required
                 label="Anexe sua foto"
                 acceptDescription="Apenas imagens JPG"
             />
@@ -84,7 +84,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
             <UploadField
                 id="ID"
                 accept="image/jpg"
-                isRequired
+                required
                 label="Anexe sua foto"
                 acceptDescription="Apenas imagens JPG"
             />
@@ -105,7 +105,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
             <UploadField
                 id="ID"
                 accept="image/jpg"
-                isRequired
+                required
                 label="Anexe sua foto"
                 acceptDescription="Apenas imagens JPG"
                 css={{
@@ -134,7 +134,7 @@ describe("[Textbox] - Conformidade com as diretrizes do eMAG", () => {
             <UploadField
                 id="ID"
                 accept="image/jpg"
-                isRequired
+                required
                 label="Anexe sua foto"
                 onChange={mockOnChange}
                 acceptDescription="Apenas imagens JPG"
