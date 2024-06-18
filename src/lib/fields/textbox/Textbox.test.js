@@ -72,6 +72,8 @@ describe("[Textbox] - Omitindo outros atributos", () => {
                 id="d"
                 placeholder="Digite aqui..."
                 label="label"
+                name="teste"
+                type=""
             />
         );
 
