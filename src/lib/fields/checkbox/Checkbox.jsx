@@ -23,7 +23,7 @@ const CheckboxStyled = styled("input", {});
  * Diretrizes adotadas:
  * 
  * - Recomendação 2.1 - Disponibilizar todas as funções da página via teclado: É possível selecionar e remover a seleção
- * através da tecla espaço e enter.
+ * através da tecla espaço.
  * 
  * - Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  *  - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no checkbox.
@@ -32,10 +32,6 @@ const CheckboxStyled = styled("input", {});
  * - Recomendação 6.2 – Associar etiquetas aos seus campos: 
  *  - O atributo id é obrigatório, e é utilizado para vincular a label ao checkbox e identificar o input;
  * 
- * - Recomendação 6.5 – Fornecer instruções para entrada de dados: 
- *  - Para os campos obrigatórios é adicionado a informação *campo obrigatório* a frente da label para que
- * leitores de telas possam comunicar ao usuário que o campo precisa ser preenchido;
- * 
  * @param {ExtendedCheckboxProps} props 
  * @returns 
  */
@@ -43,6 +39,7 @@ const Checkbox = ({
     id,
     label,
     css,
+    name,
     type = "checkbox",
     onChange,
     checked,
@@ -62,11 +59,14 @@ const Checkbox = ({
         onChange && onChange(event);
     }
 
+
     useEffect(() => {
+
         if (type !== "checkbox") {
             console.warn(`Não é possível alterar atributo type do Checkbox.`);
         }
-    }, [type]);
+
+    }, [type, name]);
 
 
     return (
@@ -84,7 +84,7 @@ const Checkbox = ({
                         checked={isChecked}
                         onChange={onChangeCheckbox}
                         type="checkbox"
-                        name={id}
+                        name={name}
                         id={id} />
                 </div>
             }

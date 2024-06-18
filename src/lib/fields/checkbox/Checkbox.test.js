@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Checkbox from "./Checkbox";
-import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 
 
 describe("[Checkbox] - Violando diretriz 6.2 do eMAG", () => {
@@ -45,27 +44,11 @@ describe("[Checkbox] - Violando diretriz 6.2 do eMAG", () => {
 })
 
 describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
-    it("Deve aparecer a indicação (campo obrigatório) quando isRequired for igual a true", () => {
-        render(
-            <Checkbox
-                id="teste"
-                isRequired={true}
-                label="teste"
-                type="text"
-                placeholder="Digite aqui..."
-            />
-        )
-
-        const field = screen.getByRole("checkbox");
-
-        waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
-    });
 
     it("Deve ser possível definir o valor inicial via props", () => {
         render(
             <Checkbox
                 id="teste"
-                isRequired={true}
                 label="teste"
                 type="text"
                 placeholder="Digite aqui..."
@@ -84,7 +67,6 @@ describe("[Checkbox] - Conformidade com as diretrizes do eMAG", () => {
         render(
             <Checkbox
                 id="teste"
-                isRequired={true}
                 label="teste"
                 type="text"
                 placeholder="Digite aqui..."
