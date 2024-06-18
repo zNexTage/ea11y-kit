@@ -79,7 +79,7 @@ describe("[Textarea] - Omitindo outros atributos", () => {
 
         const title = "Violação das diretrizes do eMAG";
 
-        const message = "É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).";
+        const message = "Violação das diretrizes do eMAGÉ necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).";
 
         const alert = screen.queryByRole("alert");
         expect(alert).toBeInTheDocument();
