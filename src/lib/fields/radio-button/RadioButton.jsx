@@ -24,6 +24,9 @@ const RadioButtonStyled = styled("input", {});
 /**
  * Campo radio configurado com as diretrizes do eMAG. 
  * 
+ * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
+ * - Permite marcar e desmarcar um radio button através das teclas: espaço (comportamento nativo) e enter.
+ * 
  * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.
  * Além da borda, foi reforçado o destaque do componente através do atributo outline.
@@ -41,9 +44,8 @@ const RadioButtonStyled = styled("input", {});
  * @param {ExtendedRadioButtonProps} props
  * @returns 
  */
-const RadioButton = ({ id, type, name, label, onKeyDown, onChange, checked, required = false, css, ...rest }) => {
+const RadioButton = ({ id, type, name, label, required = false, onKeyDown,  css, ...rest }) => {
     const violations = useFieldValidations(label, id);
-    const [isChecked, setIsChecked] = useState(checked || false);
 
     useEffect(() => {
         if (type) {
@@ -51,31 +53,14 @@ const RadioButton = ({ id, type, name, label, onKeyDown, onChange, checked, requ
         }
     }, []);
 
-    /**
-     * Permite seleção e remoção de seleção via teclado.
-     * @param {KeyboardEvent} event 
-     */
     const onKeyDownRadioButton = event => {
         const key = event.code;
 
-        //  verifica se foi pressionado a tecla Enter ou espaço.
-        if (INTERACTION_KEYS.includes(key)) {
-            setIsChecked(true);
-        } else if (FOCUS_OUT_KEYS.includes(key)) { // caso tenha sido pressionada as setas, significa que o usuário vai navegar para o próximo Radio, portanto remove a seleção.
-            setIsChecked(false);
+        if (!event.target.checked && INTERACTION_KEYS.includes(key)) {
+            event.target.checked = true;
         }
 
         onKeyDown && onKeyDown(event);
-    }
-
-    /**
-     * Seleciona o radio
-     * @param {Event} event 
-     */
-    const onChangeRadioButton = event => {
-        setIsChecked(event.target.checked);
-
-        onChange && onChange(event);
     }
 
     return (
@@ -87,15 +72,12 @@ const RadioButton = ({ id, type, name, label, onKeyDown, onChange, checked, requ
                     </label>
                     <RadioButtonStyled
                         {...rest}
-                        key={`${id}_${isChecked}`}
+                        onKeyDown={onKeyDownRadioButton}
                         className={`${lightTheme} ${fieldHightlight}`}
                         css={css}
                         type="radio"
                         name={name}
                         id={id}
-                        checked={isChecked}
-                        onChange={onChangeRadioButton}
-                        onKeyDown={onKeyDownRadioButton}
                         required={required}
                     />
                 </div>
