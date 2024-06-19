@@ -197,8 +197,6 @@ const Month = ({ id,
     fallbackYearCss,
     fallbackYearRange,
     ...rest }) => {
-    // FIXME: passar para o componente Fallback o yearRange.
-
     const violations = useFieldValidations(label, id);
     const [errors, setErrors] = useState([]);
 
