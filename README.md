@@ -225,7 +225,7 @@ Campo para anexação de arquivos. Adotando os diretrizes do eMAG, o componente 
    - A propriedade `placeholder` é obrigatória;
    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
 
-##### Props API
+#### Props API
 | Prop | Descrição | Obrigatória | Valor padrão |
 | ---- | --------- | ----------- | ------------ |
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
