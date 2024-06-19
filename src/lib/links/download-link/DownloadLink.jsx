@@ -22,8 +22,6 @@ import Link from "../link";
  * Âncora para download de arquivos configurada com as diretrizes do eMAG
  * 
  * Diretrizes adotadas:
- * 
- * Atenção a diretriz
  *  
  * Recomendação 3.5 – Descrever links clara e sucintamente
  * - O componente utiliza como base a exigência: "Em links de arquivos para download, é necessário informar a extensão e o tamanho do arquivo no próprio texto do link" 
