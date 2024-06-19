@@ -88,6 +88,58 @@ Botão gráfico para submissão de formulários (`<input type='image' />`). É e
 Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
 
 ### Month
+Month permite a entrada de um mês e um ano. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
+
+#### Diretrizes adotadas
+
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
+    - Uma borda é adicionada ao elemento ao ser focado.
+- 6.2 – Associar etiquetas aos seus campos;
+    - A propriedade `label` e `id` são obrigatórias.
+- 6.5 – Fornecer instruções para entrada de dados.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
+
+#### Compatibilidade com navegadores
+De acordo com a biblioteca da MDN, os seguintes navegadores possuem compatibilidade com o `type month`:
+![alt text](image-1.png)
+[Veja mais sobre compatibilidade dos navegadores com o input month](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#browser_compatibility).
+
+Imagem consultada em: 19/04/2024.
+
+Nesse sentido, caso o navegador não suporte o tipo month, é utilizado um componente fallback, [seguindo o exemplo proposto pela MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month#examples).
+
+O componente fallback consiste em dois selects, sendo que um permite selecionar o mês e o outro o ano.
+
+**Exemplo:**
+
+dado o código:
+```JSX
+ <Month
+      id='txtMonth'
+      label='Selecione o mês do seu aniversário'
+      name='mes'
+      required
+      fallbackYearRange={[2024, 2023, 2022]}
+    />
+```
+e de acordo com a imagem abaixo:
+![alt text](image-2.png)
+
+O navegador utilizado a esquerda (edge) suporta o tipo `month`, portanto o componente é renderizado normalmente. A direita, o navegador firefox não suporta o type `month`, logo é renderizado o componente `Fallback`.
+
+#### Props API
+`fallbackMonthCss`, `fallbackYearCss` e `fallbackYearRange` são props para customização do componente fallback, que é renderizado quando o navegador não suporta o `type month`. 
+
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| name | Define o nome do campo. | Sim | | 
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+| fallbackMonthCss | Permite customizar o select do mês. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | | 
+| fallbackYearCss | Permite customizar o select do ano. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | | 
+| fallbackYearRange | Estabelece o intervalo de anos a ser exibido. O valor padrão é 40, o que significa que as opções do seletor de ano incluirão 40 anos a partir do ano atual.  [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | | 
 
 ### Phone
 Campo de entrada com formatação para aceitar apenas telefones fixos e/ou móveis. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label. Além disso, é acrescentado a frente da label o formato que o usuário deve inserir no campo, por exemplo: se for setado para o campo aceitar apenas números de telefone fixos é demonstrado: "00 0000-0000".  Vale ressaltar que **o componente é configurado para formatar os valores digitados ou colados para o formato de telefone fixo e/ou móvel**. O formato aceito pelo campo pode ser configurado via props `whichFormat`.
