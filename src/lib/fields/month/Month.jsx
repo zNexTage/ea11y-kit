@@ -195,7 +195,7 @@ const Month = ({ id,
     css,
     fallbackMonthCss,
     fallbackYearCss,
-    fallbackYearRange,
+    fallbackYearRange = 40,
     ...rest }) => {
     const violations = useFieldValidations(label, id);
     const [errors, setErrors] = useState([]);
