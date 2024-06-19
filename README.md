@@ -117,7 +117,26 @@ Controle deslizante que permite selecionar um valor. Adotando as diretrizes do e
 | orientation | Define a orientação do campo, podendo ser: horizontal ou vertical | Não | horizontal | 
 
 ### Select
+Representa um controle com um menu de opções selecionaveis. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, a prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
 
+#### Diretrizes adotadas
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
+    - Uma borda é adicionada ao elemento ao ser focado;
+- 6.2 – Associar etiquetas aos seus campos;
+    - A propriedade `label` e `id` são obrigatórias.
+- 6.5 – Fornecer instruções para entrada de dados.
+    - A propriedade `placeholder` é obrigatória.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
+
+#### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| name | Define o nome do campo. | Sim | | 
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| children | Define as opções de seleção. Deve-se utilizar o elemento `<option>`. | Sim | |
 
 ### Textarea
 Textarea permite trabalhar com entrada de textos extensos. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, através da prop obrigatória `placeholder` é descrito ao usuário o que deve ser inserido no campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
@@ -208,6 +227,7 @@ Campo para seleção de semanas, ou seja, input com o type week. É exigido que 
     - A propriedade `label` e `id` são obrigatórias.
 - 6.5 – Fornecer instruções para entrada de dados.
     - A propriedade `placeholder` é obrigatória.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
 
 #### Compatibilidade com navegadores
 
