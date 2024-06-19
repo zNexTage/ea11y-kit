@@ -23,7 +23,7 @@ Botão `<button>` configurado com as diretrizes do eMAG. Não há bem uma diretr
 Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLButtonElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement).
 
 ### Checkbox
-Checkbox permite trabalhar com campos selecionaveis. Seguindo as diretrizes do eMAG, o componente exige que seja informado um `id` e uma `label`, que permite identificar o campo. Além disso, a prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label, conforme descreve a diretriz **6.5 – Fornecer instruções para entrada de dados**.
+Checkbox permite trabalhar com campos selecionaveis. Adotando as diretrizes do eMAG, o componente exige que seja informado um `id` e uma `label`, que permite identificar o campo. Além disso, a prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label, conforme descreve a diretriz **6.5 – Fornecer instruções para entrada de dados**.
 
 #### Diretrizes adotadas
 
@@ -117,6 +117,27 @@ A prop `placeholder` é obrigatória, e permite oferecer mais detalhes para o us
 
 
 ### RadioButton
+RadioButton permite trabalhar com a seleção de opções. Adotando as diretrizes do eMAG, o componente exige que seja informado um `id` e uma `label`, que permite identificar o campo.  Além disso, a prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label, conforme descreve a diretriz **6.5 – Fornecer instruções para entrada de dados**.
+É possível interagir com o campo via tecla `Enter`.
+
+#### Diretrizes adotadas
+
+- 2.1 - Disponibilizar todas as funções da página via teclado
+  - É possível interagir utilizando a tecla `Enter`
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+- 6.2 – Associar etiquetas aos seus campos
+- 6.5 – Fornecer instruções para entrada de dados
+
+#### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| name | Define o nome do campo. | Sim | | 
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+
+Além disso, pode se passar qualquer propriedade e método oferecido pela interface [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
 
 ### Range
 Controle deslizante que permite selecionar um valor. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. Além disso, permite estabelecer um valor mínimo e máximo, além de ser possível alterar a orientação entre horizontal e vertical.
