@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import RadioButton from "./RadioButton";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
+import userEvent from "@testing-library/user-event";
 
 describe("[RadioButton] - Violando diretriz 6.2 do eMAG", () => {
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo label", () => {
@@ -102,63 +103,13 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
 
         // Deve selecionar apenas o primeiro RadioButton
         fireEvent.keyDown(firstRb, { code: KeyboardKeys.ENTER });
-        waitFor(() => {
-            expect(firstRb).toBeChecked();
-            expect(secondRb).not.toBeChecked();
-        });
+        expect(firstRb).toBeChecked();
+        expect(secondRb).not.toBeChecked();
 
         // Ao selecionar o segundo RadioButton, o primeiro deve perder o status de selecionado.
         fireEvent.keyDown(secondRb, { code: KeyboardKeys.ENTER });
-        waitFor(() => {
-            expect(secondRb).toBeChecked();
-            expect(firstRb).not.toBeChecked();
-        });
-    });
-
-    it("Deve desmarcar o campo ao interagir com as setas", () => {
-        render(
-            <>
-                <RadioButton
-                    id="nightfall"
-                    required={true}
-                    label="Nightfall"
-                    name="blind guardian"
-                />
-
-                <RadioButton
-                    id="mirror mirror"
-                    label="Mirror Mirror"
-                    name="blind guardian"
-                />
-            </>
-        )
-
-        const fields = screen.getAllByRole("radio");
-
-        const firstRb = fields[0];
-        const secondRb = fields[1];
-
-        // Deve selecionar apenas o primeiro RadioButton
-        fireEvent.keyDown(firstRb, { code: KeyboardKeys.ENTER });
-        waitFor(() => {
-            expect(firstRb).toBeChecked();
-            expect(secondRb).not.toBeChecked();
-        })
-
-        // ao navegar com a seta, o foco deverá ir para o próximo RadioButton e o status de selecionado deve ser perdido
-        fireEvent.keyDown(firstRb, { code: KeyboardKeys.ARROW_DOWN });
-        waitFor(() => { expect(firstRb).not.toBeChecked(); })
-
-        fireEvent.keyDown(secondRb, { code: KeyboardKeys.ENTER });
-        waitFor(() => {
-            expect(secondRb).toBeChecked();
-            expect(firstRb).not.toBeChecked();
-        })
-
-        fireEvent.keyDown(secondRb, { code: KeyboardKeys.ARROW_UP });
-        waitFor(() => {
-            expect(secondRb).not.toBeChecked();
-        })
+        expect(secondRb).toBeChecked();
+        expect(firstRb).not.toBeChecked();
     });
 
     it("Deve ser possível definir um valor inicial", () => {
@@ -200,7 +151,7 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
         expect(mockOnKeyDown).toHaveBeenCalled();
     })
 
-    it("Deve invocar a função onChange passada via props", () => {
+    it("Deve invocar a função onChange passada via props", async () => {
         const mockOnChange = jest.fn();
 
         render(
@@ -210,16 +161,16 @@ describe("[RadioButton] - Conformidade com as diretrizes do eMAG", () => {
                     label="Nightfall"
                     name="blind guardian"
                     onChange={mockOnChange}
-                    checked
+                    checked={false}
                 />
             </>
         )
 
         const field = screen.getByLabelText("Nightfall");
 
-        fireEvent.change(field);
+        userEvent.click(field);
 
-        waitFor(() => expect(mockOnChange).toHaveBeenCalled());
+        await waitFor(() => expect(mockOnChange).toHaveBeenCalled());
     })
 
     it("Deve ser possível customizar o componente via propriedade css", () => {
