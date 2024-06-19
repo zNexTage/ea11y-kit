@@ -40,12 +40,15 @@ const AvatarExample = () => {
                 Imagens com src inválido
             </h2> */}
 
+            
+
             <Avatar
                 alt='Max Payne'
                 size='80'
                 src="https://assetsio.gnwcdn.com/max1_QWnkQA8.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp"
                 sx={{ width: 100, height: 100 }}
             />
+            <br />
 
             <Avatar
                 size='80'
