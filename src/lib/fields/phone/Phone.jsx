@@ -7,6 +7,8 @@ import ComponentErrorList from "../../../components/component-error-list";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 import { styled } from "@stitches/react";
+import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
+import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 
 const PHONE_LANDLINE_MIN_LENGTH = 12;
 const PHONE_CELLPHONE_MIN_LENGTH = 13;
@@ -85,8 +87,14 @@ const Phone = ({
             );
         }
 
+        if(!placeholder){
+            errorsAux.push(
+                new GuidelineViolation(PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY, `É necessário especificar uma dica para o campo de texto (placeholder). É importante informar uma dica, pois leitores de tela leem a dica e comunicam aos usuários.`)
+            );
+        }
+
         setErrors([...errorsAux]);
-    }, [name, violations, whichFormat]);
+    }, [name, violations, placeholder, whichFormat]);
 
     /**
      * Formata o valor de entrada para 00 00000-0000
@@ -213,7 +221,7 @@ const Phone = ({
 
     /**
      * Formata o número colocado no campo de texto
-     * @param {ClipboardEvent } event 
+     * @param {ClipboardEvent} event 
      */
     const onPastePhone = event => {
         const value = (event.clipboardData || window.clipboardData).getData("text");

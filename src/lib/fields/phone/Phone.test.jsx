@@ -47,6 +47,30 @@ describe("[Phone] - Violando diretriz 6.2 do eMAG", () => {
     });
 });
 
+describe("[Phone] - Violando diretriz 6.5 do eMAG", () => {
+    it("Deverá ser renderizado um alerta de violação da diretriz 6.5 ao omitir o atributo placeholder", () => {
+        render(
+            <Phone
+                id="phone"
+                label="Telefone"
+                whichFormat="both"
+                required
+                name="phone"
+            />
+        );
+
+        const title = "Violação das diretrizes do eMAG";
+
+        const message = "Violação da diretriz 6.5 - Fornecer instruções para entrada de dados";
+
+        const alert = screen.queryByRole("alert");
+        expect(alert).toBeInTheDocument();
+
+        expect(alert).toHaveTextContent(title);
+        expect(alert).toHaveTextContent(message);
+    })
+})
+
 describe("[Phone] - Omitindo outros atributos", () => {
     it("Deverá ser renderizado um alerta ao omitir o atributo name", () => {
         render(
