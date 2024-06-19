@@ -90,6 +90,31 @@ Além disso, pode se passar qualquer propriedade e método oferecido pela interf
 ### Month
 
 ### Phone
+Campo de entrada com formatação para aceitar apenas telefones fixos e/ou móveis. Adotando as diretrizes do eMAG, o componente exige que seja informado uma `label` e um `id`, que permite identificar o campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label. Além disso, é acrescentado a frente da label o formato que o usuário deve inserir no campo, por exemplo: se for setado para o campo aceitar apenas números de telefone fixos é demonstrado: "00 0000-0000".  Vale ressaltar que **o componente é configurado para formatar os valores digitados ou colados para o formato de telefone fixo e/ou móvel**. O formato aceito pelo campo pode ser configurado via props `whichFormat`.
+A prop `placeholder` é obrigatória, e permite oferecer mais detalhes para o usuário sobre **o que** e **como** ele deve preencher o campo.
+
+#### Diretrizes adotadas
+
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
+  - Uma borda é adicionada ao elemento ao ser focado.
+- 6.2 – Associar etiquetas aos seus campos
+  - A propriedade `label` e `id` são obrigatórias.
+- 6.5 – Fornecer instruções para entrada de dados
+  - A propriedade `placeholder` é obrigatória;
+  - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`;
+  - Além de formatar o valor digitado ou colado, é fornecido uma indicação de como o valor deve ser inserido;
+
+#### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
+| id | Define um identificador para o campo. deve ser único | Sim | | 
+| name | Define o nome do campo. | Sim | | 
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| placeholder | Define uma instrução a respeito de como preencher o campo. | Sim | |
+| whichFormat | Define qual formatação será utilizado no campo, podendo ser: `phone`, `cellphone` e `both`. Os valores digitados ou colados serão formatados de acordo com o valor definido para `whichFormat`. Além disso, será acrescentado a frente da label uma instrução a respeito da máscara de formatação que será aplicada no campo. `phone`: aplica a máscara: `(00) 0000-0000` para os valores digitados ou colados; `cellphone`: aplica a máscara`(00) 90000-0000` para os valores digitados ou colados; `both`: utiliza de ambas as máscaras citadas anteriomente, permitindo a entrada de telefones fixos ou móveis | Não | "both" | 
+
 
 ### RadioButton
 
