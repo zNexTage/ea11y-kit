@@ -185,7 +185,7 @@ export const FallbackWeek = ({
 
             {errors.length === 0 &&
                 <div>
-                    <p>{label}</p>
+                    <p>{label} {required && <small>(campo obrigatório)</small>}</p>
                     <div className={`${fallbackContainer}`}>
                         <Select
                             onChange={onYearChange}

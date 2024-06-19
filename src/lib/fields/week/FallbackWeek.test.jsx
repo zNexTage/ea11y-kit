@@ -81,11 +81,8 @@ describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
             />
         );
 
-
         const field = screen.getByLabelText("Semana (campo obrigatório)");
-
-        waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
-
+        expect(field.parentElement).toHaveTextContent("(campo obrigatório)");
     });
 
     it("Deve aparecer a indicação (campo obrigatório) quando required do campo semana (yeekField) for igual a true", () => {
@@ -99,8 +96,7 @@ describe("[FallbackWeek] - Conformidade com as diretrizes do eMAG", () => {
         )
 
         const field = screen.getByLabelText("Ano (campo obrigatório)");
-
-        waitFor(() => expect(field.parentElement).toHaveTextContent("(campo obrigatório)"));
+        expect(field.parentElement).toHaveTextContent("(campo obrigatório)");
     })
 
     it("Deve ser possível customizar o select de semana via propriedade fallbackWeekCss", () => {
