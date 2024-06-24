@@ -23,7 +23,7 @@ const CheckboxStyled = styled("input", {});
  * Diretrizes adotadas:
  * 
  * - Recomendação 2.1 - Disponibilizar todas as funções da página via teclado: É possível selecionar e remover a seleção
- * através da tecla espaço e enter.
+ * através da tecla espaço.
  * 
  * - Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  *  - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no checkbox.
