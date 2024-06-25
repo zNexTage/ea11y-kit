@@ -12,7 +12,7 @@ const ModalDialogStyled = styled("dialog", {
  * @property {React.ReactNode} body
  * @property {boolean} show
  * @property {"modal"|"non-modal"} type
- * @property {(event:React.MouseEvent<HTMLButtonElement>)=> void} onCloseClick
+ * @property {()=> void} onClose
  */
 
 /**
@@ -24,28 +24,35 @@ const ModalDialogStyled = styled("dialog", {
  * @param {Dialog} props
  * @returns 
  */
-const Root = ({ header, body, type, show }) => {
+const Root = ({ header, body, type, show, onClose }) => {
     const dialog = useRef();
 
-    useEffect(()=>{
-        if(!show){
+    useEffect(() => {
+        dialog.current.addEventListener("cancel", event => {
+            onClose && onClose();
+        })
+    }, []);
+
+    useEffect(() => {
+        if (!show) {
             dialog.current.close();
+            onClose && onClose();
             return;
         }
 
         // demonstra o modal de acordo com o tipo específicado.
-        if(type === "modal"){
+        if (type === "modal") {
             // apresenta o dialog no formato modal
             dialog.current.showModal();
-        } else{
+        } else {
             // apresenta o dialog no formato non-modal.
             dialog.current.show();
         }
     }, [show]);
 
     return (
-        <ModalDialogStyled 
-        ref={dialog}>
+        <ModalDialogStyled
+            ref={dialog}>
             {header}
             {body}
         </ModalDialogStyled>

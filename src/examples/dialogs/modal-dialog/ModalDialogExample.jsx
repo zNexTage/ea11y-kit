@@ -12,6 +12,7 @@ const ModalDialogExample = () => {
             </Button>
             <Dialog.Root
                 show={show}
+                onClose={() => setShow(false)}
                 type="modal"
                 body={(
                     <Dialog.Body>
