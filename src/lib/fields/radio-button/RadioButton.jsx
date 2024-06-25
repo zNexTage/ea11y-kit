@@ -53,16 +53,6 @@ const RadioButton = ({ id, type, name, label, required = false, onKeyDown,  css,
         }
     }, []);
 
-    const onKeyDownRadioButton = event => {
-        const key = event.code;
-
-        if (!event.target.checked && INTERACTION_KEYS.includes(key)) {
-            event.target.checked = true;
-        }
-
-        onKeyDown && onKeyDown(event);
-    }
-
     return (
         <>
             {violations.length === 0 &&
@@ -72,7 +62,6 @@ const RadioButton = ({ id, type, name, label, required = false, onKeyDown,  css,
                     </label>
                     <RadioButtonStyled
                         {...rest}
-                        onKeyDown={onKeyDownRadioButton}
                         className={`${lightTheme} ${fieldHightlight}`}
                         css={css}
                         type="radio"
