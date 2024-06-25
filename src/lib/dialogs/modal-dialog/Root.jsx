@@ -2,8 +2,7 @@ import { styled } from "@stitches/react";
 import React, { useEffect, useRef } from "react";
 
 const ModalDialogStyled = styled("dialog", {
-    width: "100%",
-    maxWidth: 700
+    width: "95%"    
 });
 
 /**
