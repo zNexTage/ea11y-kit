@@ -1,8 +1,13 @@
 import { styled } from "@stitches/react";
 import React, { useEffect, useRef } from "react";
+import Button from "../../fields/button/Button";
 
-const ModalDialogStyled = styled("dialog", {
-    width: "95%"    
+const DialogStyled = styled("dialog", {
+    width: "95%"
+});
+
+const DialogCloseButtonContainer = styled("div", {
+    textAlign: "right"
 });
 
 /**
@@ -32,13 +37,7 @@ const Root = ({ header, body, type, show, onClose }) => {
         })
     }, []);
 
-    useEffect(() => {
-        if (!show) {
-            dialog.current.close();
-            onClose && onClose();
-            return;
-        }
-
+    const onShow = () => {
         // demonstra o modal de acordo com o tipo específicado.
         if (type === "modal") {
             // apresenta o dialog no formato modal
@@ -47,14 +46,29 @@ const Root = ({ header, body, type, show, onClose }) => {
             // apresenta o dialog no formato non-modal.
             dialog.current.show();
         }
+    }
+
+    useEffect(() => {
+        if (!show) {
+            dialog.current.close();
+            onClose && onClose();
+            return;
+        }
+
+        onShow();
     }, [show]);
 
     return (
-        <ModalDialogStyled
+        <DialogStyled
             ref={dialog}>
             {header}
             {body}
-        </ModalDialogStyled>
+            <DialogCloseButtonContainer>
+                <Button onClick={onClose}>
+                    Fechar
+                </Button>
+            </DialogCloseButtonContainer>
+        </DialogStyled>
     )
 }
 
