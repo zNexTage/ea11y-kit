@@ -10,6 +10,8 @@ const ModalDialogHeaderStyled = styled("div", {});
  * @property {string} title
  * @property {React.ReactNode} children
  * @property {(event:React.MouseEvent<HTMLButtonElement>)=> void} onCloseClick
+ * @property {import("@stitches/react").CSS} css
+ * @property {import("@stitches/react").CSS} closeButtonCss
  */
 
 /**
@@ -17,8 +19,8 @@ const ModalDialogHeaderStyled = styled("div", {});
  * @param {HeaderProps} props
  * @returns 
  */
-const Header = ({ title, children, onCloseClick }) => (
-    <ModalDialogHeaderContainerStyled>
+const Header = ({ title, children, onCloseClick, css, closeButtonCss }) => (
+    <ModalDialogHeaderContainerStyled css={css}>
         <ModalDialogHeaderStyled css={{
             display: "flex",
             justifyContent: "space-between",
@@ -28,7 +30,9 @@ const Header = ({ title, children, onCloseClick }) => (
             </h1>
 
             <div>
-                <Button onClick={onCloseClick}>
+                <Button
+                    css={closeButtonCss}
+                    onClick={onCloseClick}>
                     <b>x</b>
                 </Button>
             </div>

@@ -17,6 +17,8 @@ const DialogCloseButtonContainer = styled("div", {
  * @property {boolean} show
  * @property {"modal"|"non-modal"} type
  * @property {()=> void} onClose
+ * @property {import("@stitches/react").CSS} css
+ * @property {import("@stitches/react").CSS} closeButtonCss
  */
 
 /**
@@ -28,7 +30,7 @@ const DialogCloseButtonContainer = styled("div", {
  * @param {Dialog} props
  * @returns 
  */
-const Root = ({ header, body, type, show, onClose }) => {
+const Root = ({ header, body, type, show, onClose, css, closeButtonCss }) => {
     const dialog = useRef();
 
     useEffect(() => {
@@ -60,11 +62,12 @@ const Root = ({ header, body, type, show, onClose }) => {
 
     return (
         <DialogStyled
+            css={css}
             ref={dialog}>
             {header}
             {body}
             <DialogCloseButtonContainer>
-                <Button onClick={onClose}>
+                <Button css={closeButtonCss} onClick={onClose}>
                     Fechar
                 </Button>
             </DialogCloseButtonContainer>

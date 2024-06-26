@@ -6,6 +6,7 @@ const ModalDialogBodyStyled = styled("div", {});
 /**
  * @typedef BodyProps
  * @property {React.ReactNode} children
+ * @property {import("@stitches/react").CSS} css
  */
 
 /**
@@ -13,8 +14,8 @@ const ModalDialogBodyStyled = styled("div", {});
  * @param {BodyProps} props 
  * @returns 
  */
-const Body = ({ children }) => (
-    <ModalDialogBodyStyled>
+const Body = ({ children, css }) => (
+    <ModalDialogBodyStyled css={css}>
         {children}
     </ModalDialogBodyStyled>
 )
