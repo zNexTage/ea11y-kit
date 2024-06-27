@@ -1,5 +1,5 @@
 import { styled } from "@stitches/react";
-import Button from "../../fields/button/Button";
+import Button from "../fields/button/Button";
 
 const ModalDialogHeaderContainerStyled = styled("div", {});
 

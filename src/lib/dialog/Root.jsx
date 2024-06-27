@@ -1,6 +1,6 @@
 import { styled } from "@stitches/react";
 import React, { useEffect, useRef } from "react";
-import Button from "../../fields/button/Button";
+import Button from "../fields/button/Button";
 
 const DialogStyled = styled("dialog", {
     width: "95%"
@@ -26,7 +26,12 @@ const DialogCloseButtonContainer = styled("div", {
  * 
  * Diretrizes adotadas
  * 
- * 
+ * 1.9 – Não abrir novas instâncias sem a solicitação do usuário - "As janelas modais, como as lightbox, fazem com que o foco do 
+ * teclado permaneça “atrás” da janela, ou seja, o usuário navegando pelo teclado não tem acesso ao conteúdo dessas janelas. 
+ * Além disso, as janelas modais, em geral, não apresentam um bom nível de acessibilidade em dispositivos móveis. 
+ * Assim, se houver real necessidade de utilizar esse tipo de elemento, é preciso garantir que o foco seja remetido para o início do 
+ * conteúdo da janela modal, que o conteúdo dentro da mesma seja acessível e que seja possível retornar facilmente para o site navegando pelo teclado."
+ * nesse sentido, o foco é remetido para o conteúdo do dialog assim que ele é aberto. Além disso, o componente é feito para se adaptar a diversas telas.
  * @param {Dialog} props
  * @returns 
  */

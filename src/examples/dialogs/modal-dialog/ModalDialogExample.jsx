@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog } from "../../../lib/dialogs/modal-dialog";
+import { Dialog } from "../../../lib/dialog";
 import Button from "../../../lib/fields/button/Button";
 
 const ModalDialogExample = () => {
