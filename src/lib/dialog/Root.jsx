@@ -32,6 +32,15 @@ const DialogCloseButtonContainer = styled("div", {
  * Assim, se houver real necessidade de utilizar esse tipo de elemento, é preciso garantir que o foco seja remetido para o início do 
  * conteúdo da janela modal, que o conteúdo dentro da mesma seja acessível e que seja possível retornar facilmente para o site navegando pelo teclado."
  * nesse sentido, o foco é remetido para o conteúdo do dialog assim que ele é aberto. Além disso, o componente é feito para se adaptar a diversas telas.
+ * 
+ * Dialog modal - Defina o `type` para `modal`. O tipo modal bloqueia o conteúdo externo e coloca o conteúdo do Modal em foco, permitindo que o usuário navegue entre os 
+ * elementos dentro do modal sem se perder com os conteúdos externos. Utiliza-se um dialog do tipo Modal para interromper a atividade do usuário e para apresentar
+ * confirmação de ações críticas, exibição de mensagens importantes, entre outros.
+ * 
+ * Dialog non-modal - Defina o `type` para `non-modal`. O tipo non-modal não bloqueia o conteúdo externo e coloca o conteúdo do Dialog em foco, permitindo que o usuário navegue entre os 
+ * elementos dentro do modal e com os conteúdos externos. Utiliza-se um dialog do tipo non-modal em situações não é preciso interromper a atividade do usuário e para apresentar
+ * informações auxiliares, notificações, alertas, interações complementares, entre outros.
+ * 
  * @param {Dialog} props
  * @returns 
  */
