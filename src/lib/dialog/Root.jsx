@@ -1,6 +1,7 @@
 import { styled } from "@stitches/react";
 import React, { useEffect, useRef } from "react";
 import Button from "../fields/button/Button";
+import PropTypes from "prop-types";
 
 const DialogStyled = styled("dialog", {
     width: "95%"
@@ -9,6 +10,8 @@ const DialogStyled = styled("dialog", {
 const DialogCloseButtonContainer = styled("div", {
     textAlign: "right"
 });
+
+const DIALOG_TYPES = ["modal", "non-modal"];
 
 /**
  * @typedef Dialog
@@ -31,7 +34,8 @@ const DialogCloseButtonContainer = styled("div", {
  * Além disso, as janelas modais, em geral, não apresentam um bom nível de acessibilidade em dispositivos móveis. 
  * Assim, se houver real necessidade de utilizar esse tipo de elemento, é preciso garantir que o foco seja remetido para o início do 
  * conteúdo da janela modal, que o conteúdo dentro da mesma seja acessível e que seja possível retornar facilmente para o site navegando pelo teclado."
- * nesse sentido, o foco é remetido para o conteúdo do dialog assim que ele é aberto. Além disso, o componente é feito para se adaptar a diversas telas.
+ * nesse sentido, utilizando do elemento <dialog> o foco é remetido para o conteúdo do dialog assim que ele é aberto, pois esse é o comportamento
+ * padrão. Além disso, o componente é feito para se adaptar a diversas telas.
  * 
  * Dialog modal - Defina o `type` para `modal`. O tipo modal bloqueia o conteúdo externo e coloca o conteúdo do Modal em foco, permitindo que o usuário navegue entre os 
  * elementos dentro do modal sem se perder com os conteúdos externos. Utiliza-se um dialog do tipo Modal para interromper a atividade do usuário e para apresentar
@@ -88,5 +92,15 @@ const Root = ({ header, body, type, show, onClose, css, closeButtonCss }) => {
         </DialogStyled>
     )
 }
+
+Root.propTypes = {
+    header: PropTypes.node.isRequired,
+    body: PropTypes.node.isRequired,
+    type: PropTypes.oneOf(DIALOG_TYPES).isRequired,
+    show: PropTypes.bool,
+    onClose: PropTypes.func.isRequired,
+    css: PropTypes.object,
+    closeButtonCss: PropTypes.object,
+};
 
 export default Root;

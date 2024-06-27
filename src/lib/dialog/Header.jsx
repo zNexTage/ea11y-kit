@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { styled } from "@stitches/react";
 import Button from "../fields/button/Button";
 
@@ -41,5 +42,13 @@ const Header = ({ title, children, onCloseClick, css, closeButtonCss }) => (
         {children}
     </ModalDialogHeaderContainerStyled>
 )
+
+Header.propTypes = {
+    title: PropTypes.string.isRequired,
+    children: PropTypes.node,
+    onCloseClick: PropTypes.func.isRequired,
+    css: PropTypes.object,
+    closeButtonCss: PropTypes.object,
+};
 
 export default Header;
