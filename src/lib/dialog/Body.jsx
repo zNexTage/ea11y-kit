@@ -1,5 +1,6 @@
 import { styled } from "@stitches/react"
 import React from "react";
+import PropTypes from "prop-types";
 
 const ModalDialogBodyStyled = styled("div", {});
 
@@ -19,5 +20,10 @@ const Body = ({ children, css }) => (
         {children}
     </ModalDialogBodyStyled>
 )
+
+Body.propTypes = {
+    css: PropTypes.object,
+    children: PropTypes.node,
+}
 
 export default Body;
