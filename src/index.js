@@ -10,6 +10,7 @@ import AudioExample from './examples/audio/AudioExample';
 import Link from './lib/links/link';
 import DownloadLink from './lib/links/download-link';
 import VideoExample from './examples/videos/VideoExample';
+import ModalDialogExample from './examples/dialogs/modal-dialog/ModalDialogExample';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -24,7 +25,8 @@ root.render(
       unit='MB'
     /> */}
 
-    <VideoExample />
+    {/* <VideoExample /> */}
+    <ModalDialogExample />
     {/* <AudioExample /> */}
   </React.StrictMode>
 );

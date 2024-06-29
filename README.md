@@ -39,7 +39,7 @@ Checkbox permite trabalhar com campos selecionaveis. Adotando as diretrizes do e
 | ---- | --------- | ----------- | ------------ |
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
 | id | Define um identificador para o campo. deve ser único | Sim | | 
-| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | name | Define o nome do campo. | Sim | |
 | onChange | Define uma função callback para quando o componente for selecionado ou não selecionado. | Não | |
 | checked | Define se o checkbox está selecionado ou não selecionado | Não | |
@@ -65,7 +65,7 @@ Input do tipo (type) `color` que permite trabalhar com seleção de cores. Segui
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
 | name | Define o nome do campo. | Sim | |
 | id | Define um identificador para o campo. deve ser único | Sim | | 
-| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
 
 
@@ -233,7 +233,7 @@ Representa um controle com um menu de opções selecionaveis. Adotando as diretr
 | id | Define um identificador para o campo. deve ser único | Sim | | 
 | name | Define o nome do campo. | Sim | | 
 | css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
-| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | children | Define as opções de seleção. Deve-se utilizar o elemento `<option>`. | Sim | |
 
 ### Textarea
@@ -254,7 +254,7 @@ Textarea permite trabalhar com entrada de textos extensos. Adotando as diretrize
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
 | placeholder | Define uma instrução sobre o dado que deve ser informado | Sim | |
 | id | Define um identificador para o campo. deve ser único | Sim | | 
-| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | name | Define o nome do campo. | Sim | | 
 | css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
 
@@ -282,7 +282,7 @@ Campo para anexação de arquivos. Adotando os diretrizes do eMAG, o componente 
 | ---- | --------- | ----------- | ------------ |
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
 | id | Define um identificador para o campo. deve ser único | Sim | | 
-| required | Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required | Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
 | accept | Define quais formatos devem ser anexados. Deve-se informar uma string e separar cada extensão utilizando vírgulas. Ex: image/png, image/jpeg. [Clique aqui para ver quais formatos podem ser informados](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept) | Não | |
 | acceptDescription | Apresenta para o usuário quais formatos devem ser anexados. | É obrigatório quando é informado o `accept`. | |
@@ -307,7 +307,7 @@ Textbox permite trabalhar com campo de entrada para email, número, senha, pesqu
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
 | placeholder | Define uma instrução sobre o dado que deve ser informado | Sim | |
 | id | Define um identificador para o campo. deve ser único | Sim | | 
-| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | name | Define o nome do campo. | Sim | | 
 | css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
 | type | Define o tipo do campo. Valores permitidos: `email`, `number`, `password`, `search`, `text`, `url`, `date`, `datetime-local` e `time`. Utilize `Phone` se precisar usar o tipo `tel` e utilize o componente `Week` se precisar adotar o uso do tipo `week`  | text |
@@ -316,16 +316,6 @@ Além disso, pode se passar qualquer propriedade e método oferecido pela interf
 
 ### Week
 Campo para seleção de semanas, ou seja, input com o type week. É exigido que seja informado uma `label` e um `id` para identificar o campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
-
-#### Diretrizes adotadas
-
-- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
-    - Uma borda é adicionada ao elemento ao ser focado.
-- 6.2 – Associar etiquetas aos seus campos;
-    - A propriedade `label` e `id` são obrigatórias.
-- 6.5 – Fornecer instruções para entrada de dados.
-    - A propriedade `placeholder` é obrigatória.
-    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
 
 #### Compatibilidade com navegadores
 
@@ -339,6 +329,16 @@ Nesse sentido, caso o navegador não suporte o tipo week, é utilizado um compon
 
 O componente fallback consiste em dois selects, sendo que um permite selecionar o ano e o outro o número da semana.
 
+#### Diretrizes adotadas
+
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
+    - Uma borda é adicionada ao elemento ao ser focado.
+- 6.2 – Associar etiquetas aos seus campos;
+    - A propriedade `label` e `id` são obrigatórias.
+- 6.5 – Fornecer instruções para entrada de dados.
+    - A propriedade `placeholder` é obrigatória.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
+
 #### Props API
 `fallbackYearOptions`, `fallbackWeekCss` e `fallbackWeekYearCss` são props para customização do componente fallback, que é renderizado quando o navegador não suporta o `type week`. 
 
@@ -346,7 +346,7 @@ O componente fallback consiste em dois selects, sendo que um permite selecionar 
 | ---- | --------- | ----------- | ------------ |
 | label | Define uma descrição (rótulo) do campo de entrada. | Sim | |
 | id | Define um identificador para o campo. deve ser único | Sim | | 
-| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta flag é igual a true. | Não | false |
+| required| Define se o campo é obrigatório ou não. O indicativo `(campo obrigatório)` é colocado a frente do campo quando esta prop é igual a true. | Não | false |
 | name | Define o nome do campo. | Sim | | 
 | css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Não | |
 | fallbackYearOptions | Define quais anos anos serão utilizados no select. | Não | `Array<number>` Lista dos dez anos anteriores ao ano atual |
@@ -487,8 +487,27 @@ Reprodutor de áudio com controles customizados, com o uso obrigatório de alter
 | captionFile | Alternativa textual do conteúdo do áudio.  | Sim | |
 | tracks | Permite especificar as legendas do vídeo. Deve-se informar as legendas no formato `.vtt`. | Sim | |
 
-### ModalDialog e NonModalDialog
-Em desenvolvimento...
+### Dialog
+Caixa de diálogo composta pelos componentes `Root`, `Body` e `Header`. Através de Root monta-se o dialog, nesse sentido deve-se utilizar das props `header` e `body` para compor e montar a caixa de diálogo. Pode-se definir o tipo do dialog através da prop type, onde é oferecido dois tipos: `modal` e `non-modal`.
+O tipo modal deixa todo o conteúdo atrás do Dialog inerte, foca para o primeiro elemento dentro do dialog e deve ser utilizado para ações importantes, como: confirmação de ações críticas, exibição de mensagens importantes, etc.
+O tipo non-modal não deixa todo o conteúdo atrás do Dialog inerte, foca para o primeiro elemento dentro do dialog e deve ser usado em situações que não necessitam interromper o fluxo de navegação do usuário, como demonstrar informações auxiliares, notificações, alertas, interações complementares, entre outros.
+
+#### Diretrizes adotadas
+
+- 1.9 – Não abrir novas instâncias sem a solicitação do usuário
+    - Segundo o eMAG (2014) "As janelas modais, como as lightbox, fazem com que o foco do teclado permaneça “atrás” da janela, ou seja, o usuário navegando pelo teclado não tem acesso ao conteúdo dessas janelas. Além disso, as janelas modais, em geral, não apresentam um bom nível de acessibilidade em dispositivos móveis". Nesse sentido, o componente Dialog foi feito utilizando o elemento dialog como base, que apresenta semântica e recursos nativos de acessibilidade, como: atribuir o foco para os elementos internos do dialog; para dialog do tipo modal, o conteúdo externo fica inacessível, o que impede que os usuários se percam durante a navegação entre os itens do dialog; entre outros.
+
+#### Props API
+| Prop | Descrição | Obrigatória | Valor padrão |
+| ---- | --------- | ----------- | ------------ |
+| header | Define o cabeçalho do dialog. Pode-se utilizar do componente Header, que está localizado na pasta dialog. | Sim | |
+| body | Define o corpo do dialog. Pode-se utilizar do componente Body, que está localizado na pasta dialog. | Sim | |
+| type | Define o tipo do dialog, sendo possível escolher entre `modal` e `non-modal`. | Não | modal |
+| show | Quando o valor é `true` demonstrado o dialog, quando `false`, oculta. | Não | false | 
+| onClose | Callback que executa quando o dialog está fechando. |  Não | |
+| css | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Sim | |
+| closeButtonCss | Permite customizar o componente via css-in-js. [Saiba mais sobre sobrescrever CSS aqui](https://stitches.dev/docs/overriding-styles) | Sim | |
+
 
 ### Slideshow
 Em desenvolvimento...

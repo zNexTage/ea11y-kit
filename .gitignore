@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 *storybook.log
+/playground/radix-ui-playground/node_modules
+/playground/material-ui-playground/node_modules
