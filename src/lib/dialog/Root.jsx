@@ -48,7 +48,7 @@ const DIALOG_TYPES = ["modal", "non-modal"];
  * @param {Dialog} props
  * @returns 
  */
-const Root = ({ header, body, type, show, onClose, css, closeButtonCss }) => {
+const Root = ({ header, body, type = "modal", show = false, onClose, css, closeButtonCss }) => {
     const dialog = useRef();
 
     useEffect(() => {
