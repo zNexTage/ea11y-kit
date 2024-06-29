@@ -219,16 +219,6 @@ Além disso, pode se passar qualquer propriedade e método oferecido pela interf
 ### Week
 Campo para seleção de semanas, ou seja, input com o type week. É exigido que seja informado uma `label` e um `id` para identificar o campo. A prop `required` permite especificar se o campo é obrigatório ou não, e caso seja colocado que sim é acrescentado a indicação `(campo obrigatório)` na frente do texto da label.
 
-#### Diretrizes adotadas
-
-- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
-    - Uma borda é adicionada ao elemento ao ser focado.
-- 6.2 – Associar etiquetas aos seus campos;
-    - A propriedade `label` e `id` são obrigatórias.
-- 6.5 – Fornecer instruções para entrada de dados.
-    - A propriedade `placeholder` é obrigatória.
-    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
-
 #### Compatibilidade com navegadores
 
 De acordo com a biblioteca da MDN, os seguintes navegadores possuem compatibilidade com o `type week`:
@@ -240,6 +230,16 @@ Imagem consultada em: 16/04/2024.
 Nesse sentido, caso o navegador não suporte o tipo week, é utilizado um componente fallback, [seguindo o exemplo proposto pela MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/week#examples).
 
 O componente fallback consiste em dois selects, sendo que um permite selecionar o ano e o outro o número da semana.
+
+#### Diretrizes adotadas
+
+- 4.4 – Possibilitar que o elemento com foco seja visualmente evidente;
+    - Uma borda é adicionada ao elemento ao ser focado.
+- 6.2 – Associar etiquetas aos seus campos;
+    - A propriedade `label` e `id` são obrigatórias.
+- 6.5 – Fornecer instruções para entrada de dados.
+    - A propriedade `placeholder` é obrigatória.
+    - É adicionado a indicação `(campo obrigatório)` ao definir a prop required como `true`.
 
 #### Props API
 `fallbackYearOptions`, `fallbackWeekCss` e `fallbackWeekYearCss` são props para customização do componente fallback, que é renderizado quando o navegador não suporta o `type week`. 
