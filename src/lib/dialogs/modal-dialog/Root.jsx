@@ -26,6 +26,13 @@ const DialogCloseButtonContainer = styled("div", {
  * 
  * Diretrizes adotadas
  * 
+ * 1.9 – Não abrir novas instâncias sem a solicitação do usuário - o eMAG cita o seguinte sobre o uso de dialogs
+ * "As janelas modais, como as lightbox, fazem com que o foco do teclado permaneça “atrás” da janela, ou seja, o usuário navegando pelo teclado não tem acesso ao conteúdo dessas janelas. 
+ * Além disso, as janelas modais, em geral, não apresentam um bom nível de acessibilidade em dispositivos móveis"
+ * nesse sentido, o componente Dialog foi feito utilizando o elemento dialog como base, que apresenta semântica e recursos nativos de acessibilidade, como:
+ * atribuir o foco para os elementos internos do dialog; para dialog do tipo modal, o conteúdo externo fica inacessível, o que impede que os usuários se percam durante a navegação entre os itens do dialog; entre outros.
+ * 
+ *  
  * 
  * @param {Dialog} props
  * @returns 
