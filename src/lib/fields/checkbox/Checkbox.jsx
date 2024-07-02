@@ -67,8 +67,7 @@ const Checkbox = ({
             console.warn(`Não é possível alterar atributo type do Checkbox.`);
         }
     }, [type]);
-
-
+    
     return (
         <>
             {violations.length == 0 &&
@@ -78,7 +77,6 @@ const Checkbox = ({
                     </label>
                     <CheckboxStyled
                         {...rest}
-                        role="checkbox"
                         className={`${lightTheme} ${fieldHightlight}`}
                         css={css}
                         checked={isChecked}
