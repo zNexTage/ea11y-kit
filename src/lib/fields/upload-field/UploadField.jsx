@@ -61,7 +61,8 @@ const UploadField = ({
     acceptDescription,
     multiple,
     css,
-    onChange
+    onChange,
+    ...rest
 }) => {
     const [errors, setErrors] = useState([]);
     const [files, setFiles] = useState([]);
@@ -130,6 +131,7 @@ const UploadField = ({
                     </label>
 
                     <UploadFieldStyled
+                        {...rest}
                         multiple={multiple}
                         onChange={onChangeUploadField}
                         id={id}
