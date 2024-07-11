@@ -6,7 +6,7 @@ import { CheckIcon } from '@radix-ui/react-icons';
 const CheckboxExample = () => (
     <form>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Checkbox.Root name='teste' className="CheckboxRoot" defaultChecked id="c1">
+            <Checkbox.Root disabled name='teste' className="CheckboxRoot" defaultChecked id="c1">
                 <Checkbox.Indicator className="CheckboxIndicator">
                     <CheckIcon />
                 </Checkbox.Indicator>

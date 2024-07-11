@@ -1,4 +1,5 @@
 import * as Form from '@radix-ui/react-form';
+import * as Slider from '@radix-ui/react-slider';
 
 
 const FormExample = () => (
@@ -28,6 +29,14 @@ const FormExample = () => (
                 <textarea className="Textarea" required />
             </Form.Control>
         </Form.Field>
+
+        <Slider.Root className="SliderRoot" defaultValue={[50]} max={100} step={1}>
+            <Slider.Track className="SliderTrack">
+                <Slider.Range className="SliderRange" />
+            </Slider.Track>
+            <Slider.Thumb className="SliderThumb" aria-label="Volume" />
+        </Slider.Root>
+
         <Form.Submit asChild>
             <button className="Button" style={{ marginTop: 10 }}>
                 Post question
