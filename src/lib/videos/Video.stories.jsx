@@ -4,6 +4,7 @@ import AudioCaptionBr from "../../examples/videos/sintel-br.vtt";
 import AudioCaptionEn from "../../examples/videos/sintel-en.vtt";
 import AudioCaptionDe from "../../examples/videos/sintel-de.vtt";
 import AudioCaptionEs from "../../examples/videos/sintel-es.vtt";
+import VideoAudioDescriptionExample from "../../examples/video-audio-description/VideoAudioDescriptionExample";
 
 export default {
     title: "Vídeo",
@@ -68,3 +69,11 @@ export const NonCompliace = {
     component: Video
 };
 NonCompliace.storyName = "Inconformidade com as diretrizes do eMAG";
+
+/**
+ * Exemplo de vídeo com áudio descrição * 
+ */
+export const VideoAudioDescription = () => (
+    <VideoAudioDescriptionExample />
+)
+VideoAudioDescription.storyName = "Demonstração com áudio descrição";
