@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Checkbox, Input, Radio, RadioGroup, useRadioState } from "reakit";
+import { Button, Checkbox, Input, Menu, MenuButton, MenuItem, MenuSeparator, Radio, RadioGroup, useMenuState, useRadioState } from "reakit";
 import {
     unstable_useFormState as useFormState,
     unstable_Form as Form,
@@ -37,11 +37,13 @@ const FormExample = () => {
 
     const radio = useRadioState();
 
+    const menu = useMenuState();
+
 
     return (
         <Form {...form}>
             <label htmlFor="gilad">
-                <Checkbox name="participantes" id="gilad" value={"gilad"} checked={checked.includes("gilad")} onChange={toggle} />
+                <Checkbox disabled name="participantes" id="gilad" value={"gilad"} checked={checked.includes("gilad")} onChange={toggle} />
                 Gilad Gray
             </label>
 
@@ -63,7 +65,7 @@ const FormExample = () => {
             <FormInput {...form} name="name" placeholder="John Doe" />
             <FormMessage {...form} name="name" />
 
-            <Input placeholder="input" />
+            <Input as={"div"} placeholder="input" disabled />
             <br />
             <FormSubmitButton {...form}>Submit</FormSubmitButton>
 
@@ -71,7 +73,7 @@ const FormExample = () => {
 
             <RadioGroup {...radio} aria-label="fruits">
                 <label>
-                    <Radio {...radio} value="apple" /> apple
+                    <Radio as={"button"} {...radio} value="apple" /> apple
                 </label>
                 <label>
                     <Radio {...radio} value="orange" /> orange
@@ -81,11 +83,30 @@ const FormExample = () => {
                 </label>
             </RadioGroup>
 
+
+            <Input value="value" placeholder="input" />
+
             <br />
 
             <Button onClick={event => console.log("ALOOOO MUNDO")}>
                 Confirmar
             </Button>
+
+            <Button as={"div"} onClick={event => console.log("ALOOOO MUNDO")}>
+                Botão Div
+            </Button>
+
+            <MenuButton {...menu}>
+                Preferences
+            </MenuButton>
+            <Menu {...menu} aria-label="Preferences">
+                <MenuItem {...menu}>Settings</MenuItem>
+                <MenuItem {...menu} disabled>
+                    Extensions
+                </MenuItem>
+                <MenuSeparator {...menu} />
+                <MenuItem {...menu}>Keyboard shortcuts</MenuItem>
+            </Menu>
         </Form>
     )
 }
