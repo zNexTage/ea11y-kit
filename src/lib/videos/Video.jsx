@@ -396,6 +396,17 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
         return result;
     }
 
+    /**
+     * Reseta o tempo do vídeo quando chega ao fim.
+     * @param {} event 
+     */
+    const onVideoEnded = event => {
+        stop();
+        if (enableAd) {
+            stopAd();
+        }
+    }
+
     return (
         <>
             {violations.length === 0 &&
@@ -410,6 +421,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                         onLoadedData={event => {
                             setDuration(event.target.duration);
                         }}
+                        onEnded={onVideoEnded}
                         {...rest}>
                         {sources?.map((source, index) => (
                             <source
