@@ -18,6 +18,8 @@ import RequiredAttribute from "../../exceptions/RequiredAttribute";
 
 const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapters"];
 
+//TODO: Colocar AudioDescription em PropTypes
+
 /**
  * @typedef Source
  * @property {string} src
@@ -63,7 +65,8 @@ const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapte
 const ControlButton = styled(BaseButton, {
     "&:fullscreen": {
         border: "2px solid #DDD"
-    }
+    },
+    padding: 10
 });
 
 const VideoContainer = styled("div", {
@@ -80,13 +83,13 @@ const VideoProgressContainer = styled("div", {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    margin: "5px 0"
+    margin: "5px 0",
+    flexDirection: "column"
 });
 
 const VideoProgressoBar = styled("input", {
     width: "100%",
     flex: 1,
-    marginRight: 25
 });
 
 const VideoStyled = styled("video", {
@@ -454,6 +457,17 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                             unit={textualAlternativeFile?.unit}
                         />
                         <VideoProgressContainer>
+                            <VideoDuration>
+                                {formatTime(currentTime)} / {formatTime(duration)}
+                            </VideoDuration>
+                            <VideoProgressoBar
+                                className={`${lightTheme} ${fieldHightlight}`}
+                                min={0}
+                                max={100}
+                                onChange={onProgressChange}
+                                value={getVideoCurrentTime()}
+                                aria-label="Barra de progresso do vídeo" type="range" />
+
 
                             <div>
                                 {!isPlaying ?
@@ -534,16 +548,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                                 }
                             </div>
 
-                            <VideoProgressoBar
-                                className={`${lightTheme} ${fieldHightlight}`}
-                                min={0}
-                                max={100}
-                                onChange={onProgressChange}
-                                value={getVideoCurrentTime()}
-                                aria-label="Barra de progresso do vídeo" type="range" />
-                            <VideoDuration>
-                                {formatTime(currentTime)} / {formatTime(duration)}
-                            </VideoDuration>
+
                         </VideoProgressContainer>
 
                         <VideoControls>
