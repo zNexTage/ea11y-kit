@@ -385,6 +385,9 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
 
         setVolume(newVolume);
         videoRef.current.volume = newVolume / 100;
+        if (audioRef.current) { // altera o volume do audiodescrição.
+            audioRef.current.volume = newVolume / 100;
+        }
     }
 
     /**
