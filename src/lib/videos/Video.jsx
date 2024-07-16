@@ -81,15 +81,18 @@ const VideoContainer = styled("div", {
 
 const VideoProgressContainer = styled("div", {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     margin: "5px 0",
     "@media(max-width: 530px)": {
         flexDirection: "column"
-    }
+    },
 });
 
-const VideoProgressoBar = styled("input", {
+const VideoProgress = styled("div", {
+    flex: 1,
+    padding: "0 5px"
+})
+
+const ProgressBar = styled("input", {
     width: "100%",
     flex: 1,
 });
@@ -98,7 +101,7 @@ const VideoStyled = styled("video", {
     width: "100%",
     height: "80%",
     "@media(max-width: 530px)": {
-        height: "75%"
+        height: "70%"
     },
     minHeight: "15em",
 });
@@ -107,33 +110,13 @@ const VideoDuration = styled("p", {
     margin: 0
 });
 
-const VideoControls = styled("div", {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-    "&>div": {
-        flex: 1,
-        marginRight: 15
-    }
-});
-
-const VolumeContainer = styled("div", {
-    textAlign: "left",
-    display: "flex",
-    alignItems: "center",
-    "&>span": {
-        flex: .2
-    },
-    "&>div": {
-        width: "100%",
-        flex: 1
-    }
-});
-
 const AudioDescription = styled("audio", {
     display: "none"
 });
+
+const VideoControlButtonsContainer = styled("div", {
+    textAlign: "center"
+})
 
 /**
  * Componente vídeo pré-configurado com as diretrizes do eMAG
@@ -478,7 +461,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                         />
                         <VideoProgressContainer>
 
-                            <div>
+                            <VideoControlButtonsContainer>
                                 {!isPlaying ?
                                     <ControlButton
                                         type="button"
@@ -555,35 +538,39 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
 
                                     </>
                                 }
-                            </div>
+                            </VideoControlButtonsContainer>
 
+                            <VideoProgress>
+                                <ProgressBar
+                                    className={`${lightTheme} ${fieldHightlight}`}
+                                    min={0}
+                                    max={100}
+                                    onChange={onProgressChange}
+                                    value={getVideoCurrentTime()}
+                                    aria-label="Barra de progresso do vídeo" type="range" />
+                                <VideoDuration>
+                                    {formatTime(currentTime)} / {formatTime(duration)}
+                                </VideoDuration>
+                            </VideoProgress>
 
-                            <VideoProgressoBar
-                                className={`${lightTheme} ${fieldHightlight}`}
-                                min={0}
-                                max={100}
-                                onChange={onProgressChange}
-                                value={getVideoCurrentTime()}
-                                aria-label="Barra de progresso do vídeo" type="range" />
-                            <VideoDuration>
-                                {formatTime(currentTime)} / {formatTime(duration)}
-                            </VideoDuration>
-                        </VideoProgressContainer>
-
-                        <VideoControls>
-                            <VolumeContainer>
-                                <span>
-                                    {volume}
-                                </span>
-                                <Range
-                                    label="Volume"
+                            <div>
+                                <ProgressBar
+                                    className={`${lightTheme} ${fieldHightlight}`}
+                                    aria-label="Volume"
                                     id={volumeId}
                                     min={0}
                                     max={100}
                                     value={volume}
                                     onChange={onVolumeChange}
-                                />
-                            </VolumeContainer>
+                                    type="range" />
+
+                                <span>
+                                    {volume}
+                                </span>
+                            </div>
+                        </VideoProgressContainer>
+
+                        <div>
 
                             <Select
                                 name={`cboVideoCaption${cboVideoId}`}
@@ -604,9 +591,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                                     ))
                                 }
                             </Select>
-
-
-                        </VideoControls>
+                        </div>
 
 
                     </div>
