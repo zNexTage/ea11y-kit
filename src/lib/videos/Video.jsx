@@ -84,7 +84,9 @@ const VideoProgressContainer = styled("div", {
     justifyContent: "center",
     alignItems: "center",
     margin: "5px 0",
-    flexDirection: "column"
+    "@media(max-width: 530px)": {
+        flexDirection: "column"
+    }
 });
 
 const VideoProgressoBar = styled("input", {
@@ -95,6 +97,9 @@ const VideoProgressoBar = styled("input", {
 const VideoStyled = styled("video", {
     width: "100%",
     height: "80%",
+    "@media(max-width: 530px)": {
+        height: "75%"
+    },
     minHeight: "15em",
 });
 
@@ -469,17 +474,6 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                             unit={textualAlternativeFile?.unit}
                         />
                         <VideoProgressContainer>
-                            <VideoDuration>
-                                {formatTime(currentTime)} / {formatTime(duration)}
-                            </VideoDuration>
-                            <VideoProgressoBar
-                                className={`${lightTheme} ${fieldHightlight}`}
-                                min={0}
-                                max={100}
-                                onChange={onProgressChange}
-                                value={getVideoCurrentTime()}
-                                aria-label="Barra de progresso do vídeo" type="range" />
-
 
                             <div>
                                 {!isPlaying ?
@@ -561,6 +555,16 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                             </div>
 
 
+                            <VideoProgressoBar
+                                className={`${lightTheme} ${fieldHightlight}`}
+                                min={0}
+                                max={100}
+                                onChange={onProgressChange}
+                                value={getVideoCurrentTime()}
+                                aria-label="Barra de progresso do vídeo" type="range" />
+                            <VideoDuration>
+                                {formatTime(currentTime)} / {formatTime(duration)}
+                            </VideoDuration>
                         </VideoProgressContainer>
 
                         <VideoControls>
