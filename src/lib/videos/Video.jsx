@@ -9,7 +9,7 @@ import Select from "../fields/select";
 import useFullscreenAPI from "../hooks/fullscreen-api";
 import Range from "../fields/range/Range";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faPause, faStop, faExpand, faMinimize, faAudioDescription } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faPause, faStop, faExpand, faMinimize, faAudioDescription, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons'
 import DownloadLink from "../links/download-link/DownloadLink";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_ALTERNATIVE_TO_VIDEO } from "../../utils/eMagGuidelineCode";
@@ -565,6 +565,12 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
                                     type="range" />
 
                                 <span>
+                                    {
+                                        volume == 0 ?
+                                            <FontAwesomeIcon icon={faVolumeXmark} title="Volume" /> :
+                                            <FontAwesomeIcon icon={faVolumeHigh} title="Volume" />
+                                    }
+                                    &nbsp;
                                     {volume}
                                 </span>
                             </div>
