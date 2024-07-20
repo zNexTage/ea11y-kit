@@ -67,7 +67,7 @@ const FormExample = () => {
 
             <Input as={"div"} placeholder="input" disabled />
             <br />
-            <FormSubmitButton {...form}>Submit</FormSubmitButton>
+            <FormSubmitButton as="div" {...form} disabled>Submit</FormSubmitButton>
 
             <br />
 

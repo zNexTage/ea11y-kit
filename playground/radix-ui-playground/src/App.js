@@ -1,10 +1,10 @@
-import AvatarExample from "./examples/AvatarExample";
-import CheckboxExample from "./examples/CheckboxExample";
-import { DialogExample } from "./examples/DialogExample";
-import FormExample from "./examples/FormExample";
-import RadioGroupExample from "./examples/RadioGroupExample";
-import SelectExample from "./examples/SelectExample";
-
+// import AvatarExample from "./examples/AvatarExample";
+// import CheckboxExample from "./examples/CheckboxExample";
+// import FormExample from "./examples/FormExample";
+// import RadioGroupExample from "./examples/RadioGroupExample";
+// import SelectExample from "./examples/SelectExample";
+// import { DialogExample } from "./examples/DialogExample";
+import NavigationMenuExample from "./examples/NavigationExample"
 
 function App() {
   return (
@@ -13,7 +13,8 @@ function App() {
       {/* <FormExample /> */}
       {/* <RadioGroupExample /> */}
       {/* <SelectExample /> */}
-      <DialogExample />
+      <NavigationMenuExample />
+      {/* <DialogExample /> */}
       
     </div>
   );
