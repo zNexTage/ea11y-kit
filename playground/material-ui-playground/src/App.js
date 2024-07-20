@@ -1,6 +1,10 @@
+import AlertExample from "./examples/AlertExample";
 import AvatarExample from "./examples/AvatarExample";
+import ButtonExample from "./examples/ButtonExample";
 import FormExample from "./examples/FormExample";
 import LinkExample from "./examples/LinkExample";
+import SelectExample from "./examples/SelectExample";
+import SliderExample from "./examples/SliderElement";
 
 function App() {
   return (
@@ -9,7 +13,15 @@ function App() {
 
       {/* <FormExample /> */}
 
-      <LinkExample />
+      {/* <LinkExample /> */}
+
+      {/* <ButtonExample /> */}
+
+      {/* <AlertExample /> */}
+
+      <SliderExample />
+
+      {/* <SelectExample /> */}
     </div>
   );
 }
