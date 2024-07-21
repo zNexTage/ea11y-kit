@@ -3,6 +3,7 @@ import AvatarExample from "./examples/AvatarExample";
 import ButtonExample from "./examples/ButtonExample";
 import FormExample from "./examples/FormExample";
 import LinkExample from "./examples/LinkExample";
+import PopoverExample from "./examples/PopoverExample";
 import SelectExample from "./examples/SelectExample";
 import SliderExample from "./examples/SliderElement";
 
@@ -19,9 +20,10 @@ function App() {
 
       {/* <AlertExample /> */}
 
-      <SliderExample />
+      {/* <SliderExample /> */}
 
       {/* <SelectExample /> */}
+      <PopoverExample />
     </div>
   );
 }
