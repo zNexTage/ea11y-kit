@@ -1,6 +1,6 @@
 import * as Select from '@radix-ui/react-select';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
-
+import "./SelectExample.css";
 
 const SelectExample = () => (
     <Select.Root>

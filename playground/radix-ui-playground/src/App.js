@@ -2,8 +2,9 @@
 // import CheckboxExample from "./examples/CheckboxExample";
 // import FormExample from "./examples/FormExample";
 // import RadioGroupExample from "./examples/RadioGroupExample";
-// import SelectExample from "./examples/SelectExample";
+import SelectExample from "./examples/SelectExample";
 // import { DialogExample } from "./examples/DialogExample";
+import MenuBarExample from "./examples/MenuBarExample";
 import NavigationMenuExample from "./examples/NavigationExample"
 
 function App() {
@@ -12,9 +13,10 @@ function App() {
       {/* <CheckboxExample /> */}
       {/* <FormExample /> */}
       {/* <RadioGroupExample /> */}
-      {/* <SelectExample /> */}
-      <NavigationMenuExample />
+      <SelectExample />
+      {/* <NavigationMenuExample /> */}
       {/* <DialogExample /> */}
+      {/* <MenuBarExample /> */}
       
     </div>
   );
