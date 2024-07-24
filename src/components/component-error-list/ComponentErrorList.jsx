@@ -1,4 +1,5 @@
 import BaseError from "../../exceptions/BaseError";
+import Link from "../../lib/links/link";
 
 /**
  * Lista os erros que ocorreram em um determinado componente para indicar o desenvolvedor o que ele
@@ -13,11 +14,22 @@ const ComponentErrorList = ({ errors }) => {
                 Violação das diretrizes do <abbr title="Modelo de Acessibilidade em Governo Eletrônico">eMAG</abbr>
             </h1>
             <ul>
-                {errors.map((err, index) => (
-                    <li key={`error_${index}`}>
-                        {err.message}
-                    </li>
-                ))}
+                {errors.map((err, index) => {
+                    return (
+                        <li key={`error_${index}`}>
+                            {err.message}&nbsp;
+                            {err.guidelineUrl &&
+                                <>
+                                    <br />
+                                    <Link href={err.guidelineUrl} target="_blank">
+                                        Veja mais sobre as diretrizes do eMAG clicando aqui.
+                                    </Link>
+                                </>
+                            }
+                        </li>
+                    )
+                }
+                )}
             </ul>
         </div>
     )
