@@ -5,12 +5,12 @@ import BaseError from "./BaseError";
  */
 class ViolationBaseError extends BaseError {
 
-    constructor(code, message){
+    constructor(code, message, guidelineUrl = "https://emag.governoeletronico.gov.br/"){
         super(message);
         
         this.code = code;
         this.message = message;
-
+        this.guidelineUrl = guidelineUrl;
     }
 
 }
