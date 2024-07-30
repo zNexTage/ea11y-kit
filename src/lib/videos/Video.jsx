@@ -9,7 +9,7 @@ import Select from "../fields/select";
 import useFullscreenAPI from "../hooks/fullscreen-api";
 import Range from "../fields/range/Range";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faPause, faStop, faExpand, faMinimize } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faPause, faStop, faExpand, faMinimize, faAudioDescription, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons'
 import DownloadLink from "../links/download-link/DownloadLink";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_ALTERNATIVE_TO_VIDEO } from "../../utils/eMagGuidelineCode";
@@ -17,6 +17,8 @@ import ComponentErrorList from "../../components/component-error-list";
 import RequiredAttribute from "../../exceptions/RequiredAttribute";
 
 const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapters"];
+
+//TODO: Colocar AudioDescription em PropTypes
 
 /**
  * @typedef Source
@@ -40,11 +42,20 @@ const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapte
  **/
 
 /**
+ * @typedef AudioDescription
+ * @property {string} src
+ * @property {string} type
+ * @property {boolean} enable
+ */
+
+/**
  * @typedef VideoProps
  * @property {import("@stitches/react").CSS} css
  * @property {Array<VideoSource>} sources 
  * @property {Array<Track>} tracks
  * @property {import("../links/download-link/DownloadLink").DownloadLinkProps} textualAlternativeFile
+ * @property {AudioDescription|null} audioDescription
+ * 
  */
 
 /**
@@ -54,7 +65,8 @@ const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapte
 const ControlButton = styled(BaseButton, {
     "&:fullscreen": {
         border: "2px solid #DDD"
-    }
+    },
+    padding: 10
 });
 
 const VideoContainer = styled("div", {
@@ -69,20 +81,28 @@ const VideoContainer = styled("div", {
 
 const VideoProgressContainer = styled("div", {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "5px 0"
+    margin: "5px 0",
+    "@media(max-width: 530px)": {
+        flexDirection: "column"
+    },
 });
 
-const VideoProgressoBar = styled("input", {
+const VideoProgress = styled("div", {
+    flex: 1,
+    padding: "0 5px"
+})
+
+const ProgressBar = styled("input", {
     width: "100%",
     flex: 1,
-    marginRight: 25
 });
 
 const VideoStyled = styled("video", {
     width: "100%",
     height: "80%",
+    "@media(max-width: 530px)": {
+        height: "70%"
+    },
     minHeight: "15em",
 });
 
@@ -90,29 +110,13 @@ const VideoDuration = styled("p", {
     margin: 0
 });
 
-const VideoControls = styled("div", {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-    "&>div": {
-        flex: 1,
-        marginRight: 15
-    }
+const AudioDescription = styled("audio", {
+    display: "none"
 });
 
-const VolumeContainer = styled("div", {
-    textAlign: "left",
-    display: "flex",
-    alignItems: "center",
-    "&>span": {
-        flex: .2
-    },
-    "&>div": {
-        width: "100%",
-        flex: 1
-    }
-});
+const VideoControlButtonsContainer = styled("div", {
+    textAlign: "center"
+})
 
 /**
  * Componente vídeo pré-configurado com as diretrizes do eMAG
@@ -124,16 +128,17 @@ const VolumeContainer = styled("div", {
  * a leitura do material ou que não têm tempo para ouvir um arquivo multimídia.
  * Além disso, deve-se fornecer uma alternativa textual (arquivo) do vídeo através da propriedade textualAlternativeFile para que o usuário
  * - 5.3 -  Oferecer audiodescrição para vídeo pré-gravado. Audiodescrição é considerado opcional, e deve-se ser fornecido quando
- * "vídeos que transmitem conteúdo visual que não está disponível na faixa de áudio devem possuir uma audiodescrição." (eMAG, 2014). É possível informar audidescrição
- * via "tracks", bastando definir o kind para "descriptions".
+ * "vídeos que transmitem conteúdo visual que não está disponível na faixa de áudio devem possuir uma audiodescrição." (eMAG, 2014). É possível informar audiodescrição
+ * via "tracks", bastando definir o kind para "descriptions". Pode-se também informar via prop audioDescription, onde deve-se informar um arquivo de áudio.
  * 5.4 – Fornecer controle de áudio para som - É fornecido controles para reproduzir, pausar, parar e alterar o volume do vídeo.
  * - 4-4 - Possibilitar que o elemento com foco seja visualmente evidente: os controles de interação recebem uma borda ao serem focados.
  * 
  * @param {ExtendedVideoProps} props 
  * @returns 
  */
-const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
+const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription, ...rest }) => {
     const videoRef = useRef();
+    const audioRef = useRef();
     const videoContainerRef = useRef();
     const { formatTime, onProgressTimeChange, changeCaptionLang } = usePlayer();
 
@@ -145,12 +150,29 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [volume, setVolume] = useState(100);
+    const [enableAd, setEnableAd] = useState(audioDescription?.enable);
 
     const [isFullscreen, setIsFullscreen] = useState(false);
 
     const { isBrowserSupports, exitFullscreen, activeFullscreen } = useFullscreenAPI();
 
     const [violations, setViolations] = useState([]);
+
+    // quando clicar no botão de áudio descrição...
+    const onAdClick = event => {
+        const enable = !enableAd;
+        setEnableAd(enable); // se áudio descrição estiver ativado, desativa. se estiver desativado, ativa.
+
+        if (enable) {
+            // reproduz o áudio descrição
+            setAdCurrentTime(videoRef.current.currentTime);
+            playAd();
+        } else {
+            // para a reprodução do áudio descrição.
+            stopAd();
+        }
+
+    }
 
 
     useEffect(() => {
@@ -200,7 +222,19 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
      */
     const play = () => {
         videoRef.current.play();
+
+        if (enableAd) {
+            playAd();
+        }
+
         setIsPlaying(true);
+    }
+
+    /**
+     * Reproduz o áudio descrição
+     */
+    const playAd = () => {
+        audioRef.current && audioRef.current.play();
     }
 
     /**
@@ -208,7 +242,19 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
      */
     const pause = () => {
         videoRef.current.pause();
+
+        if (enableAd) {
+            pauseAd();
+        }
+
         setIsPlaying(false);
+    }
+
+    /**
+     * Pausa a reprodução do áudio descrição
+     */
+    const pauseAd = () => {
+        audioRef.current && audioRef.current.pause();
     }
 
     /**
@@ -216,7 +262,21 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
      */
     const stop = () => {
         videoRef.current.currentTime = 0;
+
+        if (enableAd) {
+            stopAd();
+        }
+
         pause();
+    }
+
+    // Para a reprodução do áudio descrição
+    const stopAd = () => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+        }
+
+        pauseAd();
     }
 
     /**
@@ -236,6 +296,20 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
 
         setCurrentTime(timeSeek);
         videoRef.current.currentTime = timeSeek;
+
+        if (enableAd) {
+            setAdCurrentTime(timeSeek);
+        }
+    }
+
+    /**
+     * Altera o tempo de reprodução do áudio descrição
+     * @param {number} time 
+     */
+    const setAdCurrentTime = time => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = time;
+        }
     }
 
     /**
@@ -294,6 +368,9 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
 
         setVolume(newVolume);
         videoRef.current.volume = newVolume / 100;
+        if (audioRef.current) { // altera o volume do audiodescrição.
+            audioRef.current.volume = newVolume / 100;
+        }
     }
 
     /**
@@ -310,6 +387,17 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
         return result;
     }
 
+    /**
+     * Reseta o tempo do vídeo quando chega ao fim.
+     * @param {} event 
+     */
+    const onVideoEnded = event => {
+        stop();
+        if (enableAd) {
+            stopAd();
+        }
+    }
+
     return (
         <>
             {violations.length === 0 &&
@@ -324,6 +412,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
                         onLoadedData={event => {
                             setDuration(event.target.duration);
                         }}
+                        onEnded={onVideoEnded}
                         {...rest}>
                         {sources?.map((source, index) => (
                             <source
@@ -372,7 +461,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
                         />
                         <VideoProgressContainer>
 
-                            <div>
+                            <VideoControlButtonsContainer>
                                 {!isPlaying ?
                                     <ControlButton
                                         type="button"
@@ -403,6 +492,24 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
                                     <FontAwesomeIcon title="Parar" icon={faStop} />
                                 </ControlButton>
 
+                                {audioDescription &&
+                                    <ControlButton
+                                        role="checkbox"
+                                        aria-checked={enableAd}
+                                        tabIndex={0}
+                                        aria-label={enableAd ? "Áudiodescrição habilitado" : "Áudiodescrição desabilitado"}
+                                        type="button"
+                                        onClick={onAdClick}
+                                        className={`${lightTheme} ${fieldHightlight}`}
+                                        css={{
+                                            marginRight: 10,
+                                            backgroundColor: enableAd ? "LawnGreen" : "#FFF",
+                                        }}
+                                    >
+                                        <FontAwesomeIcon title="Áudio descrição" icon={faAudioDescription} />
+                                    </ControlButton>
+                                }
+
                                 {isBrowserSupports &&
                                     <>
                                         {!isFullscreen &&
@@ -431,34 +538,45 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
 
                                     </>
                                 }
-                            </div>
+                            </VideoControlButtonsContainer>
 
-                            <VideoProgressoBar
-                                className={`${lightTheme} ${fieldHightlight}`}
-                                min={0}
-                                max={100}
-                                onChange={onProgressChange}
-                                value={getVideoCurrentTime()}
-                                aria-label="Barra de progresso do vídeo" type="range" />
-                            <VideoDuration>
-                                {formatTime(currentTime)} / {formatTime(duration)}
-                            </VideoDuration>
-                        </VideoProgressContainer>
+                            <VideoProgress>
+                                <ProgressBar
+                                    className={`${lightTheme} ${fieldHightlight}`}
+                                    min={0}
+                                    max={100}
+                                    onChange={onProgressChange}
+                                    value={getVideoCurrentTime()}
+                                    aria-label="Barra de progresso do vídeo" type="range" />
+                                <VideoDuration>
+                                    {formatTime(currentTime)} / {formatTime(duration)}
+                                </VideoDuration>
+                            </VideoProgress>
 
-                        <VideoControls>
-                            <VolumeContainer>
-                                <span>
-                                    {volume}
-                                </span>
-                                <Range
-                                    label="Volume"
+                            <div>
+                                <ProgressBar
+                                    className={`${lightTheme} ${fieldHightlight}`}
+                                    aria-label="Volume"
                                     id={volumeId}
                                     min={0}
                                     max={100}
                                     value={volume}
                                     onChange={onVolumeChange}
-                                />
-                            </VolumeContainer>
+                                    type="range" />
+
+                                <span>
+                                    {
+                                        volume == 0 ?
+                                            <FontAwesomeIcon icon={faVolumeXmark} title="Volume" /> :
+                                            <FontAwesomeIcon icon={faVolumeHigh} title="Volume" />
+                                    }
+                                    &nbsp;
+                                    {volume}
+                                </span>
+                            </div>
+                        </VideoProgressContainer>
+
+                        <div>
 
                             <Select
                                 name={`cboVideoCaption${cboVideoId}`}
@@ -479,9 +597,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
                                     ))
                                 }
                             </Select>
-
-
-                        </VideoControls>
+                        </div>
 
 
                     </div>
@@ -491,6 +607,15 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, ...rest }) => {
             {
                 violations.length > 0 &&
                 <ComponentErrorList errors={violations} />
+            }
+
+            {audioDescription &&
+                <AudioDescription ref={audioRef}>
+                    <source
+                        src={audioDescription.src}
+                        type={audioDescription.type}
+                    />
+                </AudioDescription>
             }
         </>
     )
