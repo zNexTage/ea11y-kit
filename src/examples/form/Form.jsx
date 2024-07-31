@@ -79,6 +79,7 @@ const Form = () => {
                     id="txtTelefone"
                     label="Informe o seu celular ou telefone fixo"
                     name="telefone"
+                    placeholder="Digite seu celular ou telefone fixo"
 
                 />
 
