@@ -27,6 +27,9 @@ const RadioButtonStyled = styled("input", {});
  * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
  * - Permite marcar e desmarcar um radio button através das teclas: espaço (comportamento nativo) e enter.
  * 
+ * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
+ * - Permite marcar e desmarcar um radio button através das teclas: espaço (comportamento nativo)
+ * 
  * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.
  * Além da borda, foi reforçado o destaque do componente através do atributo outline.

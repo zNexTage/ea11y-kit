@@ -78,7 +78,6 @@ const Checkbox = ({
                     </label>
                     <CheckboxStyled
                         {...rest}
-                        role="checkbox"
                         className={`${lightTheme} ${fieldHightlight}`}
                         css={css}
                         checked={isChecked}

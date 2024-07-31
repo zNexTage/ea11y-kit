@@ -45,6 +45,7 @@ const Form = () => {
                     maxLength={50}
                     name="primeiro_nome"
                     type="text"
+                    required
                     placeholder="Informe o seu primeiro nome"
                 />
 
