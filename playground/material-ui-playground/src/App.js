@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       {/* <AvatarExample /> */}
 
-      {/* <FormExample /> */}
+      <FormExample />
 
       {/* <LinkExample /> */}
 
@@ -23,7 +23,7 @@ function App() {
       {/* <SliderExample /> */}
 
       {/* <SelectExample /> */}
-      <PopoverExample />
+      {/* <PopoverExample /> */}
     </div>
   );
 }
