@@ -27,6 +27,7 @@ describe("[Audio] - Violando diretriz 5.2 - Fornecer alternativa para áudio", (
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Audio");
     });
 })
 

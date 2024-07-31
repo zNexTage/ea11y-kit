@@ -29,6 +29,7 @@ describe("[Video] - Violando diretriz 5.1 - Fornecer alternativa para vídeo", (
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Video");
     });
 
     it("Deve renderizar um alerta ao omitir a legendas, isto é, a propriedade tracks", () => {
@@ -65,6 +66,7 @@ describe("[Video] - Violando diretriz 5.1 - Fornecer alternativa para vídeo", (
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Video");
     });
 });
 
@@ -100,5 +102,6 @@ describe("[Video] - Omitindo outros atributos", () => {
         expect(alert).toBeInTheDocument();
 
         expect(alert).toHaveTextContent(title);
+        expect(alert).toHaveTextContent("Componente: Video");
     })
 })

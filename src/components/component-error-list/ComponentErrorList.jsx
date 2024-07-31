@@ -4,15 +4,20 @@ import Link from "../../lib/links/link";
 /**
  * Lista os erros que ocorreram em um determinado componente para indicar o desenvolvedor o que ele
  * precisa corrigir.
- * @param {{errors: Array<BaseError>}} props 
+ * @param {{errors: Array<BaseError>, whichComponent: string}} props 
  */
-const ComponentErrorList = ({ errors }) => {
-    
+const ComponentErrorList = ({ errors, whichComponent }) => {
+
     return (
         <div role="alert">
             <h1>
                 Violação das diretrizes do <abbr title="Modelo de Acessibilidade em Governo Eletrônico">eMAG</abbr>
             </h1>
+
+            <p>
+                Componente: <b>{whichComponent}</b>
+            </p>
+
             <ul>
                 {errors.map((err, index) => {
                     return (

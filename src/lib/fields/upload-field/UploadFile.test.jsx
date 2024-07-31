@@ -19,6 +19,7 @@ describe("[UploadFile] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: UploadField");
     });
 
     test("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
@@ -38,6 +39,7 @@ describe("[UploadFile] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: UploadField");
     });
 });
 
@@ -59,6 +61,7 @@ describe("[UploadFile] - Violando diretriz 6.5 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: UploadField");
     })
 });
 

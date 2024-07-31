@@ -170,7 +170,7 @@ const UploadField = ({
                     </div>
                 </>
             }
-            {errors.length > 0 && <ComponentErrorList errors={errors} />}
+            {errors.length > 0 && <ComponentErrorList errors={errors} whichComponent="UploadField" />}
         </div>
 
     )

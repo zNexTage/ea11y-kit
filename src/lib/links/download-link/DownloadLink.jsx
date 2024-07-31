@@ -80,7 +80,7 @@ const DownloadLink = forwardRef(({
                     {fileName} ({extension}, {size}{unit})
                 </Link>
             }
-            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+            {violations.length > 0 && <ComponentErrorList errors={violations} whichComponent="DownloadLink" />}
         </>
     )
 });

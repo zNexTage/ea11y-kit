@@ -23,7 +23,7 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
         });
     });
 
-    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
+    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", async () => {
         render(
             <Month
                 label="mes"
@@ -35,12 +35,13 @@ describe("[Month] - Violando diretriz 6.2 do eMAG", () => {
 
         const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
 
-        waitFor(() => {
+        await waitFor(() => {
             const alert = screen.queryByRole("alert");
             expect(alert).toBeInTheDocument();
 
             expect(alert).toHaveTextContent(title);
             expect(alert).toHaveTextContent(message);
+            expect(alert).toHaveTextContent("Componente: Month");
         });
     });
 });

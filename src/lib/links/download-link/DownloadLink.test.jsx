@@ -21,6 +21,7 @@ describe("[DownloadLink] - Violando diretriz 3.5", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: DownloadLink");
     })
 
     test("Deverá ser renderizado um alerta de violação da diretriz 3.5 ao omitir o atributo size", () => {
@@ -42,6 +43,7 @@ describe("[DownloadLink] - Violando diretriz 3.5", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: DownloadLink");
     })
 });
 
@@ -102,5 +104,6 @@ describe("[DownloadLink] - Omitindo outras propriedades", () => {
 
         expect(alert).toBeInTheDocument();
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: DownloadLink");
     })
 })

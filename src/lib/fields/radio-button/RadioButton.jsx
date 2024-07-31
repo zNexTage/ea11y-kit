@@ -83,7 +83,7 @@ const RadioButton = ({ id, type, name, label, required = false, onKeyDown,  css,
                 </div>
             }
 
-            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+            {violations.length > 0 && <ComponentErrorList errors={violations} whichComponent="RadioButton" />}
         </>
     )
 }

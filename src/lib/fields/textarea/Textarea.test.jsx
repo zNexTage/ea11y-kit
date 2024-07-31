@@ -21,6 +21,7 @@ describe("[Textarea] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textarea");
     });
 
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
@@ -41,6 +42,7 @@ describe("[Textarea] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textarea");
     });
 });
 
@@ -63,6 +65,7 @@ describe("[Textarea] - Violando diretriz 6.5 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textarea");
     })
 });
 
@@ -79,13 +82,14 @@ describe("[Textarea] - Omitindo outros atributos", () => {
 
         const title = "Violação das diretrizes do eMAG";
 
-        const message = "Violação das diretrizes do eMAGÉ necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).";
+        const message = "É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).";
 
         const alert = screen.queryByRole("alert");
         expect(alert).toBeInTheDocument();
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textarea");
     });
 });
 

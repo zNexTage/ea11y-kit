@@ -22,6 +22,7 @@ describe("[Phone] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Phone");
     });
 
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
@@ -44,6 +45,7 @@ describe("[Phone] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Phone");
     });
 });
 
@@ -68,6 +70,7 @@ describe("[Phone] - Violando diretriz 6.5 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Phone");
     })
 })
 
@@ -91,6 +94,7 @@ describe("[Phone] - Omitindo outros atributos", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Phone");
     });
 });
 

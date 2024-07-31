@@ -135,7 +135,7 @@ const Range = ({
                 </div>
             }
 
-            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+            {violations.length > 0 && <ComponentErrorList errors={violations} whichComponent="Range" />}
         </>
     )
 }

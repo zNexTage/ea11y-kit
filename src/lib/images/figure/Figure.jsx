@@ -74,7 +74,7 @@ const Figure = ({ caption, children, css, ...rest }) => {
             }
 
             {errors.length > 0 &&
-                <ComponentErrorList errors={errors} />
+                <ComponentErrorList errors={errors} whichComponent="Figure" />
             }
         </>
     )

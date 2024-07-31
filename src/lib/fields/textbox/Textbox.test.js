@@ -20,6 +20,7 @@ describe("[Textbox] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textbox");
     });
 
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
@@ -40,6 +41,7 @@ describe("[Textbox] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textbox");
     });
 });
 
@@ -62,6 +64,7 @@ describe("[Textbox] - Violando diretriz 6.5 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textbox");
     })
 });
 
@@ -86,6 +89,7 @@ describe("[Textbox] - Omitindo outros atributos", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Textbox");
     });
 });
 

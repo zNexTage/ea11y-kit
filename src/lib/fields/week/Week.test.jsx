@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import Week from "./Week";
 
 describe("[Week] - Violando diretriz 6.2 do eMAG", () => {
-    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo label", () => {
+    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo label", async () => {
         render(
             <Week
                 id="txtWeek"
@@ -14,16 +14,17 @@ describe("[Week] - Violando diretriz 6.2 do eMAG", () => {
 
         const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
 
-        waitFor(() => {
+        await waitFor(() => {
             const alert = screen.queryByRole("alert");
             expect(alert).toBeInTheDocument();
 
             expect(alert).toHaveTextContent(title);
             expect(alert).toHaveTextContent(message);
+            expect(alert).toHaveTextContent("Componente: Week");
         });
     });
 
-    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
+    it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", async () => {
         render(
             <Week
                 label="label"
@@ -35,18 +36,19 @@ describe("[Week] - Violando diretriz 6.2 do eMAG", () => {
 
         const message = "Violação da diretriz 6.2 - Associar etiquetas aos seus campos";
 
-        waitFor(() => {
+        await waitFor(() => {
             const alert = screen.queryByRole("alert");
             expect(alert).toBeInTheDocument();
 
             expect(alert).toHaveTextContent(title);
             expect(alert).toHaveTextContent(message);
+            expect(alert).toHaveTextContent("Componente: Week");
         })
     });
 });
 
 describe("[Week] - Omitindo outros atributos", () => {
-    it("Deverá ser renderizado um alerta ao omitir o atributo name", () => {
+    it("Deverá ser renderizado um alerta ao omitir o atributo name", async () => {
         render(
             <Week
                 id="semana"
@@ -56,14 +58,15 @@ describe("[Week] - Omitindo outros atributos", () => {
 
         const title = "Violação das diretrizes do eMAG";
 
-        const message = "É necessário especificar o tipo do campo de texto (atributo 'name')";
+        const message = "É necessário especificar o nome (name) do campo. O atributo name é usado como referência quando os dados são enviados (https://www.w3schools.com/tags/att_name.asp).";
 
-        waitFor(() => {
+        await waitFor(() => {
             const alert = screen.queryByRole("alert");
             expect(alert).toBeInTheDocument();
 
             expect(alert).toHaveTextContent(title);
             expect(alert).toHaveTextContent(message);
+            expect(alert).toHaveTextContent("Componente: Week");
         });
     });
 });

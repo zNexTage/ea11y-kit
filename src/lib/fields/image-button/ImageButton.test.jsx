@@ -18,6 +18,7 @@ describe("[ImageButton] - Violando diretriz 6.1", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: ImageButton");
     });
 });
 

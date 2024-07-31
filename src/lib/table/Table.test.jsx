@@ -17,6 +17,7 @@ describe("[Table] - Violando diretriz 3.9 - Em tabelas, utilizar títulos e resu
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Table.Root");
     })
 });
 

@@ -156,7 +156,7 @@ export const FallbackMonth = ({ required, id, yearRange = 40, name, label, fallb
             }
             {
                 violations.length > 0 &&
-                <ComponentErrorList errors={violations} />
+                <ComponentErrorList errors={violations} whichComponent="Month > FallbackMonth" />
             }
         </>
     )
@@ -198,14 +198,12 @@ const Month = ({ id,
     fallbackYearRange = 40,
     ...rest }) => {
     const violations = useFieldValidations(label, id);
-    const [errors, setErrors] = useState([]);
 
     const field = useRef();
 
     const [isBrowserSupportsTypeMonth, setIsBrowserSupportsTypeMonth] = useState(true);
 
     useEffect(() => {
-        const errors = [...violations];
 
         if (type) {
             console.warn("Não é possível alterar o tipo do componente Month");
@@ -213,14 +211,12 @@ const Month = ({ id,
 
         // Quando o navegador não suporta o type month, ele define o tipo para text.
         setIsBrowserSupportsTypeMonth(field.current?.type == "month");
-
-        setErrors([...errors]);
     }, []);
 
     return (
         <>
             {
-                errors.length == 0 &&
+                violations.length == 0 &&
                 <>
                     {
                         isBrowserSupportsTypeMonth ?
@@ -253,7 +249,7 @@ const Month = ({ id,
             }
 
             {
-                errors.length > 0 && <ComponentErrorList errors={errors} />
+                violations.length > 0 && <ComponentErrorList errors={violations} whichComponent="Month" />
             }
         </>
     )

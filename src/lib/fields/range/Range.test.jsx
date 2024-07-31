@@ -16,6 +16,7 @@ describe("[Range] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Range");
     });
 
     it("Deverá ser renderizado um alerta de violação da diretriz 6.2 ao omitir o atributo id", () => {
@@ -34,6 +35,7 @@ describe("[Range] - Violando diretriz 6.2 do eMAG", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+        expect(alert).toHaveTextContent("Componente: Range");
     });
 });
 

@@ -69,7 +69,7 @@ const ImageButton = ({
             }
 
             {
-                errors.length > 0 && <ComponentErrorList errors={errors} />
+                errors.length > 0 && <ComponentErrorList errors={errors} whichComponent="ImageButton" />
             }
         </>
     )

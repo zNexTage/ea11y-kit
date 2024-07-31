@@ -108,7 +108,7 @@ const Root = ({
 
                 </TableStyled>
             }
-            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+            {violations.length > 0 && <ComponentErrorList errors={violations} whichComponent="Table.Root" />}
         </>
     )
 }

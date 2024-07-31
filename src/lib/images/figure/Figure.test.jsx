@@ -22,6 +22,8 @@ describe("[Figure] - Violando diretriz 3.6", () => {
 
         expect(alert).toHaveTextContent(title);
         expect(alert).toHaveTextContent(message);
+
+        expect(alert).toHaveTextContent("Componente: Figure");
     });
 });
 

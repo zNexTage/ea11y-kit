@@ -49,7 +49,7 @@ const Image = ({ src, alt, css, ...extraProps }) => {
                 />
             }
 
-            {errors.length > 0 && <ComponentErrorList errors={errors} />}
+            {errors.length > 0 && <ComponentErrorList errors={errors} whichComponent="Image" />}
         </>
     )
 }

@@ -606,7 +606,7 @@ const Video = ({ sources, css, tracks, textualAlternativeFile, audioDescription,
 
             {
                 violations.length > 0 &&
-                <ComponentErrorList errors={violations} />
+                <ComponentErrorList errors={violations} whichComponent="Video" />
             }
 
             {audioDescription &&

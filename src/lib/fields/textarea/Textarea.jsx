@@ -85,7 +85,7 @@ const Textarea = ({
                 </div>
             }
 
-            {errors.length > 0 && <ComponentErrorList errors={errors} />}
+            {errors.length > 0 && <ComponentErrorList whichComponent="Textarea" errors={errors} />}
         </>
     )
 }

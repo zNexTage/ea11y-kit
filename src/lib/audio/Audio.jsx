@@ -352,7 +352,7 @@ const Audio = ({ sources = [], captionFile, tracks = [] }) => {
                 </AudioContainer>
             }
 
-            {violations.length > 0 && <ComponentErrorList errors={violations} />}
+            {violations.length > 0 && <ComponentErrorList errors={violations} whichComponent="Audio" />}
         </>
     )
 }
