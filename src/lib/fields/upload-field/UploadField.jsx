@@ -131,6 +131,7 @@ const UploadField = ({
                     </label>
 
                     <UploadFieldStyled
+                        {...rest}
                         multiple={multiple}
                         onChange={onChangeUploadField}
                         id={id}

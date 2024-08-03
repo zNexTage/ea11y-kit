@@ -267,7 +267,8 @@ const Week = ({
     css,
     fallbackYearOptions,
     fallbackWeekCss,
-    fallbackWeekYearCss
+    fallbackWeekYearCss,
+    ...rest
 }) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
@@ -301,6 +302,7 @@ const Week = ({
                         </label>
 
                         <WeekStyled
+                            {...rest}
                             ref={weekRef}
                             type="week"
                             name={name}

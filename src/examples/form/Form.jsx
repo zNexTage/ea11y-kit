@@ -45,6 +45,7 @@ const Form = () => {
                     maxLength={50}
                     name="primeiro_nome"
                     type="text"
+                    required
                     placeholder="Informe o seu primeiro nome"
                 />
 
@@ -109,9 +110,11 @@ const Form = () => {
                 </div>
 
                 <Range
-                    id="salario"
-                    label="Salário"
-                    name="salario"
+                    id="nota"
+                    label="Nota (0 - 10)"
+                    name="nota"
+                    min={0}
+                    max={10}
                 />
 
                 <Select id="estado" label="Escolha um estado" name="estado">
