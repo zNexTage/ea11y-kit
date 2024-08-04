@@ -16,7 +16,7 @@ const baseTheme = createStitches({
 
 export const lightTheme = baseTheme.createTheme({
     colors: {
-        highlightColor: '#F00',
+        highlightColor: '#0000FF',
         borderColor: '#000'
     }
 });
