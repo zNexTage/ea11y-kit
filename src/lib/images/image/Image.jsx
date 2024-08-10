@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import ComponentErrorList from "../../../components/component-error-list/ComponentErrorList";
+import ComponentErrorList from "../../../helper-components/component-error-list/ComponentErrorList";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_TEXT_ALTERNATIVE_TO_WEBSITE_IMAGES } from "../../../utils/eMagGuidelineCode";
 import { styled } from "@stitches/react";

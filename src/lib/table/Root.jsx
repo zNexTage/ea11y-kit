@@ -3,7 +3,7 @@ import { styled } from "@stitches/react"
 import { useEffect, useState } from "react";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
 import { IN_TABLES_USES_TITLE_AND_SUMMARIES_APPROPRIATELY } from "../../utils/eMagGuidelineCode";
-import ComponentErrorList from "../../components/component-error-list";
+import ComponentErrorList from "../../helper-components/component-error-list";
 
 /**
  * @typedef CaptionProps

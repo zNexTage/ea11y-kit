@@ -7,13 +7,12 @@ import { lightTheme } from "../../stitches.config";
 import { fieldHightlight } from "../fields/shared-styles/Field.style";
 import Select from "../fields/select";
 import useFullscreenAPI from "../hooks/fullscreen-api";
-import Range from "../fields/range/Range";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faPause, faStop, faExpand, faMinimize, faAudioDescription, faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons'
 import DownloadLink from "../links/download-link/DownloadLink";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_ALTERNATIVE_TO_VIDEO } from "../../utils/eMagGuidelineCode";
-import ComponentErrorList from "../../components/component-error-list";
+import ComponentErrorList from "../../helper-components/component-error-list";
 import RequiredAttribute from "../../exceptions/RequiredAttribute";
 
 const KIND_AVAILABLE_OPTIONS = ["subtitles", "captions", "descriptions", "chapters"];

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import { useEffect, useState } from "react";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import { fieldHightlight } from "../shared-styles/Field.style";

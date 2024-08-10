@@ -9,7 +9,7 @@ import Select from "../fields/select/Select";
 import Range from "../fields/range/Range";
 import GuidelineViolation from "../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_ALTERNATIVE_TO_AUDIO } from "../../utils/eMagGuidelineCode";
-import ComponentErrorList from "../../components/component-error-list";
+import ComponentErrorList from "../../helper-components/component-error-list";
 import PropTypes from "prop-types";
 import usePlayer from "../hooks/player";
 
