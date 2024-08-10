@@ -7,7 +7,6 @@ import SelectExample from "./examples/SelectExample";
 // import MenuBarExample from "./examples/MenuBarExample";
 import NavigationMenuExample from "./examples/NavigationExample"
 import ButtonExample from "./examples/ButtonExample";
-import LinkExample from "./examples/LinkExample";
 
 function App() {
   return (
@@ -19,8 +18,7 @@ function App() {
       {/* <NavigationMenuExample /> */}
       {/* <DialogExample /> */}
       {/* <MenuBarExample /> */}
-      {/* <ButtonExample /> */}
-      <LinkExample />
+      <ButtonExample />
     </div>
   );
 }

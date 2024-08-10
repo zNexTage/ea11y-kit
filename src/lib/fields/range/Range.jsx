@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
 import { fieldHightlight } from "../shared-styles/Field.style";
@@ -36,6 +36,9 @@ const RangeStyled = styled("input", {
  * Campo range configurado com as diretrizes do eMAG. 
  * 
  * Diretrizes adotadas:
+ * 
+ * 2.1 - Disponibilizar todas as funções da página via teclado
+ * é possível alterar o valor do Range via teclado. 
  * 
  * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.

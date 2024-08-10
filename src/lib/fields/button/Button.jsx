@@ -46,7 +46,7 @@ const Button = ({ type = 'button', children, css, ...rest }) => {
 
 Button.propTypes = {
     children: PropTypes.node.isRequired,
-    type: PropTypes.oneOf(['submit', 'reset', 'button']).isRequired
+    type: PropTypes.oneOf(['submit', 'reset', 'button'])
 }
 
 export default Button;

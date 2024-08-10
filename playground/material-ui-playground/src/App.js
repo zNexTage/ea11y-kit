@@ -12,13 +12,11 @@ function App() {
     <div className="App">
       {/* <AvatarExample /> */}
 
-      {/* <FormExample /> */}
+      <FormExample />
 
       {/* <LinkExample /> */}
 
       {/* <ButtonExample /> */}
-
-      <LinkExample />
 
       {/* <AlertExample /> */}
 

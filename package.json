@@ -1,6 +1,8 @@
 {
-  "name": "ea11y-kit",
-  "version": "0.1.0",
+  "name": "ea11y",
+  "version": "0.1.4",
+  "license": "MIT",
+  "author": "Christian Bueno christian.bueno@ufabc.edu.br",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -20,11 +22,23 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "del dist && mkdir dist && cross-env NODE_ENV=production babel src/lib src/exceptions src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
+    "release-lib": "del core && mkdir core && cross-env NODE_ENV=production babel src/helper-components --out-dir core/helper-components --copy-files --ignore __tests__,spec.js,test.js,__snapshots__ && cross-env NODE_ENV=production babel src/exceptions --out-dir core/exceptions --copy-files --ignore __tests__,spec.js,test.js,__snapshots__ && cross-env NODE_ENV=production babel src/lib --out-dir core/lib --copy-files --ignore __tests__,spec.js,test.js,__snapshots__ && cross-env NODE_ENV=production babel src/stitches.config.js --out-dir core --copy-files --ignore __tests__,spec.js,test.js,__snapshots__ && cross-env NODE_ENV=production babel src/utils --out-dir core/utils --copy-files --ignore __tests__,spec.js,test.js,__snapshots__ && cross-env NODE_ENV=production babel ./package.json --out-dir core --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
+    "build": "react-scripts build",
     "test": "react-scripts test --silent",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
+  },
+  "main": "core/index.js",
+  "module": "core/index.js",
+  "files": [
+    "core",
+    "LICENCE.txt",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zNexTage/ea11y-kit"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@axe-core/react": "^4.9.1",
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.3",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

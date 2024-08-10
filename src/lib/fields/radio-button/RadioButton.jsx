@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
@@ -26,6 +26,9 @@ const RadioButtonStyled = styled("input", {});
  * 
  * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
  * - Permite marcar e desmarcar um radio button através das teclas: espaço (comportamento nativo) e enter.
+ * 
+ * Recomendação 2.1 - Disponibilizar todas as funções da página via teclado
+ * - Permite marcar e desmarcar um radio button através das teclas: espaço (comportamento nativo)
  * 
  * Recomendação 4.4 – Possibilitar que o elemento com foco seja visualmente evidente
  * - Ao receber foco é aplicado uma borda vermelha de 2px do tipo solid no campo de texto.

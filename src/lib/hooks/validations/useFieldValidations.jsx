@@ -9,7 +9,7 @@ import { ASSOCIATE_TAGS_WITH_YOUR_FIELDS } from "../../../utils/eMagGuidelineCod
  * 
  * Recomendação 6.2 – Associar etiquetas aos seus campos: 
  *  - O atributo id e label é obrigatório, e é utilizado para vincular a label ao campo de texto e identificar o input.   
- * 
+ * TODO: Verificar se foi informado o `name`;
  * @param {string} label - Etiqueta (label) que deve ser especificada para um campo de entrada
  * @param {string} id - Identificador de um campo de entrada
  * @returns 

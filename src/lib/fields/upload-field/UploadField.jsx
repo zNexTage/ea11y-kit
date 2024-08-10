@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import DownloadLink from "../../links/download-link";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
@@ -131,6 +131,7 @@ const UploadField = ({
                     </label>
 
                     <UploadFieldStyled
+                        {...rest}
                         multiple={multiple}
                         onChange={onChangeUploadField}
                         id={id}

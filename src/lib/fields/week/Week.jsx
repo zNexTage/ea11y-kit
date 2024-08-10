@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
@@ -267,7 +267,8 @@ const Week = ({
     css,
     fallbackYearOptions,
     fallbackWeekCss,
-    fallbackWeekYearCss
+    fallbackWeekYearCss,
+    ...rest
 }) => {
     const [errors, setErrors] = useState([]);
     const violations = useFieldValidations(label, id);
@@ -301,6 +302,7 @@ const Week = ({
                         </label>
 
                         <WeekStyled
+                            {...rest}
                             ref={weekRef}
                             type="week"
                             name={name}

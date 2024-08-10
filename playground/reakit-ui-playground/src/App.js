@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import ButtonExample from './examples/ButtonExample';
+import FormExample from './examples/FormExample';
 
 function App() {
   return (
-    <ButtonExample />
+    <FormExample />
   );
 }
 

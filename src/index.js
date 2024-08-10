@@ -11,6 +11,8 @@ import Link from './lib/links/link';
 import DownloadLink from './lib/links/download-link';
 import VideoExample from './examples/videos/VideoExample';
 import ModalDialogExample from './examples/dialogs/modal-dialog/ModalDialogExample';
+import LinkExample from './examples/link/LinkExample';
+import DownloadLinkExample from './examples/link/DownloadLinkExample';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -26,8 +28,11 @@ root.render(
     /> */}
 
     {/* <VideoExample /> */}
-    <ModalDialogExample />
+    {/* <ModalDialogExample /> */}
     {/* <AudioExample /> */}
+    {/* <Form /> */}
+    {/* <LinkExample /> */}
+    <DownloadLinkExample />
   </React.StrictMode>
 );
 
@@ -35,3 +40,8 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+if (process.env.NODE_ENV !== 'production') {
+  const axe = require('@axe-core/react');
+  axe(React, ReactDOM, 1000);
+}
