@@ -22,17 +22,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "release-lib": "del dist && mkdir dist && cross-env NODE_ENV=production babel src/lib src/exceptions src/components --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
+    "release-lib": "del components && mkdir components && cross-env NODE_ENV=production babel src/components src/exceptions src/lib src/stitches.config.js  --out-dir components --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "build": "react-scripts build",
     "test": "react-scripts test --silent",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "components/index.js",
+  "module": "components/index.js",
   "files": [
-    "dist",
+    "components",
     "LICENCE.txt",
     "README.md"
   ],

@@ -31,3 +31,4 @@ yarn-error.log*
 /playground/reakit-ui-playground/node_modules
 
 /dist
+/components
