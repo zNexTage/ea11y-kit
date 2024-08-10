@@ -2,6 +2,13 @@
 
 Biblioteca de componentes em React pré-configurados com as recomendações do [eMAG (Modelo de Acessibilidade em Governo Eletrônico)](https://emag.governoeletronico.gov.br/). Entretanto, nesta biblioteca as recomendações são tratadas como diretrizes, exigindo que o desenvolvedor utilize dos componentes de maneira conforme com o eMAG.
 
+A biblioteca ainda está em desenvolvimento! Sinta-se livre para testá-la e contribuir, caso você queira!
+
+# Como instalar?
+
+Rode o comando
+`npm i @ea11y/ea11y-kit`
+
 # Componentes desenvolvidos:
 
 ## Formulário:

@@ -5,6 +5,12 @@
             {
                 "option": "value"
             }
+        ],
+        [
+            "react-app",
+            {
+                "absoluteRuntime": false
+            }
         ]
     ]
 }

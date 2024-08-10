@@ -1,6 +1,7 @@
 {
   "name": "ea11y-kit",
   "version": "0.1.0",
+  "license": "MIT",
   "author": "Christian Bueno christian.bueno@ufabc.edu.br",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
@@ -32,6 +33,7 @@
   "module": "dist/index.js",
   "files": [
     "dist",
+    "LICENCE.txt",
     "README.md"
   ],
   "repository": {
