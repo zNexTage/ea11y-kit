@@ -13,9 +13,14 @@ import VideoExample from './examples/videos/VideoExample';
 import ModalDialogExample from './examples/dialogs/modal-dialog/ModalDialogExample';
 import LinkExample from './examples/link/LinkExample';
 import DownloadLinkExample from './examples/link/DownloadLinkExample';
+import Register from './examples/my-album-app/Register';
+import memoryDatabase from './examples/my-album-app/MemoryDatabase';
+import Header from './examples/my-album-app/Header';
+import Router from './examples/my-album-app/Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+const database = memoryDatabase();
 
 root.render(
   <React.StrictMode>
@@ -32,7 +37,8 @@ root.render(
     {/* <AudioExample /> */}
     {/* <Form /> */}
     {/* <LinkExample /> */}
-    <DownloadLinkExample />
+    {/* <DownloadLinkExample /> */}
+    <Router />
   </React.StrictMode>
 );
 
