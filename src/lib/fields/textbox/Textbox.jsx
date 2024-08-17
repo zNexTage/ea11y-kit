@@ -14,7 +14,8 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url",
 /**
  *  @typedef TextboxProps
  *  @property {import("@stitches/react").CSS} css
- *  @property {("email"|"number"|"password"|"search"|"text"|"url")} type
+ *  @property {import("@stitches/react").CSS} containerCss
+ *  @property {("email"|"number"|"password"|"search"|"text"|"url"|"date"|"datetime-local"|"time")} type
  */
 
 /**
@@ -22,6 +23,8 @@ const AVAILABLE_TYPES = ["email", "number", "password", "search", "text", "url",
  */
 
 const TextboxStyled = styled("input", {});
+
+const ContainerStyled = styled("div", {});
 
 /** 
  * Campo de texto configurado com as diretrizes do eMAG. 
@@ -50,13 +53,14 @@ const TextboxStyled = styled("input", {});
  * @returns {React.JSX.Element} 
  */
 const Textbox = ({
-    label,    
+    label,
     placeholder,
     id,
     name,
     maxLength,
     required = false,
     type = "text",
+    containerCss,
     css,
     ...rest
 }) => {
@@ -93,7 +97,7 @@ const Textbox = ({
 
         <>
             {errors.length === 0 &&
-                <div>
+                <ContainerStyled css={containerCss}>
                     <label htmlFor={id}>
                         {required ? <>{label}&nbsp;<small>(campo obrigatório)</small></> : label}
                     </label>
@@ -108,7 +112,7 @@ const Textbox = ({
                         type={type}
                         required={required || false}
                     />
-                </div>
+                </ContainerStyled>
             }
             {errors.length > 0 && <ComponentErrorList errors={errors} whichComponent="Textbox" />}
         </>
@@ -120,9 +124,9 @@ Textbox.propTypes = {
     placeholder: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     required: PropTypes.bool,
-    type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
+    type: PropTypes.oneOf(AVAILABLE_TYPES),
     maxLength: PropTypes.number,
-    css: PropTypes.object.isRequired,
+    css: PropTypes.object,
     name: PropTypes.string.isRequired
 }
 

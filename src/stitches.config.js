@@ -22,8 +22,10 @@ export const lightTheme = baseTheme.createTheme({
 });
 
 const global = globalCss({
-    '*':{
-        fontFamily:'$fonts$default'
+    '*': {
+        fontFamily: '$fonts$default',
+        margin: 0,
+        padding: 0
     }
 });
 
