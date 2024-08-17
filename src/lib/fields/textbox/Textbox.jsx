@@ -124,9 +124,9 @@ Textbox.propTypes = {
     placeholder: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     required: PropTypes.bool,
-    type: PropTypes.oneOf(AVAILABLE_TYPES).isRequired,
+    type: PropTypes.oneOf(AVAILABLE_TYPES),
     maxLength: PropTypes.number,
-    css: PropTypes.object.isRequired,
+    css: PropTypes.object,
     name: PropTypes.string.isRequired
 }
 
