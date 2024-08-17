@@ -2,19 +2,24 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Register from "./Register";
+import RegisterOrEdit from "./RegisterOrEdit";
 import memoryDatabase from "./MemoryDatabase";
+import List from "./List";
 
 const database = memoryDatabase();
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <h1>Alo mundo</h1>
+        element: <List database={database} />
     },
     {
         path: "/Register",
-        element: <Register database={database} />,
+        element: <RegisterOrEdit database={database} />,
+    },
+    {
+        path: "/Edit/:albumId",
+        element: <RegisterOrEdit database={database} />,
     },
 ]);
 

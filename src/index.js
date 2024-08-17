@@ -1,43 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import Form from './examples/form/Form'
-import TableExample from './examples/table/TableExample';
-import Textbox from './lib/fields/textbox';
-import Figure from './lib/images/figure/Figure';
-import FigureExample from './examples/figure/FigureExampe';
-import AudioExample from './examples/audio/AudioExample';
-import Link from './lib/links/link';
-import DownloadLink from './lib/links/download-link';
-import VideoExample from './examples/videos/VideoExample';
-import ModalDialogExample from './examples/dialogs/modal-dialog/ModalDialogExample';
-import LinkExample from './examples/link/LinkExample';
-import DownloadLinkExample from './examples/link/DownloadLinkExample';
-import Register from './examples/my-album-app/Register';
-import memoryDatabase from './examples/my-album-app/MemoryDatabase';
-import Header from './examples/my-album-app/Header';
 import Router from './examples/my-album-app/Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const database = memoryDatabase();
 
 root.render(
   <React.StrictMode>
-    {/* <DownloadLink
-      extension='.pdf'
-      fileName='Cartilha de acessibilidade do W3C'
-      href='https://acervo.ceweb.br/acervos/conteudo/8d6506be-5d3f-4e88-900f-df8749d81c36'
-      size={3.15}
-      unit='MB'
-    /> */}
-
-    {/* <VideoExample /> */}
-    {/* <ModalDialogExample /> */}
-    {/* <AudioExample /> */}
-    {/* <Form /> */}
-    {/* <LinkExample /> */}
-    {/* <DownloadLinkExample /> */}
     <Router />
   </React.StrictMode>
 );

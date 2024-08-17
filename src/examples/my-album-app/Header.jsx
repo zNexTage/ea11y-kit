@@ -39,7 +39,7 @@ const Header = () => {
                     </li>
                     <li>
                         <Link to={"/Register"} style={{ color: "#FFF" }} href="#">
-                            Registar
+                            Registrar
                         </Link>
                     </li>
                 </StyledUl>
