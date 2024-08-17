@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_TEXT_ALTERNATIVE_TO_FORM_IMAGE_BUTTONS } from "../../../utils/eMagGuidelineCode";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 

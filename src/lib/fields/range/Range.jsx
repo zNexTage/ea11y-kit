@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import PropTypes from "prop-types";
 import { fieldHightlight } from "../shared-styles/Field.style";

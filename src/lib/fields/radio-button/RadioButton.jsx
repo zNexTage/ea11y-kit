@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import * as KeyboardKeys from "../../../utils/KeyboardCodes";
 import { fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";

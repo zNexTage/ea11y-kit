@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { PROVIDE_INSTRUCTIONS_FOR_DATA_ENTRY } from "../../../utils/eMagGuidelineCode";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";

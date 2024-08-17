@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState, forwardRef } from "react";
 import GuidelineViolation from "../../../exceptions/GuidelineViolation/GuidelineViolation";
 import { DESCRIBE_LINKS_CLEARLY_AND_SUCCINCTLY } from "../../../utils/eMagGuidelineCode";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import Link from "../link";
 

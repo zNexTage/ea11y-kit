@@ -60,9 +60,11 @@ const FormExample = () => {
             <br />
 
             <FormLabel name="name">
-                Name
+                Nome
             </FormLabel>
-            <FormInput {...form} name="name" placeholder="John Doe" />
+            <br />
+            <FormInput {...form} name="name" />
+
             <FormMessage {...form} name="name" />
 
             <Input as={"div"} placeholder="input" disabled />

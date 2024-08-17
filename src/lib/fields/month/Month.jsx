@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import Select from "../select/Select";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import baseTheme, { lightTheme } from "../../../stitches.config";

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import useFieldValidations from "../../hooks/validations/useFieldValidations";
 import RequiredAttribute from "../../../exceptions/RequiredAttribute";
 import InvalidAttribute from "../../../exceptions/InvalidAttribute";
-import ComponentErrorList from "../../../components/component-error-list";
+import ComponentErrorList from "../../../helper-components/component-error-list";
 import { fieldCss, fieldHightlight } from "../shared-styles/Field.style";
 import { lightTheme } from "../../../stitches.config";
 import { styled } from "@stitches/react";
