@@ -17,7 +17,5 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-if (process.env.NODE_ENV !== 'production') {
-  const axe = require('@axe-core/react');
-  axe(React, ReactDOM, 1000);
-}
+const axe = require('@axe-core/react');
+axe(React, ReactDOM, 1000);
