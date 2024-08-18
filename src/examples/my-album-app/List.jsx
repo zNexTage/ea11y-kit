@@ -50,7 +50,7 @@ const List = ({ database }) => {
     return (
         <>
             <Header />
-            <Dialog.Root
+            {showSuccessRemove && <Dialog.Root
                 onClose={() => setShowSuccessRemove(false)}
                 show={showSuccessRemove}
                 css={{ margin: "auto" }}
@@ -60,7 +60,7 @@ const List = ({ database }) => {
                         Álbum removido com sucesso
                     </Dialog.Header>
                 }
-            />
+            />}
 
             <Main css={{ padding: 5 }}>
                 <h1>
@@ -107,101 +107,103 @@ const List = ({ database }) => {
 
             </Main>
 
-            <Dialog.Root
-                onClose={onCloseDetailModal}
-                css={{ margin: "auto" }}
-                closeButtonCss={{
-                    marginBottom: 10,
-                    marginRight: 10
-                }}
-                header={
-                    <Dialog.Header css={{ padding: 10 }} onCloseClick={onCloseDetailModal}>
-                        <h1>
-                            {albumModal?.album?.album}
-                        </h1>
-                        <h2>
-                            {albumModal?.album?.author}
-                        </h2>
-                    </Dialog.Header>
-                }
-                body={
-                    <Dialog.Body css={{ padding: 10, display: "flex", flexDirection: "row" }}>
-                        <Image
-                            css={{
-                                maxWidth: 350,
-                                border: "2px solid #DDD",
-                                padding: 10,
-                                borderRadius: 10,
-                                minHeight: "100%",
-                                objectFit: "cover",
-                                width: "100%"
-                            }}
-                            src={albumModal?.album?.photo}
-                            alt={`Capa do álbum ${albumModal?.album?.album}`} />
-                        <div style={{ padding: "0 15px" }}>
+            {albumModal?.show &&
+                <Dialog.Root
+                    onClose={onCloseDetailModal}
+                    css={{ margin: "auto" }}
+                    closeButtonCss={{
+                        marginBottom: 10,
+                        marginRight: 10
+                    }}
+                    header={
+                        <Dialog.Header css={{ padding: 10 }} onCloseClick={onCloseDetailModal}>
+                            <h1>
+                                {albumModal?.album?.album}
+                            </h1>
+                            <h2>
+                                {albumModal?.album?.author}
+                            </h2>
+                        </Dialog.Header>
+                    }
+                    body={
+                        <Dialog.Body css={{ padding: 10, display: "flex", flexDirection: "row" }}>
+                            <Image
+                                css={{
+                                    maxWidth: 350,
+                                    border: "2px solid #DDD",
+                                    padding: 10,
+                                    borderRadius: 10,
+                                    minHeight: "100%",
+                                    objectFit: "cover",
+                                    width: "100%"
+                                }}
+                                src={albumModal?.album?.photo}
+                                alt={`Capa do álbum ${albumModal?.album?.album}`} />
+                            <div style={{ padding: "0 15px" }}>
+                                <p>
+                                    <b>Autor:</b> {albumModal?.album?.author}
+                                </p>
+                                <p>
+                                    <b>Álbum:</b> {albumModal?.album?.album}
+                                </p>
+                                <p>
+                                    <b>Gravadora:</b> {albumModal?.album?.recordLabel}
+                                </p>
+                                <p>
+                                    <b>Gênero:</b> {albumModal?.album?.gender}
+                                </p>
+                                <br />
+                                <div>
+                                    <Button
+                                        onClick={onEditClick}
+                                        css={{ marginRight: 10 }}>
+                                        Editar
+                                    </Button>
+                                    <Button
+                                        onClick={onRemoveClick}>
+                                        Remover
+                                    </Button>
+                                </div>
+                            </div>
+                        </Dialog.Body>
+                    }
+                    show={albumModal?.show} />}
+
+            {showRemoveModal &&
+                <Dialog.Root
+                    onClose={onRemoveModalCloseClick}
+                    css={{ margin: "auto" }}
+                    closeButtonCss={{
+                        marginBottom: 10,
+                        marginRight: 10
+                    }}
+                    header={
+                        <Dialog.Header css={{ padding: 10 }} onCloseClick={onRemoveModalCloseClick}>
+                            <h1>
+                                {albumModal?.album?.album}
+                            </h1>
+                            <h2>
+                                {albumModal?.album?.author}
+                            </h2>
+                        </Dialog.Header>
+                    }
+                    body={
+                        <Dialog.Body css={{ padding: 10 }}>
                             <p>
-                                <b>Autor:</b> {albumModal?.album?.author}
-                            </p>
-                            <p>
-                                <b>Álbum:</b> {albumModal?.album?.album}
-                            </p>
-                            <p>
-                                <b>Gravadora:</b> {albumModal?.album?.recordLabel}
-                            </p>
-                            <p>
-                                <b>Gênero:</b> {albumModal?.album?.gender}
+                                Deseja remover o álbum {albumModal?.album?.album}?
                             </p>
                             <br />
                             <div>
-                                <Button
-                                    onClick={onEditClick}
-                                    css={{ marginRight: 10 }}>
-                                    Editar
+                                <Button onClick={onRemoveAlbumClick} css={{ marginRight: 10 }}>
+                                    Sim
                                 </Button>
-                                <Button
-                                    onClick={onRemoveClick}>
-                                    Remover
+                                <Button onClick={onRemoveModalCloseClick}>
+                                    Não
                                 </Button>
                             </div>
-                        </div>
-                    </Dialog.Body>
-                }
-                show={albumModal.show} />
-
-            <Dialog.Root
-                onClose={onRemoveModalCloseClick}
-                css={{ margin: "auto" }}
-                closeButtonCss={{
-                    marginBottom: 10,
-                    marginRight: 10
-                }}
-                header={
-                    <Dialog.Header css={{ padding: 10 }} onCloseClick={onRemoveModalCloseClick}>
-                        <h1>
-                            {albumModal?.album?.album}
-                        </h1>
-                        <h2>
-                            {albumModal?.album?.author}
-                        </h2>
-                    </Dialog.Header>
-                }
-                body={
-                    <Dialog.Body css={{ padding: 10 }}>
-                        <p>
-                            Deseja remover o álbum {albumModal?.album?.album}?
-                        </p>
-                        <br />
-                        <div>
-                            <Button onClick={onRemoveAlbumClick} css={{ marginRight: 10 }}>
-                                Sim
-                            </Button>
-                            <Button onClick={onRemoveModalCloseClick}>
-                                Não
-                            </Button>
-                        </div>
-                    </Dialog.Body>
-                }
-                show={showRemoveModal} />
+                        </Dialog.Body>
+                    }
+                    show={showRemoveModal} />}
         </>
     )
 }
