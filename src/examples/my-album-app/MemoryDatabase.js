@@ -18,19 +18,19 @@ const memoryDatabase = () => {
         },
         {
             id: "3",
-            photo: "https://upload.wikimedia.org/wikipedia/pt/8/80/Isopor_pato_fu.jpg",
-            author: "Pato Fu",
-            album: "Isopor",
-            recordLabel: "BMG (Sony Music)",
-            gender: "Pop rock, rock"
+            photo: "https://i.scdn.co/image/ab67616d0000b27343ad3b367f6f54c767cc7021",
+            author: "Saint Saens",
+            album: "Melodies sans parole",
+            recordLabel: "-",
+            gender: "Música clássica"
         },
         {
             id: "4",
-            photo: "https://upload.wikimedia.org/wikipedia/en/4/45/Lindsey_Stirling_-_Artemis.png",
-            author: "Lindsey Stirling",
-            album: "Artemis",
-            recordLabel: "Lindseystomp, BMG",
-            gender: "Classical crossover"
+            photo: "https://i.scdn.co/image/ab67616d0000b27370dd4e18b9c3431ee7a9b8a1",
+            author: "Enya",
+            album: "A day without rain",
+            recordLabel: "Warner Music UK",
+            gender: "New age, Música celta"
         },
         {
             id: "5",
