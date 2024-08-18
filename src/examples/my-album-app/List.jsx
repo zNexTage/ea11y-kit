@@ -93,7 +93,7 @@ const List = ({ database }) => {
                                     {album.author}
                                 </span>
                                 <Button onClick={(event) => onShowInfoClick(event, album)}>
-                                    Mais informações do álbum
+                                    Ver mais detalhes sobre o álbum
                                 </Button>
                             </div>
                         </StyledListItem>
