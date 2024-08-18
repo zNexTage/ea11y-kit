@@ -18,6 +18,14 @@ const memoryDatabase = () => {
         },
         {
             id: "3",
+            photo: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEji8CXcUeRGF6GrzbPr77rnABYQFlr28mAg8RtJ43TleAf8ct2TmZRx-7VEDG_PlxVDF_LkiExKctTNkTG-KdtksV1JytIF3hRFtpptx2GaCHh-LYViIxsCWGDaqAjx2lfnnQTF1RdHP4BB/s1600/mirror+mirror.jpg",
+            author: "Blind Guardian",
+            album: "Mirror Mirror",
+            recordLabel: "Twilight Hall Studios, Karo Studios, Sweet Silence Studios, Vox Studios, Air-Edel Studios",
+            gender: "Power Metal, Metal progressivo"
+        },
+        {
+            id: "4",
             photo: "https://i.scdn.co/image/ab67616d0000b27343ad3b367f6f54c767cc7021",
             author: "Saint Saens",
             album: "Melodies sans parole",
@@ -25,20 +33,12 @@ const memoryDatabase = () => {
             gender: "Música clássica"
         },
         {
-            id: "4",
+            id: "5",
             photo: "https://i.scdn.co/image/ab67616d0000b27370dd4e18b9c3431ee7a9b8a1",
             author: "Enya",
             album: "A day without rain",
             recordLabel: "Warner Music UK",
             gender: "New age, Música celta"
-        },
-        {
-            id: "5",
-            photo: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEji8CXcUeRGF6GrzbPr77rnABYQFlr28mAg8RtJ43TleAf8ct2TmZRx-7VEDG_PlxVDF_LkiExKctTNkTG-KdtksV1JytIF3hRFtpptx2GaCHh-LYViIxsCWGDaqAjx2lfnnQTF1RdHP4BB/s1600/mirror+mirror.jpg",
-            author: "Blind Guardian",
-            album: "Mirror Mirror",
-            recordLabel: "Twilight Hall Studios, Karo Studios, Sweet Silence Studios, Vox Studios, Air-Edel Studios",
-            gender: "Power Metal, Metal progressivo"
         },
         {
             id: "6",
