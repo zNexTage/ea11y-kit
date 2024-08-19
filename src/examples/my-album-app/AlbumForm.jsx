@@ -24,8 +24,8 @@ const AlbumForm = ({ onSubmit, album }) => {
         alt: "Imagem de espaço reservado sem conteúdo disponível"
     });
 
-    useEffect(()=>{
-        if(!album) return;
+    useEffect(() => {
+        if (!album) return;
 
         setAlbumPhoto({
             src: album.photo,
@@ -69,6 +69,7 @@ const AlbumForm = ({ onSubmit, album }) => {
                         label="Anexe a capa do álbum"
                         name="photo"
                         id="album"
+                        required
                     />
                     <Row css={{
                         marginTop: 10
@@ -80,12 +81,14 @@ const AlbumForm = ({ onSubmit, album }) => {
                             placeholder="Informe o nome do autor"
                             label="Nome do autor"
                             id="txtAutor"
+                            required
                             defaultValue={album?.author}
                             name="author" />
                         <Textbox
                             placeholder="Informe o nome do álbum"
                             label="Nome do álbum"
                             id="txtAlbum"
+                            required
                             defaultValue={album?.album}
                             name="album" />
                     </Row>
@@ -100,6 +103,7 @@ const AlbumForm = ({ onSubmit, album }) => {
                             type="text"
                             id="txtRecordLabel"
                             label="Gravadora"
+                            required
                             defaultValue={album?.recordLabel}
                             placeholder="Informe a gravadora" />
                         <Textbox
@@ -107,6 +111,7 @@ const AlbumForm = ({ onSubmit, album }) => {
                             type="text"
                             id="txtGender"
                             label="Gênero"
+                            required
                             defaultValue={album?.gender}
                             placeholder="Informe o gênero" />
 
