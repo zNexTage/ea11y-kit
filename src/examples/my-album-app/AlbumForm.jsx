@@ -64,7 +64,9 @@ const AlbumForm = ({ onSubmit, album }) => {
             }}>
             <Fieldset css={{ padding: 10, flex: 1, border: "none" }}>
                 <legend>
-                    Dados do álbum 
+                    <b>
+                        Dados do álbum
+                    </b>
                 </legend>
                 <div>
                     <UploadField
