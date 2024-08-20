@@ -63,6 +63,9 @@ const AlbumForm = ({ onSubmit, album }) => {
                 justifyContent: "space-between"
             }}>
             <Fieldset css={{ padding: 10, flex: 1, border: "none" }}>
+                <legend>
+                    Dados do álbum 
+                </legend>
                 <div>
                     <UploadField
                         onChange={onPhotoChange}
