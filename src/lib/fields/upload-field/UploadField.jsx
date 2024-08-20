@@ -139,6 +139,7 @@ const UploadField = ({
                         type="file"
                         className={`${lightTheme} ${fieldCss} ${fieldHightlight}`}
                         css={css}
+                        required={required}
                         {...rest}
                     />
                     <span>
