@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { styled } from "@stitches/react";
 import Button from "../fields/button/Button";
 
-const ModalDialogHeaderContainerStyled = styled("div", {});
+const ModalDialogHeaderContainerStyled = styled("header", {});
 
 const ModalDialogHeaderStyled = styled("div", {});
 
