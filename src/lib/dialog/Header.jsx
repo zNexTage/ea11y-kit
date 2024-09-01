@@ -26,9 +26,9 @@ const Header = ({ title, children, onCloseClick, css, closeButtonCss }) => (
             display: "flex",
             justifyContent: "space-between",
         }}>
-            <h1>
+            <h2>
                 {title}
-            </h1>
+            </h2>
 
             <div>
                 <Button
