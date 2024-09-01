@@ -4,7 +4,7 @@ import Header from "./Header";
 import AlbumForm from "./AlbumForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { Dialog } from "../../lib/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../lib/fields/button/Button";
 
 const Main = styled("main", {});
@@ -52,6 +52,16 @@ const RegisterOrEdit = ({ database }) => {
     const onBackToMenuClick = () => {
         navigate("/");
     }
+
+    useEffect(() => {
+        const title = document.getElementsByTagName("title")[0];
+
+        if (!albumId) {
+            title.textContent = 'ea11y-kit | Teste | Registrar álbum';
+        } else {
+            title.textContent = 'ea11y-kit | Teste | Editar álbum';
+        }
+    }, [albumId]);
 
     return (
         <>

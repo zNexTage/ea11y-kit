@@ -2,7 +2,7 @@ import { styled } from "@stitches/react";
 import Image from "../../lib/images/image";
 import Header from "./Header";
 import Button from "../../lib/fields/button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "../../lib/dialog";
 import { useNavigate } from "react-router-dom";
 
@@ -62,6 +62,11 @@ const List = ({ database }) => {
 
         setShowSuccessRemove(true);
     }
+
+    useEffect(()=>{
+        const title = document.getElementsByTagName("title")[0];
+        title.textContent = 'ea11y-kit | Teste | Listagem de álbums';
+    }, []);
 
 
     return (
