@@ -150,26 +150,28 @@ const UploadField = ({
                             </small>
                         }
                     </span>
-                    <div>
-                        <ul>
-                            {files.map((file, index) => {
+                    {files.length > 0 &&
+                        <div>
+                            <ul>
+                                {files.map((file, index) => {
 
-                                return (
-                                    (
-                                        <li key={`${file.name}_${index}`}>
-                                            <DownloadLink
-                                                href={file.url}
-                                                extension={`.${file.extesion}`}
-                                                size={file.size}
-                                                fileName={file.name}
-                                                unit={file.unit}
-                                            />
-                                        </li>
+                                    return (
+                                        (
+                                            <li key={`${file.name}_${index}`}>
+                                                <DownloadLink
+                                                    href={file.url}
+                                                    extension={`.${file.extesion}`}
+                                                    size={file.size}
+                                                    fileName={file.name}
+                                                    unit={file.unit}
+                                                />
+                                            </li>
+                                        )
                                     )
-                                )
-                            })}
-                        </ul>
-                    </div>
+                                })}
+                            </ul>
+                        </div>
+                    }
                 </>
             }
             {errors.length > 0 && <ComponentErrorList errors={errors} whichComponent="UploadField" />}
