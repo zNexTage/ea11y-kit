@@ -65,7 +65,7 @@ const List = ({ database }) => {
 
     useEffect(() => {
         const title = document.getElementsByTagName("title")[0];
-        title.textContent = 'ea11y-kit | Teste | Listagem de álbums';
+        title.textContent = 'ea11y-kit | Teste | Listagem de álbuns';
     }, []);
 
 
@@ -89,10 +89,10 @@ const List = ({ database }) => {
                 <section>
                     <hgroup>
                         <h1>
-                            Álbums
+                            Álbuns
                         </h1>
                         <h2>
-                            Minha lista de álbums
+                            Minha lista de álbuns
                         </h2>
                     </hgroup>
                     <StyledUL>
