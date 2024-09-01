@@ -80,7 +80,7 @@ const RegisterOrEdit = ({ database }) => {
                 />
                 <div>
 
-                    <h1>
+                    <h1 id={!albumId ? "register" : "edit"}>
                         {!albumId ? "Registrar álbum" : "Editar álbum"}
                     </h1>
                     <br />

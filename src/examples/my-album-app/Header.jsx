@@ -1,5 +1,5 @@
 import { styled } from "@stitches/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const StyledHeader = styled("header", {});
 const StyledHeaderDiv = styled("div", {});
@@ -8,6 +8,8 @@ const StyledUl = styled("ul", {});
 
 
 const Header = () => {
+    const location = useLocation();
+
     return (
         <StyledHeader css={{
             marginBottom: 10,
@@ -33,12 +35,14 @@ const Header = () => {
                     }
                 }}>
                     <li>
-                        <Link to={"/"} style={{ color: "#FFF" }} href="#">
+                        <Link
+                            to={location.pathname == "/" ? "#list" : "/"}
+                            style={{ color: "#FFF" }}>
                             Lista
                         </Link>
                     </li>
                     <li>
-                        <Link to={"/Register"} style={{ color: "#FFF" }} href="#">
+                        <Link to={location.pathname == "/Register" ? "#register" : "/Register"} style={{ color: "#FFF" }}>
                             Registrar
                         </Link>
                     </li>

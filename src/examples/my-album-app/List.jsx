@@ -28,7 +28,7 @@ const List = ({ database }) => {
     }
 
     const onEditClick = () => {
-        navigate(`/Edit/${albumModal.album.id}`);
+        navigate(`/Edit/${albumModal.album.id}#edit`);
     }
 
     const onRemoveModalCloseClick = () => {
@@ -63,7 +63,7 @@ const List = ({ database }) => {
             />}
 
             <Main css={{ padding: 5 }}>
-                <h1>
+                <h1 id="list">
                     Álbums
                 </h1>
                 <ul style={{ marginTop: 10, display: "inline-flex", flexWrap: "wrap", justifyContent: "center" }}>
