@@ -52,8 +52,6 @@ const Header = () => {
                                 :
                                 <StyledLink
                                     accessKey="1"
-                                    as={"a"}
-                                    href="#list"
                                     to={"/"}
                                 >
                                     Lista
