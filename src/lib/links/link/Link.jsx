@@ -37,7 +37,7 @@ const LinkStyled = styled("a", {});
  * @param {ExtendedLinkProps} props 
  * @returns 
  */
-const Link = ({ children, css, href, target, ...rest }) => {
+const Link = ({ children, css, href, target, accessKey, ...rest }) => {
 
   const extraProps = {};
 
@@ -64,7 +64,7 @@ const Link = ({ children, css, href, target, ...rest }) => {
       className={`${lightTheme} ${fieldHightlight}`} {...extraProps}
       css={css}
     >
-      {children} {isTargetBlank && <span>(abre em nova guia)</span>}
+      {children} {isTargetBlank && <span>(abre em nova guia)</span>} {accessKey && `[${accessKey}]`}
     </LinkStyled>
   )
 }
