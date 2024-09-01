@@ -8,7 +8,24 @@ import { useNavigate } from "react-router-dom";
 
 const StyledListItem = styled("li", {});
 
+const StyledUL = styled("ul", {
+    marginTop: 10, display: "inline-flex", flexWrap: "wrap", justifyContent: "center"
+});
+
+const AuthorInfo = styled("div", {
+    display: "flex", flexDirection: "column"
+})
+
+const SpanAlbumAuthor = styled("span", {
+    padding: 10,
+    textAlign: "center"
+});
+
 const Main = styled("main", {});
+
+const ModalContent = styled("div", {
+    padding: "0 15px"
+});
 
 const List = ({ database }) => {
     const [albums, setAlbums] = useState(database.get());
@@ -63,47 +80,55 @@ const List = ({ database }) => {
             />}
 
             <Main css={{ padding: 5 }}>
-                <h1 id="list">
-                    Álbums
-                </h1>
-                <ul style={{ marginTop: 10, display: "inline-flex", flexWrap: "wrap", justifyContent: "center" }}>
-                    {albums.map((album) => (
-                        <StyledListItem
-                            key={album.id}
-                            css={{
-                                border: "1px solid #CCC",
-                                marginBottom: 10,
-                                borderRadius: 10,
-                                listStyleType: "none",
-                                margin: 10
-                            }}>
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                                <Image
-                                    css={{
-                                        maxHeight: 300,
-                                        aspectRatio: 1 / 1,
-                                        minHeight: "100%",
-                                        objectFit: "cover",
-                                        width: "100%"
-                                    }} src={album.photo} alt={`Capa do álbum ${album.album}`} />
-                                <span style={{ padding: 10, textAlign: "center" }}>
-                                    <b>
-                                        {album.album}
-                                    </b><br />
-                                    {album.author}
-                                </span>
-                                <Button onClick={(event) => onShowInfoClick(event, album)}>
-                                    Ver mais detalhes sobre o álbum
-                                </Button>
-                            </div>
-                        </StyledListItem>
-                    ))}
-                    {albums.length == 0 &&
-                        <li>
-                            Nenhum álbum para ser listado
-                        </li>
-                    }
-                </ul>
+
+                <section>
+                    <hgroup>
+                        <h1 id="list">
+                            Álbums
+                        </h1>
+                        <h2>
+                            Minha lista de álbums
+                        </h2>
+                    </hgroup>
+                    <StyledUL>
+                        {albums.map((album) => (
+                            <StyledListItem
+                                key={album.id}
+                                css={{
+                                    border: "1px solid #CCC",
+                                    marginBottom: 10,
+                                    borderRadius: 10,
+                                    listStyleType: "none",
+                                    margin: 10
+                                }}>
+                                <AuthorInfo>
+                                    <Image
+                                        css={{
+                                            maxHeight: 300,
+                                            aspectRatio: 1 / 1,
+                                            minHeight: "100%",
+                                            objectFit: "cover",
+                                            width: "100%"
+                                        }} src={album.photo} alt={`Capa do álbum ${album.album}`} />
+                                    <SpanAlbumAuthor>
+                                        <b>
+                                            {album.album}
+                                        </b><br />
+                                        {album.author}
+                                    </SpanAlbumAuthor>
+                                    <Button onClick={(event) => onShowInfoClick(event, album)}>
+                                        Ver mais detalhes sobre o álbum
+                                    </Button>
+                                </AuthorInfo>
+                            </StyledListItem>
+                        ))}
+                        {albums.length == 0 &&
+                            <li>
+                                Nenhum álbum para ser listado
+                            </li>
+                        }
+                    </StyledUL>
+                </section>
 
             </Main>
 
@@ -141,7 +166,7 @@ const List = ({ database }) => {
                             }}
                             src={albumModal?.album?.photo}
                             alt={`Capa do álbum ${albumModal?.album?.album}`} />
-                        <div style={{ padding: "0 15px" }}>
+                        <ModalContent>
                             <p>
                                 <b>Autor:</b> {albumModal?.album?.author}
                             </p>
@@ -166,7 +191,7 @@ const List = ({ database }) => {
                                     Remover
                                 </Button>
                             </div>
-                        </div>
+                        </ModalContent>
                     </Dialog.Body>
                 }
                 show={albumModal?.show} />

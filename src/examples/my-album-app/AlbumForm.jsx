@@ -18,6 +18,10 @@ const Fieldset = styled("fieldset", {});
 const SubmitRow = styled("div", {});
 const AlbumPhotoContainer = styled("div", {});
 
+const AlbumTitleContainer = styled("div", {
+    textAlign: "center"
+})
+
 const AlbumForm = ({ onSubmit, album }) => {
     const [albumPhoto, setAlbumPhoto] = useState({
         src: "https://i0.wp.com/espaferro.com.br/wp-content/uploads/2024/06/placeholder-103.png?ssl=1",
@@ -58,7 +62,6 @@ const AlbumForm = ({ onSubmit, album }) => {
             method="POST"
             onSubmit={handleSubmit}
             css={{
-
                 display: "flex",
                 justifyContent: "space-between"
             }}>
@@ -131,11 +134,11 @@ const AlbumForm = ({ onSubmit, album }) => {
             </Fieldset>
 
             <AlbumPhotoContainer css={{ display: "flex", flexDirection: "column" }}>
-                <span style={{ textAlign: "center" }}>
+                <AlbumTitleContainer>
                     <b>
                         Capa do álbum
                     </b>
-                </span>
+                </AlbumTitleContainer>
                 <Image
                     css={{
                         maxWidth: 350,

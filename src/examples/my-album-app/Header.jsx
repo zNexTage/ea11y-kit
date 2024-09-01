@@ -6,6 +6,10 @@ const StyledHeaderDiv = styled("div", {});
 const StyledNav = styled("nav", {});
 const StyledUl = styled("ul", {});
 
+const StyledLink = styled(Link, {
+    color: "#FFF"
+})
+
 
 const Header = () => {
     const location = useLocation();
@@ -35,16 +39,47 @@ const Header = () => {
                     }
                 }}>
                     <li>
-                        <Link
-                            to={location.pathname == "/" ? "#list" : "/"}
-                            style={{ color: "#FFF" }}>
-                            Lista
-                        </Link>
+                        {
+                            location.pathname == "/" ?
+
+                                <StyledLink
+                                    accessKey="1"
+                                    as={"a"}
+                                    href="#list"
+                                >
+                                    Lista
+                                </StyledLink>
+                                :
+                                <StyledLink
+                                    accessKey="1"
+                                    as={"a"}
+                                    href="#list"
+                                    to={"/"}
+                                >
+                                    Lista
+                                </StyledLink>
+                        }
+
+
                     </li>
                     <li>
-                        <Link to={location.pathname == "/Register" ? "#register" : "/Register"} style={{ color: "#FFF" }}>
-                            Registrar
-                        </Link>
+                        {
+                            location.pathname == "/Register" ?
+                                <StyledLink
+                                    accessKey="2"
+                                    href="#register"
+                                    as="a"
+                                >
+                                    Registrar
+                                </StyledLink>
+                                :
+                                <StyledLink
+                                    accessKey="2"
+                                    to={"/Register"}>
+                                    Registrar
+                                </StyledLink>
+                        }
+
                     </li>
                 </StyledUl>
             </StyledNav>

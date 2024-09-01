@@ -1,3 +1,9 @@
+import { styled } from "@stitches/react";
+
+const ErrorItem = styled("li", {
+    color: "red"
+});
+
 const ErrorComponent = ({ error, resetErrorBoundary }) => {
     return (
         <div role="alert">
@@ -7,9 +13,9 @@ const ErrorComponent = ({ error, resetErrorBoundary }) => {
 
             <ul>
                 {error.getErrorMessages().map(message => (
-                    <li style={{ color: "red" }}>
+                    <ErrorItem>
                         {message}
-                    </li>
+                    </ErrorItem>
                 ))}
             </ul>
         </div>

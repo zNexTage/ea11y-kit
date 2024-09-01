@@ -1,3 +1,8 @@
+import { styled } from "@stitches/react";
+
+const DetailContent = styled("div", {
+    padding: "0 15px" 
+});
 const DetailDialog = ({
     albumModal = null,
 
@@ -59,7 +64,7 @@ const DetailDialog = ({
                             }}
                             src={albumModal?.album?.photo}
                             alt={`Capa do álbum ${albumModal?.album?.album}`} />
-                        <div style={{ padding: "0 15px" }}>
+                        <DetailContent>
                             <p>
                                 <b>Autor:</b> {albumModal?.album?.author}
                             </p>
@@ -84,7 +89,7 @@ const DetailDialog = ({
                                     Remover
                                 </Button>
                             </div>
-                        </div>
+                        </DetailContent>
                     </Dialog.Body>
                 }
                 show={albumModal.show} />
