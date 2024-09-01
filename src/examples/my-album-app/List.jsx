@@ -84,11 +84,11 @@ const List = ({ database }) => {
                 }
             />}
 
-            <Main css={{ padding: 5 }}>
+            <Main id="content" css={{ padding: 5 }}>
 
                 <section>
                     <hgroup>
-                        <h1 id="list">
+                        <h1>
                             Álbums
                         </h1>
                         <h2>

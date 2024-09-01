@@ -1,5 +1,6 @@
 import { styled } from "@stitches/react";
 import { Link, useLocation } from "react-router-dom";
+import { default as ELink} from "../../lib/links/link";
 
 const StyledHeader = styled("header", {});
 const StyledHeaderDiv = styled("div", {});
@@ -22,8 +23,16 @@ const Header = () => {
             <StyledHeaderDiv css={{
                 padding: 20,
                 backgroundColor: "#03F",
+                display: "flex",
+                justifyContent: "space-between"
             }}>
                 My Album App
+
+                <span>
+                    <ELink css={{color: "#FFF"}} href="#content" accessKey="c">
+                        Conteúdo
+                    </ELink>
+                </span>
             </StyledHeaderDiv>
             <StyledNav css={{
                 backgroundColor: "#06F",
@@ -39,45 +48,21 @@ const Header = () => {
                     }
                 }}>
                     <li>
-                        {
-                            location.pathname == "/" ?
-
-                                <StyledLink
-                                    accessKey="1"
-                                    as={"a"}
-                                    href="#list"
-                                >
-                                    Lista
-                                </StyledLink>
-                                :
-                                <StyledLink
-                                    accessKey="1"
-                                    to={"/"}
-                                >
-                                    Lista
-                                </StyledLink>
-                        }
+                        <StyledLink
+                            accessKey="1"
+                            to={"/"}
+                        >
+                            Lista [1]
+                        </StyledLink>
 
 
                     </li>
                     <li>
-                        {
-                            location.pathname == "/Register" ?
-                                <StyledLink
-                                    accessKey="2"
-                                    href="#register"
-                                    as="a"
-                                >
-                                    Registrar
-                                </StyledLink>
-                                :
-                                <StyledLink
-                                    accessKey="2"
-                                    to={"/Register"}>
-                                    Registrar
-                                </StyledLink>
-                        }
-
+                        <StyledLink
+                            accessKey="2"
+                            to={"/Register"}>
+                            Registrar [2]
+                        </StyledLink>
                     </li>
                 </StyledUl>
             </StyledNav>

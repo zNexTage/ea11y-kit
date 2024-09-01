@@ -67,11 +67,10 @@ const RegisterOrEdit = ({ database }) => {
         <>
             <Header />
 
-            <Main css={{ margin: 5, padding: 5 }}>
-
+            <Main id="content" css={{ margin: 5, padding: 5 }}>
                 <div>
 
-                    <h1 id={!albumId ? "register" : "edit"}>
+                    <h1>
                         {!albumId ? "Registrar álbum" : "Editar álbum"}
                     </h1>
                     <br />
