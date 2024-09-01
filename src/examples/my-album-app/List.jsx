@@ -63,7 +63,7 @@ const List = ({ database }) => {
         setShowSuccessRemove(true);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         const title = document.getElementsByTagName("title")[0];
         title.textContent = 'ea11y-kit | Teste | Listagem de álbums';
     }, []);
@@ -146,13 +146,12 @@ const List = ({ database }) => {
                 }}
                 header={
                     albumModal?.album &&
-                    <Dialog.Header css={{ padding: 10 }} onCloseClick={onCloseDetailModal}>
-                        <h1>
-                            {albumModal?.album?.album}
-                        </h1>
-                        <h2>
+                    <Dialog.Header
+                        title={albumModal?.album?.album}
+                        css={{ padding: 10 }} onCloseClick={onCloseDetailModal}>
+                        <h3>
                             {albumModal?.album?.author}
-                        </h2>
+                        </h3>
                     </Dialog.Header>
                 }
                 body={
@@ -210,13 +209,12 @@ const List = ({ database }) => {
                 }}
                 header={
                     albumModal?.album &&
-                    <Dialog.Header css={{ padding: 10 }} onCloseClick={onRemoveModalCloseClick}>
-                        <h1>
-                            {albumModal?.album?.album}
-                        </h1>
-                        <h2>
+                    <Dialog.Header
+                        title={albumModal?.album?.album}
+                        css={{ padding: 10 }} onCloseClick={onRemoveModalCloseClick}>
+                        <h3>
                             {albumModal?.album?.author}
-                        </h2>
+                        </h3>
                     </Dialog.Header>
                 }
                 body={
