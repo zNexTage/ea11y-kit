@@ -58,6 +58,16 @@ const RegisterOrEdit = ({ database }) => {
             <Header />
 
             <Main css={{ margin: 5, padding: 5 }}>
+
+                <div>
+
+                    <h1 id={!albumId ? "register" : "edit"}>
+                        {!albumId ? "Registrar álbum" : "Editar álbum"}
+                    </h1>
+                    <br />
+                    <AlbumForm album={album} onSubmit={onSubmit} />
+                </div>
+
                 <Dialog.Root
                     show={successModal.show}
                     onClose={onSuccessDialogCloseClick}
@@ -78,14 +88,7 @@ const RegisterOrEdit = ({ database }) => {
                     </Dialog.Body>}
                     type="non-modal"
                 />
-                <div>
 
-                    <h1 id={!albumId ? "register" : "edit"}>
-                        {!albumId ? "Registrar álbum" : "Editar álbum"}
-                    </h1>
-                    <br />
-                    <AlbumForm album={album} onSubmit={onSubmit} />
-                </div>
 
             </Main>
         </>
