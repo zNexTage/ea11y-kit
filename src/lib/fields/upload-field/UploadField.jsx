@@ -142,14 +142,14 @@ const UploadField = ({
                         required={required}
                         {...rest}
                     />
-                    <span>
-                        {
-                            accept &&
+                    {
+                        accept &&
+                        <span>
                             <small>
                                 {acceptDescription}
                             </small>
-                        }
-                    </span>
+                        </span>
+                    }
                     {files.length > 0 &&
                         <div>
                             <ul>
