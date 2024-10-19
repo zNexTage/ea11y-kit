@@ -36,7 +36,7 @@ const Image = ({ src, alt, css, ...extraProps }) => {
         }
 
         setErrors([...errorsAux]);
-    }, []);
+    }, [alt]);
 
     return (
         <>
